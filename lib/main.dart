@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:instatek/responsive/mobile_screen_layout.dart';
 import 'package:instatek/responsive/responsive_layout_screen.dart';
 import 'package:instatek/responsive/web_screen_layout.dart';
+import 'package:instatek/screens/login_screen.dart';
+import 'package:instatek/screens/register_screen.dart';
 import 'package:instatek/utils/colors.dart';
 
 void main() {
@@ -20,7 +22,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: mobileBackgroundColor,
       ),
-      home: ResponsiveLayout(mobileScreenLayout: MobileScreenLayout(), webScreenLayout: WebScreenLayout()),
+     // home: ResponsiveLayout(mobileScreenLayout: MobileScreenLayout(), webScreenLayout: WebScreenLayout()),
+      home: RegisterScreen(),
     );
   }
 }
