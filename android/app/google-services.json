@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "254429523809",
+    "project_id": "instatek-6fa75",
+    "storage_bucket": "instatek-6fa75.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254429523809:android:236ea3b2151011890d5f20",
+        "android_client_info": {
+          "package_name": "com.example.instatek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254429523809-b0t0el9aospqfnv1gr83u9imsq0nh1eb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJEhYzXcsxAjM8FjKn7VrG3k9kLVQ4Ev0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254429523809-b0t0el9aospqfnv1gr83u9imsq0nh1eb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "254429523809-mo3bgshri0iol381q1livj50ob7nva9e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.instatek"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

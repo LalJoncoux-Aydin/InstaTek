@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>254429523809-mo3bgshri0iol381q1livj50ob7nva9e.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.254429523809-mo3bgshri0iol381q1livj50ob7nva9e</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCxQ9LwtO1nS9Z77fq6sfiA6p7yBlnbpbw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>254429523809</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.instatek</string>
+	<key>PROJECT_ID</key>
+	<string>instatek-6fa75</string>
+	<key>STORAGE_BUCKET</key>
+	<string>instatek-6fa75.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:254429523809:ios:eb648170640f88b80d5f20</string>
+</dict>
+</plist>
