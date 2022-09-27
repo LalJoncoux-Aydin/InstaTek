@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:instatek/models/user.dart' as model;
+import 'package:instatek/resources/storage_methods.dart';
 
 class AuthMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -20,22 +23,22 @@ class AuthMethods {
     required String password,
     required String username,
     required String bio,
+    required Uint8List profilePicture,
   }) async {
     String res = "Some error Occurred";
     try {
       if (email.isNotEmpty ||
           password.isNotEmpty ||
           username.isNotEmpty ||
-          bio.isNotEmpty) {
-        UserCredential cred = await _auth.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
+          bio.isNotEmpty ) {
+        UserCredential cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+        String photoUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
+        print('hi6');
 
         model.User user = model.User(
           username: username,
           uid: cred.user!.uid,
-          photoUrl: "https://cdn-icons-png.flaticon.com/512/847/847969.png",
+          photoUrl: photoUrl,
           email: email,
           bio: bio,
           followers: [],
