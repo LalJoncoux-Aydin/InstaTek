@@ -33,8 +33,6 @@ class AuthMethods {
           bio.isNotEmpty ) {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
         String photoUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
-        print('hi6');
-
         model.User user = model.User(
           username: username,
           uid: cred.user!.uid,
@@ -53,6 +51,13 @@ class AuthMethods {
         res = "Success";
       } else {
         res = "Please enter all the fields";
+      }
+    } on FirebaseAuthException catch(err) {
+      if (err.code == 'invalid-email') {
+        return "Email format is invalid.";
+      }
+      if (err.code == 'weak-password') {
+        return "Password should be at least 6 characters";
       }
     } catch (err) {
       return err.toString();

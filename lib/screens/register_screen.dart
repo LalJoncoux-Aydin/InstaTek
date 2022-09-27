@@ -7,7 +7,6 @@ import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../utils/helper.dart';
 import '../utils/utils.dart';
 import '../widgets/text_field_input.dart';
 
