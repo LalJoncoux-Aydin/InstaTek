@@ -49,8 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         profilePicture: _image!,
     );
     // if string returned is success, user has been created
-    print(res);
-    if (res == "success") {
+    if (res == "Success") {
       setState(() {
         _isLoading = false;
       });
@@ -78,6 +77,82 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Container(
                 child: _buildBodyContainer())
         ));
+  }
+
+  Widget _buildBodyContainer() {
+    // For the spacing
+    var size = MediaQuery
+        .of(context)
+        .size;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 32),
+      width: double.infinity,
+      child: Column(
+        children: [
+          Flexible(flex: 2, child: Container()),
+          _buildHeader(),
+          _buildImageInput(),
+          _buildInput('Enter your username', _usernameController, false),
+          _buildInput('Enter your email', _emailController, false),
+          _buildInput('Enter your password', _passwordController, true),
+          _buildInput('Enter your bio', _bioController, false),
+          _buildButton('Register'),
+          Flexible(flex: 2, child: Container()),
+          _buildNavLink("I already have an account", "Login"),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Column(
+      children: [
+        const SizedBox(height: 24),
+        SvgPicture.asset(
+          'assets/instatek_logo.svg',
+          color: primaryColor,
+          height: 44,
+        ),
+        const SizedBox(height: 15),
+      ],
+    );
+  }
+
+  Widget _buildImageInput() {
+    return Column(
+      children: [
+        // image input
+        const SizedBox(height: 15),
+        Stack(
+          children: [
+            _image != null
+                ? CircleAvatar(
+              radius: 64,
+              backgroundImage: MemoryImage(_image!),
+              backgroundColor: Colors.red,
+            )
+                : const CircleAvatar(
+              radius: 64,
+              backgroundImage: NetworkImage(
+                  'https://cdn-icons-png.flaticon.com/512/847/847969.png'),
+              // backgroundColor: Colors.red,
+            ),
+            Positioned(
+              bottom: -10,
+              left: 80,
+              child: IconButton(
+                onPressed: selectImage,
+                icon: const Icon(
+                    Icons.add_a_photo
+                ),
+              ),
+            )
+          ],
+        ),
+        const SizedBox(height: 24),
+      ],
+    );
   }
 
   Widget _buildInput(displayTxt, controller, pw) {
@@ -119,48 +194,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _buildImageInput() {
-    return Column(
-      children: [
-        const SizedBox(height: 24),
-        SvgPicture.asset(
-          'assets/instatek_logo.svg',
-          color: primaryColor,
-          height: 44,
-        ),
-        const SizedBox(height: 30),
-        // my image
-        Stack(
-          children: [
-            _image != null
-                ? CircleAvatar(
-              radius: 64,
-              backgroundImage: MemoryImage(_image!),
-              backgroundColor: Colors.red,
-            )
-                : const CircleAvatar(
-              radius: 64,
-              backgroundImage: NetworkImage(
-                  'https://cdn-icons-png.flaticon.com/512/847/847969.png'),
-              // backgroundColor: Colors.red,
-            ),
-            Positioned(
-              bottom: -10,
-              left: 80,
-              child: IconButton(
-                onPressed: selectImage,
-                icon: const Icon(
-                    Icons.add_a_photo
-                ),
-              ),
-            )
-          ],
-        ),
-        const SizedBox(height: 24),
-      ],
-    );
-  }
-
   Widget _buildNavLink(displayText1, displayText2) {
     return Column(
       children: [
@@ -191,28 +224,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _buildBodyContainer() {
-    // For the spacing
-    var size = MediaQuery
-        .of(context)
-        .size;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 32),
-      width: double.infinity,
-      child: Column(
-        children: [
-          Flexible(flex: 2, child: Container()),
-          _buildImageInput(),
-          _buildInput('Enter your username', _usernameController, false),
-          _buildInput('Enter your email', _emailController, false),
-          _buildInput('Enter your password', _passwordController, true),
-          _buildInput('Enter your bio', _bioController, false),
-          _buildButton('Register'),
-          Flexible(flex: 2, child: Container()),
-          _buildNavLink("I already have an account", "Login"),
-        ],
-      ),
-    );
-  }
 }

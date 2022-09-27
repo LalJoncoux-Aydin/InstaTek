@@ -20,9 +20,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _bioController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
-  Uint8List? _image;
   bool _isLoading = false;
 
   @override
@@ -30,27 +27,21 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _bioController.dispose();
-    _usernameController.dispose();
   }
 
-  void registerUser() async {
+  void loginUser() async {
     // set loading to true
     setState(() {
       _isLoading = true;
     });
 
     // signup user using our auth method
-    String res = await AuthMethods().registerUser(
+    String res = await AuthMethods().loginUser(
       email: _emailController.text,
       password: _passwordController.text,
-      username: _usernameController.text,
-      bio: _bioController.text,
-      profilePicture: _image!,
     );
     // if string returned is success, user has been created
-    print(res);
-    if (res == "success") {
+    if (res == "Success") {
       setState(() {
         _isLoading = false;
       });
@@ -64,13 +55,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void selectImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
-    setState(() {
-      _image = im;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,6 +62,43 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Container(
                 child: _buildBodyContainer())
         ));
+  }
+
+  Widget _buildBodyContainer() {
+    // For the spacing
+    var size = MediaQuery
+        .of(context)
+        .size;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 32),
+      width: double.infinity,
+      child: Column(
+        children: [
+          Flexible(flex: 2, child: Container()),
+          _buildHeader(),
+          _buildInput('Enter your email', _emailController, false),
+          _buildInput('Enter your password', _passwordController, true),
+          _buildButton('Login'),
+          Flexible(flex: 2, child: Container()),
+          _buildNavLink("I don't have an account", "Register"),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Column(
+      children: [
+        const SizedBox(height: 24),
+        SvgPicture.asset(
+          'assets/instatek_logo.svg',
+          color: primaryColor,
+          height: 44,
+        ),
+        const SizedBox(height: 15),
+      ],
+    );
   }
 
   Widget _buildInput(displayTxt, controller, pw) {
@@ -100,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
       children: [
         const SizedBox(height: 24),
         InkWell(
-          onTap: () => registerUser(),
+          onTap: () => loginUser(),
           child: Container(
             width: double.infinity,
             alignment: Alignment.center,
@@ -113,48 +134,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             child: !_isLoading ? Text(displayTxt) : const CircularProgressIndicator(color: primaryColor),
           ),
-        ),
-        const SizedBox(height: 24),
-      ],
-    );
-  }
-
-  Widget _buildImageInput() {
-    return Column(
-      children: [
-        const SizedBox(height: 24),
-        SvgPicture.asset(
-          'assets/instatek_logo.svg',
-          color: primaryColor,
-          height: 44,
-        ),
-        const SizedBox(height: 30),
-        // my image
-        Stack(
-          children: [
-            _image != null
-                ? CircleAvatar(
-              radius: 64,
-              backgroundImage: MemoryImage(_image!),
-              backgroundColor: Colors.red,
-            )
-                : const CircleAvatar(
-              radius: 64,
-              backgroundImage: NetworkImage(
-                  'https://cdn-icons-png.flaticon.com/512/847/847969.png'),
-              // backgroundColor: Colors.red,
-            ),
-            Positioned(
-              bottom: -10,
-              left: 80,
-              child: IconButton(
-                onPressed: selectImage,
-                icon: const Icon(
-                    Icons.add_a_photo
-                ),
-              ),
-            )
-          ],
         ),
         const SizedBox(height: 24),
       ],
@@ -188,31 +167,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         const SizedBox(height: 24),
       ],
-    );
-  }
-
-  Widget _buildBodyContainer() {
-    // For the spacing
-    var size = MediaQuery
-        .of(context)
-        .size;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 32),
-      width: double.infinity,
-      child: Column(
-        children: [
-          Flexible(flex: 2, child: Container()),
-          _buildImageInput(),
-          _buildInput('Enter your username', _usernameController, false),
-          _buildInput('Enter your email', _emailController, false),
-          _buildInput('Enter your password', _passwordController, true),
-          _buildInput('Enter your bio', _bioController, false),
-          _buildButton('Register'),
-          Flexible(flex: 2, child: Container()),
-          _buildNavLink("I already have an account", "Login"),
-        ],
-      ),
     );
   }
 }

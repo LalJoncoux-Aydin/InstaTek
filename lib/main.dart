@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/screens/register_screen.dart';
 import 'package:instatek/utils/colors.dart';
 
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: mobileBackgroundColor,
       ),
       // home: ResponsiveLayout(mobileScreenLayout: MobileScreenLayout(), webScreenLayout: WebScreenLayout()),
-      home: const RegisterScreen(),
+      home: const LoginScreen(),
     );
   }
 }

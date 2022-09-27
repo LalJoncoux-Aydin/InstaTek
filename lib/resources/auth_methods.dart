@@ -80,6 +80,8 @@ class AuthMethods {
       } else {
         res = "Please enter all the fields";
       }
+    } on FirebaseAuthException catch(err) {
+      // To do
     } catch (err) {
       return err.toString();
     }
