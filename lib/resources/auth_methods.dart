@@ -69,7 +69,7 @@ class AuthMethods {
     required String email,
     required String password,
   }) async {
-    String res = "Some error Occurred";
+    String res = "Credentials are incorrect.";
     try {
       if (email.isNotEmpty || password.isNotEmpty) {
         await _auth.signInWithEmailAndPassword(
@@ -81,7 +81,9 @@ class AuthMethods {
         res = "Please enter all the fields";
       }
     } on FirebaseAuthException catch(err) {
-      // To do
+      if (err.code == 'invalid-email') {
+        return "Email format is invalid.";
+      }
     } catch (err) {
       return err.toString();
     }
