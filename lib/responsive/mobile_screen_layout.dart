@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:instatek/providers/user_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:instatek/models/user.dart' as model;
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
@@ -35,9 +38,11 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> with SingleTick
 
   @override
   Widget build(BuildContext context) {
+    model.User user = Provider.of<UserProvider>(context).getUser;
+
     return Scaffold(
       body: Center(
-        child: Text(username),
+        child: Text(user.username),
       ),
     );
   }
