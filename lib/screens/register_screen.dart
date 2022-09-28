@@ -8,6 +8,9 @@ import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout_screen.dart';
+import '../responsive/web_screen_layout.dart';
 import '../utils/utils.dart';
 import '../widgets/text_field_input.dart';
 
@@ -49,16 +52,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
         bio: _bioController.text,
         profilePicture : _image,
     );
+
+    setState(() {
+      _isLoading = false;
+    });
     // if string returned is success, user has been created
     if (res == "Success") {
-      setState(() {
-        _isLoading = false;
-      });
-      // TODO NAVIGATE TO FEED
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
     } else {
-      setState(() {
-        _isLoading = false;
-      });
       // show the error
       showSnackBar(context, res);
     }
@@ -69,6 +77,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     setState(() {
       _image = im;
     });
+  }
+
+  void navigateToLogin() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
 
   @override
@@ -205,12 +217,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Text(displayText1),
             ),
             GestureDetector(
-                onTap: () =>
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ),
-                    ),
+                onTap: navigateToLogin,
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(displayText2,

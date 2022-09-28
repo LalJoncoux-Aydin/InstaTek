@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instatek/resources/auth_methods.dart';
 import 'package:instatek/screens/login_screen.dart';
+import 'package:instatek/screens/register_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout_screen.dart';
+import '../responsive/web_screen_layout.dart';
 import '../utils/utils.dart';
 import '../widgets/text_field_input.dart';
 
@@ -40,19 +44,28 @@ class _LoginScreenState extends State<LoginScreen> {
       email: _emailController.text,
       password: _passwordController.text,
     );
+
+    setState(() {
+      _isLoading = false;
+    });
     // if string returned is success, user has been created
     if (res == "Success") {
-      setState(() {
-        _isLoading = false;
-      });
-      // TODO NAVIGATE TO FEED
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
     } else {
-      setState(() {
-        _isLoading = false;
-      });
       // show the error
       showSnackBar(context, res);
     }
+  }
+
+  void navigateToRegister() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RegisterScreen()));
   }
 
   @override
@@ -152,12 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Text(displayText1),
             ),
             GestureDetector(
-                onTap: () =>
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ),
-                    ),
+                onTap: navigateToRegister,
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(displayText2,
