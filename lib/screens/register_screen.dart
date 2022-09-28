@@ -1,12 +1,17 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instatek/resources/auth_methods.dart';
 import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../utils/helper.dart';
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout_screen.dart';
+import '../responsive/web_screen_layout.dart';
+import '../utils/utils.dart';
 import '../widgets/text_field_input.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -22,7 +27,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _bioController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   Uint8List? _image;
-
   bool _isLoading = false;
 
   @override
@@ -40,161 +44,191 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _isLoading = true;
     });
 
-    // signup user using our authmethodds
+    // signup user using our auth method
     String res = await AuthMethods().registerUser(
         email: _emailController.text,
         password: _passwordController.text,
         username: _usernameController.text,
-        bio: _bioController.text);
-    // if string returned is sucess, user has been created
-    if (res == "success") {
-      setState(() {
-        _isLoading = false;
-      });
-      // TODO NAVIGATE TO FEED
+        bio: _bioController.text,
+        profilePicture : _image,
+    );
+
+    setState(() {
+      _isLoading = false;
+    });
+    // if string returned is success, user has been created
+    if (res == "Success") {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
     } else {
-      setState(() {
-        _isLoading = false;
-      });
       // show the error
       showSnackBar(context, res);
     }
   }
 
-  void selectImage() {}
+  void selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = im;
+    });
+  }
+
+  void navigateToLogin() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginScreen()));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
-        width: double.infinity,
-        child: Column(
+            child: Container(
+                child: _buildBodyContainer())
+        ));
+  }
+
+  Widget _buildBodyContainer() {
+    // For the spacing
+    var size = MediaQuery
+        .of(context)
+        .size;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      width: double.infinity,
+      child: Column(
+        children: [
+          _buildHeader(),
+          _buildImageInput(),
+          _buildInput('Enter your username', _usernameController, false),
+          _buildInput('Enter your email', _emailController, false),
+          _buildInput('Enter your password', _passwordController, true),
+          _buildInput('Enter your bio', _bioController, false),
+          _buildButton('Register'),
+          _buildNavLink("I already have an account", "Login"),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        SvgPicture.asset(
+          'assets/instatek_logo.svg',
+          color: primaryColor,
+          height: 44,
+        ),
+        const SizedBox(height: 10),
+      ],
+    );
+  }
+
+  Widget _buildImageInput() {
+    return Column(
+      children: [
+        // image input
+        const SizedBox(height: 10),
+        Stack(
           children: [
-            Flexible(flex: 2, child: Container()),
-            // image
-            SvgPicture.asset(
-              'assets/instatek_logo.svg',
-              color: primaryColor,
-              height: 44,
+            _image != null
+                ? CircleAvatar(
+              radius: 64,
+              backgroundImage: MemoryImage(_image!),
+              backgroundColor: Colors.red,
+            )
+                : const CircleAvatar(
+              radius: 64,
+              backgroundImage: NetworkImage(
+                  'https://cdn-icons-png.flaticon.com/512/847/847969.png'),
+              // backgroundColor: Colors.red,
             ),
-            const SizedBox(height: 30),
-            // my image
-            Stack(
-              children: [
-                _image != null
-                    ? CircleAvatar(
-                        radius: 64,
-                        backgroundImage: MemoryImage(_image!),
-                        backgroundColor: Colors.red,
-                      )
-                    : const CircleAvatar(
-                        radius: 64,
-                        backgroundImage: NetworkImage(
-                            'https://cdn-icons-png.flaticon.com/512/847/847969.png'),
-                        // backgroundColor: Colors.red,
-                      ),
-                Positioned(
-                  bottom: -10,
-                  left: 80,
-                  child: IconButton(
-                    onPressed: selectImage,
-                    icon: const Icon(Icons.add_a_photo),
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            TextFieldInput(
-              hintText: 'Enter your username',
-              textInputType: TextInputType.text,
-              textEditingController: _usernameController,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            // text field email
-            TextFieldInput(
-              hintText: 'Enter your email',
-              textInputType: TextInputType.emailAddress,
-              textEditingController: _emailController,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            // text field password
-            TextFieldInput(
-              hintText: 'Enter your password',
-              textInputType: TextInputType.text,
-              textEditingController: _passwordController,
-              isPass: true,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            TextFieldInput(
-              hintText: 'Enter your bio',
-              textInputType: TextInputType.text,
-              textEditingController: _bioController,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            // button login
-            InkWell(
-              onTap: registerUser,
-              child: Container(
-                width: double.infinity,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                decoration: const ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(4),
-                    ),
-                  ),
-                  color: blueColor,
+            Positioned(
+              bottom: -10,
+              left: 80,
+              child: IconButton(
+                onPressed: selectImage,
+                icon: const Icon(
+                    Icons.add_a_photo
                 ),
-                child: !_isLoading
-                    ? const Text(
-                        'Register',
-                      )
-                    : const CircularProgressIndicator(
-                        color: primaryColor,
-                      ),
               ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            Flexible(flex: 2, child: Container()),
-            // transitioning
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: const Text("I already have an account"),
-                ),
-                GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                        ),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: const Text("Login",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    ))
-              ],
             )
           ],
         ),
-      ),
-    ));
+        const SizedBox(height: 10),
+      ],
+    );
   }
+
+  Widget _buildInput(displayTxt, controller, pw) {
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        TextFieldInput(
+          hintText: displayTxt,
+          textInputType: TextInputType.text,
+          textEditingController: controller,
+          isPass: pw,
+        ),
+        const SizedBox(height: 10),
+      ],
+    );
+  }
+
+  Widget _buildButton(displayTxt) {
+    return Column(
+      children: [
+        const SizedBox(height: 14),
+        InkWell(
+          onTap: () => registerUser(),
+          child: Container(
+            width: double.infinity,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            decoration: const ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4),),
+              ),
+              color: blueColor,
+            ),
+            child: !_isLoading ? Text(displayTxt) : const CircularProgressIndicator(color: primaryColor),
+          ),
+        ),
+        const SizedBox(height: 14),
+      ],
+    );
+  }
+
+  Widget _buildNavLink(displayText1, displayText2) {
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Text(displayText1),
+            ),
+            GestureDetector(
+                onTap: navigateToLogin,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Text(displayText2,
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                ))
+          ],
+        ),
+        const SizedBox(height: 10),
+      ],
+    );
+  }
+
+
 }

@@ -1,9 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instatek/utils/colors.dart';
+import 'dart:typed_data';
 
-import '../resources/auth_methods.dart';
-import '../utils/helper.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:instatek/resources/auth_methods.dart';
+import 'package:instatek/screens/login_screen.dart';
+import 'package:instatek/screens/register_screen.dart';
+import 'package:instatek/utils/colors.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout_screen.dart';
+import '../responsive/web_screen_layout.dart';
+import '../utils/utils.dart';
 import '../widgets/text_field_input.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,27 +24,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
   bool _isLoading = false;
-
-  void loginUser() async {
-    setState(() {
-      _isLoading = true;
-    });
-    String res = await AuthMethods().loginUser(
-        email: _emailController.text, password: _passwordController.text);
-    if (res == 'success') {
-      // TODO NAVIGATE TO FEED
-      setState(() {
-        _isLoading = false;
-      });
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
-      showSnackBar(context, res);
-    }
-  }
 
   @override
   void dispose() {
@@ -45,89 +33,148 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordController.dispose();
   }
 
+  void loginUser() async {
+    // set loading to true
+    setState(() {
+      _isLoading = true;
+    });
+
+    // signup user using our auth method
+    String res = await AuthMethods().loginUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+
+    setState(() {
+      _isLoading = false;
+    });
+    // if string returned is success, user has been created
+    if (res == "Success") {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
+    } else {
+      // show the error
+      showSnackBar(context, res);
+    }
+  }
+
+  void navigateToRegister() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RegisterScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
-        width: double.infinity,
-        child: Column(
+            child: Container(
+                child: _buildBodyContainer())
+        ));
+  }
+
+  Widget _buildBodyContainer() {
+    // For the spacing
+    var size = MediaQuery
+        .of(context)
+        .size;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 32),
+      width: double.infinity,
+      child: Column(
+        children: [
+          Flexible(flex: 2, child: Container()),
+          _buildHeader(),
+          _buildInput('Enter your email', _emailController, false),
+          _buildInput('Enter your password', _passwordController, true),
+          _buildButton('Login'),
+          Flexible(flex: 2, child: Container()),
+          _buildNavLink("I don't have an account", "Register"),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Column(
+      children: [
+        const SizedBox(height: 24),
+        SvgPicture.asset(
+          'assets/instatek_logo.svg',
+          color: primaryColor,
+          height: 44,
+        ),
+        const SizedBox(height: 15),
+      ],
+    );
+  }
+
+  Widget _buildInput(displayTxt, controller, pw) {
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+        TextFieldInput(
+          hintText: displayTxt,
+          textInputType: TextInputType.text,
+          textEditingController: controller,
+          isPass: pw,
+        ),
+        const SizedBox(height: 20),
+      ],
+    );
+  }
+
+  Widget _buildButton(displayTxt) {
+    return Column(
+      children: [
+        const SizedBox(height: 24),
+        InkWell(
+          onTap: () => loginUser(),
+          child: Container(
+            width: double.infinity,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            decoration: const ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4),),
+              ),
+              color: blueColor,
+            ),
+            child: !_isLoading ? Text(displayTxt) : const CircularProgressIndicator(color: primaryColor),
+          ),
+        ),
+        const SizedBox(height: 24),
+      ],
+    );
+  }
+
+  Widget _buildNavLink(displayText1, displayText2) {
+    return Column(
+      children: [
+        const SizedBox(height: 24),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Flexible(flex: 2, child: Container()),
-            // image
-            SvgPicture.asset(
-              'assets/instatek_logo.svg',
-              color: primaryColor,
-              height: 44,
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Text(displayText1),
             ),
-            const SizedBox(height: 64),
-            // text field email
-            TextFieldInput(
-              hintText: 'Enter your email',
-              textInputType: TextInputType.emailAddress,
-              textEditingController: _emailController,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            // text field password
-            TextFieldInput(
-              hintText: 'Enter your password',
-              textInputType: TextInputType.text,
-              textEditingController: _passwordController,
-              isPass: true,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            // button login
-            InkWell(
-                onTap: loginUser,
+            GestureDetector(
+                onTap: navigateToRegister,
                 child: Container(
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  decoration: const ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(4),
-                      ),
-                    ),
-                    color: blueColor,
-                  ),
-                  child: !_isLoading
-                      ? const Text(
-                          'Log in',
-                        )
-                      : const CircularProgressIndicator(
-                          color: primaryColor,
-                        ),
-                )),
-            const SizedBox(
-              height: 24,
-            ),
-            Flexible(flex: 2, child: Container()),
-            // transitioning
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: const Text("I don't have an account"),
-                ),
-                GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: const Text("Sign up",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    ))
-              ],
-            )
+                  child: Text(displayText2,
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                ))
           ],
         ),
-      ),
-    ));
+        const SizedBox(height: 24),
+      ],
+    );
   }
 }
