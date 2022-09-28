@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instatek/resources/auth_methods.dart';
 import 'package:instatek/screens/login_screen.dart';
@@ -46,7 +47,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         password: _passwordController.text,
         username: _usernameController.text,
         bio: _bioController.text,
-        profilePicture: _image!,
+        profilePicture : _image,
     );
     // if string returned is success, user has been created
     if (res == "Success") {
@@ -86,11 +87,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
         .size;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 32),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       width: double.infinity,
       child: Column(
         children: [
-          Flexible(flex: 2, child: Container()),
           _buildHeader(),
           _buildImageInput(),
           _buildInput('Enter your username', _usernameController, false),
@@ -98,7 +98,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           _buildInput('Enter your password', _passwordController, true),
           _buildInput('Enter your bio', _bioController, false),
           _buildButton('Register'),
-          Flexible(flex: 2, child: Container()),
           _buildNavLink("I already have an account", "Login"),
         ],
       ),
@@ -108,13 +107,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _buildHeader() {
     return Column(
       children: [
-        const SizedBox(height: 24),
+        const SizedBox(height: 10),
         SvgPicture.asset(
           'assets/instatek_logo.svg',
           color: primaryColor,
           height: 44,
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 10),
       ],
     );
   }
@@ -123,7 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Column(
       children: [
         // image input
-        const SizedBox(height: 15),
+        const SizedBox(height: 10),
         Stack(
           children: [
             _image != null
@@ -150,7 +149,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             )
           ],
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 10),
       ],
     );
   }
@@ -158,14 +157,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _buildInput(displayTxt, controller, pw) {
     return Column(
       children: [
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
         TextFieldInput(
           hintText: displayTxt,
           textInputType: TextInputType.text,
           textEditingController: controller,
           isPass: pw,
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
       ],
     );
   }
@@ -173,7 +172,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _buildButton(displayTxt) {
     return Column(
       children: [
-        const SizedBox(height: 24),
+        const SizedBox(height: 14),
         InkWell(
           onTap: () => registerUser(),
           child: Container(
@@ -189,7 +188,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: !_isLoading ? Text(displayTxt) : const CircularProgressIndicator(color: primaryColor),
           ),
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 14),
       ],
     );
   }
@@ -197,7 +196,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _buildNavLink(displayText1, displayText2) {
     return Column(
       children: [
-        const SizedBox(height: 24),
+        const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -219,7 +218,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ))
           ],
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 10),
       ],
     );
   }

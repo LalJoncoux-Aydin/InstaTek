@@ -23,16 +23,14 @@ class AuthMethods {
     required String password,
     required String username,
     required String bio,
-    required Uint8List profilePicture,
+    Uint8List? profilePicture,
   }) async {
-    String res = "Some error Occurred";
+    String res = "Internal unknown error.";
     try {
-      if (email.isNotEmpty ||
-          password.isNotEmpty ||
-          username.isNotEmpty ||
-          bio.isNotEmpty ) {
+      if (email.isNotEmpty && password.isNotEmpty && username.isNotEmpty && bio.isNotEmpty && profilePicture != null) {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
         String photoUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
+
         model.User user = model.User(
           username: username,
           uid: cred.user!.uid,
@@ -57,10 +55,13 @@ class AuthMethods {
         return "Email format is invalid.";
       }
       if (err.code == 'weak-password') {
-        return "Password should be at least 6 characters";
+        return "Password should be at least 6 characters.";
+      }
+      if (err.code == 'email-already-in-use') {
+        return "Email address is already in use by another account.";
       }
     } catch (err) {
-      return err.toString();
+      res = err.toString();
     }
     return res;
   }
@@ -71,7 +72,7 @@ class AuthMethods {
   }) async {
     String res = "Credentials are incorrect.";
     try {
-      if (email.isNotEmpty || password.isNotEmpty) {
+      if (email.isNotEmpty && password.isNotEmpty) {
         await _auth.signInWithEmailAndPassword(
           email: email,
           password: password,
@@ -85,7 +86,7 @@ class AuthMethods {
         return "Email format is invalid.";
       }
     } catch (err) {
-      return err.toString();
+      res = err.toString();
     }
     return res;
   }
