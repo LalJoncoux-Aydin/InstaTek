@@ -99,7 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         .size;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 60),
       width: double.infinity,
       child: Column(
         children: [
@@ -110,7 +110,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           _buildInput('Enter your password', _passwordController, true),
           _buildInput('Enter your bio', _bioController, false),
           _buildButton('Register'),
-          _buildNavLink("I already have an account", "Login"),
+          _buildNavLink("Already have an account ?", "Login"),
         ],
       ),
     );
@@ -119,11 +119,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _buildHeader() {
     return Column(
       children: [
-        const SizedBox(height: 10),
+        const SizedBox(height: 30),
         SvgPicture.asset(
           'assets/instatek_logo.svg',
-          color: primaryColor,
-          height: 44,
+          height: 60,
         ),
         const SizedBox(height: 10),
       ],
@@ -161,7 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             )
           ],
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
       ],
     );
   }
@@ -184,7 +183,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _buildButton(displayTxt) {
     return Column(
       children: [
-        const SizedBox(height: 14),
+        const SizedBox(height: 25),
         InkWell(
           onTap: () => registerUser(),
           child: Container(
@@ -197,10 +196,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               color: blueColor,
             ),
-            child: !_isLoading ? Text(displayTxt) : const CircularProgressIndicator(color: primaryColor),
+            child: !_isLoading ? Text(displayTxt, style: const TextStyle(color: whiteColor)) : const CircularProgressIndicator(color: primaryColor),
           ),
         ),
-        const SizedBox(height: 14),
       ],
     );
   }
@@ -208,24 +206,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _buildNavLink(displayText1, displayText2) {
     return Column(
       children: [
-        const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Text(displayText1),
+              padding: const EdgeInsets.symmetric(vertical: 41, horizontal: 8),
+              child: Text(displayText1, style: const TextStyle(color: blueColor)),
             ),
             GestureDetector(
                 onTap: navigateToLogin,
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(displayText2,
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                      style: const TextStyle(fontWeight: FontWeight.bold, color: blueColor)),
                 ))
           ],
-        ),
-        const SizedBox(height: 10),
+        )
       ],
     );
   }
