@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _buildInput('Enter your password', _passwordController, true),
           _buildButton('Login'),
           Flexible(flex: 2, child: Container()),
-          _buildNavLink("I don't have an account", "Register"),
+          _buildNavLink("I don't have an account", " Register"),
         ],
       ),
     );
