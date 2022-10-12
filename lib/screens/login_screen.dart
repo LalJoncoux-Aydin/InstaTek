@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
         .size;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 32),
+      padding: const EdgeInsets.symmetric(horizontal: 60),
       width: double.infinity,
       child: Column(
         children: [
@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _buildInput('Enter your password', _passwordController, true),
           _buildButton('Login'),
           Flexible(flex: 2, child: Container()),
-          _buildNavLink("I don't have an account", "Register"),
+          _buildNavLink("Don't have an account ?", "Register"),
         ],
       ),
     );
@@ -103,13 +103,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildHeader() {
     return Column(
       children: [
-        const SizedBox(height: 24),
         SvgPicture.asset(
           'assets/instatek_logo.svg',
-          color: primaryColor,
-          height: 44,
+          height: 80,
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 60),
       ],
     );
   }
@@ -117,14 +115,13 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildInput(displayTxt, controller, pw) {
     return Column(
       children: [
-        const SizedBox(height: 20),
         TextFieldInput(
           hintText: displayTxt,
           textInputType: TextInputType.text,
           textEditingController: controller,
           isPass: pw,
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 25),
       ],
     );
   }
@@ -132,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildButton(displayTxt) {
     return Column(
       children: [
-        const SizedBox(height: 24),
+        const SizedBox(height: 10),
         InkWell(
           onTap: () => loginUser(),
           child: Container(
@@ -145,10 +142,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               color: blueColor,
             ),
-            child: !_isLoading ? Text(displayTxt) : const CircularProgressIndicator(color: primaryColor),
+            child: !_isLoading ? Text(displayTxt, style: const TextStyle(color: whiteColor)) : const CircularProgressIndicator(color: primaryColor),
           ),
         ),
-        const SizedBox(height: 24),
       ],
     );
   }
@@ -156,20 +152,19 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildNavLink(displayText1, displayText2) {
     return Column(
       children: [
-        const SizedBox(height: 24),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Text(displayText1),
+              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 8),
+              child: Text(displayText1, style: const TextStyle(color: blueColor)),
             ),
             GestureDetector(
                 onTap: navigateToRegister,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 25),
                   child: Text(displayText2,
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                      style: const TextStyle(fontWeight: FontWeight.bold, color: blueColor)),
                 ))
           ],
         ),
