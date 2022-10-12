@@ -1,17 +1,9 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:instatek/resources/auth_methods.dart';
 import 'package:instatek/screens/login_screen.dart';
+import 'package:instatek/screens/register_screen2.dart';
 import 'package:instatek/utils/colors.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
-import '../responsive/mobile_screen_layout.dart';
-import '../responsive/responsive_layout_screen.dart';
-import '../responsive/web_screen_layout.dart';
-import '../utils/utils.dart';
+import '../widgets/header_login_register.dart';
 import '../widgets/text_field_input.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -24,63 +16,14 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _bioController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
-  Uint8List? _image;
-  bool _isLoading = false;
+  final TextEditingController _passwordController2 = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _bioController.dispose();
-    _usernameController.dispose();
-  }
-
-  void registerUser() async {
-    // set loading to true
-    setState(() {
-      _isLoading = true;
-    });
-
-    // signup user using our auth method
-    String res = await AuthMethods().registerUser(
-        email: _emailController.text,
-        password: _passwordController.text,
-        username: _usernameController.text,
-        bio: _bioController.text,
-        profilePicture : _image,
-    );
-
-    setState(() {
-      _isLoading = false;
-    });
-    // if string returned is success, user has been created
-    if (res == "Success") {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),
-          ),
-        ),
-      );
-    } else {
-      // show the error
-      showSnackBar(context, res);
-    }
-  }
-
-  void selectImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
-    setState(() {
-      _image = im;
-    });
-  }
-
-  void navigateToLogin() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginScreen()));
+    _passwordController2.dispose();
   }
 
   @override
@@ -103,12 +46,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
       width: double.infinity,
       child: Column(
         children: [
-          _buildHeader(),
-          _buildImageInput(),
-          _buildInput('Enter your username', _usernameController, false),
-          _buildInput('Enter your email', _emailController, false),
-          _buildInput('Enter your password', _passwordController, true),
-          _buildInput('Enter your bio', _bioController, false),
+          const HeaderLoginRegister(),
+          TextFieldInput(hintText: 'Enter your email', textEditingController: _emailController, isPass: false),
+          TextFieldInput(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true),
+          TextFieldInput(hintText: 'Enter your password again', textEditingController: _passwordController2, isPass: true),
           _buildButton('Register'),
           _buildNavLink("Already have an account ?", "Login"),
         ],
@@ -116,76 +57,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _buildHeader() {
-    return Column(
-      children: [
-        const SizedBox(height: 30),
-        SvgPicture.asset(
-          'assets/instatek_logo.svg',
-          height: 60,
+  void nextStepRegister() async {
+    // if string returned is success, user has been created
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => RegisterScreen2(
+            emailController: _emailController,
+            passwordController: _passwordController
         ),
-        const SizedBox(height: 10),
-      ],
+      ),
     );
   }
-
-  Widget _buildImageInput() {
-    return Column(
-      children: [
-        // image input
-        const SizedBox(height: 10),
-        Stack(
-          children: [
-            _image != null
-                ? CircleAvatar(
-              radius: 64,
-              backgroundImage: MemoryImage(_image!),
-              backgroundColor: Colors.red,
-            )
-                : const CircleAvatar(
-              radius: 64,
-              backgroundImage: NetworkImage(
-                  'https://cdn-icons-png.flaticon.com/512/847/847969.png'),
-              // backgroundColor: Colors.red,
-            ),
-            Positioned(
-              bottom: -10,
-              left: 80,
-              child: IconButton(
-                onPressed: selectImage,
-                icon: const Icon(
-                    Icons.add_a_photo
-                ),
-              ),
-            )
-          ],
-        ),
-        const SizedBox(height: 20),
-      ],
-    );
-  }
-
-  Widget _buildInput(displayTxt, controller, pw) {
-    return Column(
-      children: [
-        const SizedBox(height: 10),
-        TextFieldInput(
-          hintText: displayTxt,
-          textInputType: TextInputType.text,
-          textEditingController: controller,
-          isPass: pw,
-        ),
-        const SizedBox(height: 10),
-      ],
-    );
-  }
-
   Widget _buildButton(displayTxt) {
     return Column(
       children: [
         const SizedBox(height: 25),
         InkWell(
-          onTap: () => registerUser(),
+          onTap: () => nextStepRegister(),
           child: Container(
             width: double.infinity,
             alignment: Alignment.center,
@@ -196,13 +84,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               color: blueColor,
             ),
-            child: !_isLoading ? Text(displayTxt, style: const TextStyle(color: whiteColor)) : const CircularProgressIndicator(color: primaryColor),
+            child: Text(displayTxt, style: const TextStyle(color: whiteColor)),
           ),
         ),
       ],
     );
   }
 
+  void navigateToLogin() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginScreen()));
+  }
   Widget _buildNavLink(displayText1, displayText2) {
     return Column(
       children: [
@@ -225,6 +116,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ],
     );
   }
-
-
 }

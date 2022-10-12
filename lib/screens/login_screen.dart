@@ -12,6 +12,7 @@ import '../responsive/mobile_screen_layout.dart';
 import '../responsive/responsive_layout_screen.dart';
 import '../responsive/web_screen_layout.dart';
 import '../utils/utils.dart';
+import '../widgets/header_login_register.dart';
 import '../widgets/text_field_input.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -31,6 +32,38 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: SafeArea(
+            child: Container(
+                child: _buildBodyContainer())
+        ));
+  }
+
+  Widget _buildBodyContainer() {
+    // For the spacing
+    var size = MediaQuery
+        .of(context)
+        .size;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 60),
+      width: double.infinity,
+      child: Column(
+        children: [
+          Flexible(flex: 2, child: Container()),
+          const HeaderLoginRegister(),
+          TextFieldInput(hintText: 'Enter your email', textEditingController: _emailController, isPass: false),
+          TextFieldInput(hintText: 'Enter your password', textEditingController: _passwordController, isPass: false),
+          _buildButton('Login'),
+          Flexible(flex: 2, child: Container()),
+          _buildNavLink("Don't have an account ?", "Register"),
+        ],
+      ),
+    );
   }
 
   void loginUser() async {
@@ -63,69 +96,6 @@ class _LoginScreenState extends State<LoginScreen> {
       showSnackBar(context, res);
     }
   }
-
-  void navigateToRegister() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RegisterScreen()));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-            child: Container(
-                child: _buildBodyContainer())
-        ));
-  }
-
-  Widget _buildBodyContainer() {
-    // For the spacing
-    var size = MediaQuery
-        .of(context)
-        .size;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 60),
-      width: double.infinity,
-      child: Column(
-        children: [
-          Flexible(flex: 2, child: Container()),
-          _buildHeader(),
-          _buildInput('Enter your email', _emailController, false),
-          _buildInput('Enter your password', _passwordController, true),
-          _buildButton('Login'),
-          Flexible(flex: 2, child: Container()),
-          _buildNavLink("Don't have an account ?", "Register"),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Column(
-      children: [
-        SvgPicture.asset(
-          'assets/instatek_logo.svg',
-          height: 80,
-        ),
-        const SizedBox(height: 60),
-      ],
-    );
-  }
-
-  Widget _buildInput(displayTxt, controller, pw) {
-    return Column(
-      children: [
-        TextFieldInput(
-          hintText: displayTxt,
-          textInputType: TextInputType.text,
-          textEditingController: controller,
-          isPass: pw,
-        ),
-        const SizedBox(height: 25),
-      ],
-    );
-  }
-
   Widget _buildButton(displayTxt) {
     return Column(
       children: [
@@ -149,6 +119,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  void navigateToRegister() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RegisterScreen()));
+  }
   Widget _buildNavLink(displayText1, displayText2) {
     return Column(
       children: [
