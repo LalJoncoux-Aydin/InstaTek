@@ -12,8 +12,7 @@ class AuthMethods {
   Future<model.User> getUserDetails() async {
     User currentUser = _auth.currentUser!;
 
-    DocumentSnapshot documentSnapshot =
-        await _firestore.collection('users').doc(currentUser.uid).get();
+    DocumentSnapshot documentSnapshot = await _firestore.collection('users').doc(currentUser.uid).get();
 
     return model.User.fromSnap(documentSnapshot);
   }
@@ -27,30 +26,30 @@ class AuthMethods {
   }) async {
     String res = "Internal unknown error.";
     try {
-      if (email.isNotEmpty && password.isNotEmpty && username.isNotEmpty && bio.isNotEmpty && profilePicture != null) {
+      if (email.isNotEmpty && password.isNotEmpty && username.isNotEmpty && bio.isNotEmpty) {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-        String photoUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
+        String? photoUrl;
+        if (profilePicture != null) {
+          photoUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
+        }
 
         model.User user = model.User(
           username: username,
           uid: cred.user!.uid,
-          photoUrl: photoUrl,
+          photoUrl: photoUrl ?? '',
           email: email,
           bio: bio,
           followers: [],
           following: [],
         );
 
-        await _firestore
-            .collection("users")
-            .doc(cred.user!.uid)
-            .set(user.toJson());
+        await _firestore.collection("users").doc(cred.user!.uid).set(user.toJson());
 
         res = "Success";
       } else {
         res = "Please enter all the fields";
       }
-    } on FirebaseAuthException catch(err) {
+    } on FirebaseAuthException catch (err) {
       if (err.code == 'invalid-email') {
         return "Email format is invalid.";
       }
@@ -81,7 +80,7 @@ class AuthMethods {
       } else {
         res = "Please enter all the fields";
       }
-    } on FirebaseAuthException catch(err) {
+    } on FirebaseAuthException catch (err) {
       if (err.code == 'invalid-email') {
         return "Email format is invalid.";
       }
