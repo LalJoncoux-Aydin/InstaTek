@@ -15,8 +15,14 @@ class TextFieldInput extends StatelessWidget {
     );
     return Column(
       children: [
-        SizedBox(height: 10),
-        TextField(
+        const SizedBox(height: 10),
+        TextFormField(
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter some text';
+            }
+            return null;
+          },
           controller: textEditingController,
           decoration: InputDecoration(
             hintText: hintText,
@@ -30,7 +36,7 @@ class TextFieldInput extends StatelessWidget {
           keyboardType: TextInputType.text,
           obscureText: isPass,
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
       ],
     );
   }

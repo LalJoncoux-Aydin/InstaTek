@@ -46,11 +46,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       width: double.infinity,
       child: Column(
         children: [
+          Flexible(flex: 2, child: Container()),
           const HeaderLoginRegister(),
           TextFieldInput(hintText: 'Enter your email', textEditingController: _emailController, isPass: false),
           TextFieldInput(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true),
           TextFieldInput(hintText: 'Enter your password again', textEditingController: _passwordController2, isPass: true),
           _buildButton('Register'),
+          Flexible(flex: 2, child: Container()),
           _buildNavLink("Already have an account ?", "Login"),
         ],
       ),

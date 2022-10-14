@@ -7,6 +7,7 @@ import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/screens/register_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instatek/widgets/custom_snack_bar.dart';
 
 import '../responsive/mobile_screen_layout.dart';
 import '../responsive/responsive_layout_screen.dart';
@@ -48,60 +49,75 @@ class _LoginScreenState extends State<LoginScreen> {
     var size = MediaQuery
         .of(context)
         .size;
+    final formKey = GlobalKey<FormState>();
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 60),
-      width: double.infinity,
-      child: Column(
-        children: [
-          Flexible(flex: 2, child: Container()),
-          const HeaderLoginRegister(),
-          TextFieldInput(hintText: 'Enter your email', textEditingController: _emailController, isPass: false),
-          TextFieldInput(hintText: 'Enter your password', textEditingController: _passwordController, isPass: false),
-          _buildButton('Login'),
-          Flexible(flex: 2, child: Container()),
-          _buildNavLink("Don't have an account ?", "Register"),
-        ],
-      ),
+    return Form(
+      key: formKey,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 60),
+        width: double.infinity,
+        child: Column(
+          children: [
+            Flexible(flex: 2, child: Container()),
+            const HeaderLoginRegister(),
+            TextFieldInput(hintText: 'Enter your email', textEditingController: _emailController, isPass: false),
+            TextFieldInput(hintText: 'Enter your password', textEditingController: _passwordController, isPass: false),
+            _buildButton('Login', formKey),
+            Flexible(flex: 2, child: Container()),
+            _buildNavLink("Don't have an account ?", "Register"),
+          ],
+        ),
+      )
     );
   }
 
-  void loginUser() async {
-    // set loading to true
-    setState(() {
-      _isLoading = true;
-    });
+  void loginUser(formKey) async {
+    if (formKey.currentState!.validate()) {
+      // If the form is valid, display a snackbar. In the real world,
+      // you'd often call a server or save the information in a database.
+      // set loading to true
+      setState(() {
+        _isLoading = true;
+      });
 
-    // signup user using our auth method
-    String res = await AuthMethods().loginUser(
-      email: _emailController.text,
-      password: _passwordController.text,
-    );
-
-    setState(() {
-      _isLoading = false;
-    });
-    // if string returned is success, user has been created
-    if (res == "Success") {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),
-          ),
-        ),
+      // signup user using our auth method
+      String res = await AuthMethods().loginUser(
+        email: _emailController.text,
+        password: _passwordController.text,
       );
-    } else {
-      // show the error
-      showSnackBar(context, res);
+
+      setState(() {
+        _isLoading = false;
+      });
+      // if string returned is success, user has been created
+      if (res == "Success") {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout(),
+            ),
+          ),
+        );
+      } else {
+        // show the error
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: CustomSnackBarContent(errorText: "Your credentials are not matching."),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          )
+        );
+      }
     }
   }
-  Widget _buildButton(displayTxt) {
+  Widget _buildButton(displayTxt, formKey) {
     return Column(
       children: [
         const SizedBox(height: 10),
         InkWell(
-          onTap: () => loginUser(),
+          onTap: () => loginUser(formKey),
           child: Container(
             width: double.infinity,
             alignment: Alignment.center,

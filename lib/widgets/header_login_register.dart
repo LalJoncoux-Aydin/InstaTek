@@ -13,7 +13,7 @@ class HeaderLoginRegister extends StatelessWidget {
           'assets/instatek_logo.svg',
           height: 60,
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 30),
       ],
     );
   }
