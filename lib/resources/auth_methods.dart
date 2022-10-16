@@ -12,8 +12,7 @@ class AuthMethods {
   Future<model.User> getUserDetails() async {
     User currentUser = _auth.currentUser!;
 
-    DocumentSnapshot documentSnapshot =
-        await _firestore.collection('users').doc(currentUser.uid).get();
+    DocumentSnapshot documentSnapshot = await _firestore.collection('users').doc(currentUser.uid).get();
 
     return model.User.fromSnap(documentSnapshot);
   }
@@ -62,22 +61,22 @@ class AuthMethods {
       }
       else if (email.isNotEmpty && password.isNotEmpty && username.isNotEmpty && bio.isNotEmpty && profilePicture != null) {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-        String photoUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
+        String? photoUrl;
+        if (profilePicture != null) {
+          photoUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
+        }
 
         model.User user = model.User(
           username: username,
           uid: cred.user!.uid,
-          photoUrl: photoUrl,
+          photoUrl: photoUrl ?? '',
           email: email,
           bio: bio,
           followers: [],
           following: [],
         );
 
-        await _firestore
-            .collection("users")
-            .doc(cred.user!.uid)
-            .set(user.toJson());
+        await _firestore.collection("users").doc(cred.user!.uid).set(user.toJson());
 
         res = "Success";
       } else {
