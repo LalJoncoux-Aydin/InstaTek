@@ -40,10 +40,6 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'InstaTek',
-          theme: ThemeData.dark().copyWith(
-            scaffoldBackgroundColor: mobileBackgroundColor,
-          ),
-          // home: ResponsiveLayout(mobileScreenLayout: MobileScreenLayout(), webScreenLayout: WebScreenLayout()),
           home: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
