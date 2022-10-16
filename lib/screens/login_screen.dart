@@ -14,7 +14,6 @@ import '../responsive/responsive_layout_screen.dart';
 import '../responsive/web_screen_layout.dart';
 import '../utils/utils.dart';
 import '../widgets/header_login_register.dart';
-import '../widgets/text_field_input.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -27,6 +26,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
+  late String email = "";
+  late String password = "";
+  late String errorText = "";
+  final formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -44,12 +47,72 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
   }
 
+  void updateEmail(newMail) {
+    setState(() {
+      email = newMail;
+    });
+  }
+
+  void updatePassword(newPassword) {
+    setState(() {
+      password = newPassword;
+    });
+  }
+
+  void updateInput(value, typeInput) {
+    if (typeInput == 1) {
+      updateEmail(value);
+    } else if (typeInput == 2) {
+      updatePassword(value);
+    }
+  }
+
+  Column buildTextFormField(hintText, textEditingController, isPass, isValid, typeInput) {
+    final inputBorder = OutlineInputBorder(
+        borderSide: Divider.createBorderSide(context, color: blueColor)
+    );
+
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        TextFormField(
+          validator: (value) {
+            return isValid;
+          },
+          controller: textEditingController,
+          onChanged: (changedText) => updateInput(changedText, typeInput),
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: const TextStyle(fontSize: 15, color: blueColor),
+            border: inputBorder,
+            focusedBorder: inputBorder,
+            enabledBorder: inputBorder,
+            filled: true,
+            contentPadding: const EdgeInsets.all(20),
+          ),
+          keyboardType: TextInputType.text,
+          obscureText: isPass,
+        ),
+        const SizedBox(height: 10),
+      ],
+    );
+  }
+
+  Column buildErrorText(value) {
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        Text(value),
+        const SizedBox(height: 10),
+      ],
+    );
+  }
+
   Widget _buildBodyContainer() {
     // For the spacing
     var size = MediaQuery
         .of(context)
         .size;
-    final formKey = GlobalKey<FormState>();
 
     return Form(
       key: formKey,
@@ -60,8 +123,9 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Flexible(flex: 2, child: Container()),
             const HeaderLoginRegister(),
-            TextFieldInput(hintText: 'Enter your email', textEditingController: _emailController, isPass: false),
-            TextFieldInput(hintText: 'Enter your password', textEditingController: _passwordController, isPass: false),
+            buildTextFormField('Enter your email', _emailController, false, emailIsValid(email), 1),
+            buildTextFormField('Enter your password', _passwordController, true, passwordIsValid(password), 2),
+            buildErrorText(errorText),
             _buildButton('Login', formKey),
             Flexible(flex: 2, child: Container()),
             _buildNavLink("Don't have an account ?", "Register"),
@@ -71,8 +135,27 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  String? emailIsValid(value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter some text';
+    }
+    if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
+      return 'Please enter an email in the correct format';
+    }
+    return null;
+  }
+
+  String? passwordIsValid(value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter some text';
+    }
+    return null;
+  }
+
   void loginUser(formKey) async {
     if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+
       // If the form is valid, display a snackbar. In the real world,
       // you'd often call a server or save the information in a database.
       // set loading to true
@@ -100,6 +183,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         );
       } else {
+        setState(() {
+          errorText = "Your credentials are not matching.";
+        });
         // show the error
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -110,6 +196,10 @@ class _LoginScreenState extends State<LoginScreen> {
           )
         );
       }
+    } else {
+      setState(() {
+        errorText = "";
+      });
     }
   }
   Widget _buildButton(displayTxt, formKey) {
