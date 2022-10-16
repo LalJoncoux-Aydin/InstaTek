@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:instatek/models/user.dart' as model;
@@ -18,6 +18,36 @@ class AuthMethods {
     return model.User.fromSnap(documentSnapshot);
   }
 
+  Future<bool> usernameDoesntExist(username) async {
+    QuerySnapshot querySnapshot = await _firestore.collection('users').get();
+
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    for (var user in allData) {
+      String userStr = user.toString();
+      String usernameOffset = userStr.substring(userStr.indexOf("username: "));
+      String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1, usernameOffset.indexOf(",") == -1 ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","));
+      if (username == usernameOld) {
+        return true;
+      }
+    }
+    return false;
+  }
+  Future<bool> emailDoesntExist(email) async {
+    QuerySnapshot querySnapshot = await _firestore.collection('users').get();
+
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    for (var user in allData) {
+      String userStr = user.toString();
+      String usernameOffset = userStr.substring(userStr.indexOf("email: "));
+      String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1, usernameOffset.indexOf(",") == -1 ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","));
+      if (email == usernameOld) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
   Future<String> registerUser({
     required String email,
     required String password,
@@ -27,7 +57,10 @@ class AuthMethods {
   }) async {
     String res = "Internal unknown error.";
     try {
-      if (email.isNotEmpty && password.isNotEmpty && username.isNotEmpty && bio.isNotEmpty && profilePicture != null) {
+      if (await usernameDoesntExist(username)) {
+        return "username-already-in-use";
+      }
+      else if (email.isNotEmpty && password.isNotEmpty && username.isNotEmpty && bio.isNotEmpty && profilePicture != null) {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
         String photoUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
 
@@ -51,15 +84,7 @@ class AuthMethods {
         res = "Please enter all the fields";
       }
     } on FirebaseAuthException catch(err) {
-      if (err.code == 'invalid-email') {
-        return "Email format is invalid.";
-      }
-      if (err.code == 'weak-password') {
-        return "Password should be at least 6 characters.";
-      }
-      if (err.code == 'email-already-in-use') {
-        return "Email address is already in use by another account.";
-      }
+      res = err.code;
     } catch (err) {
       res = err.toString();
     }
@@ -82,9 +107,7 @@ class AuthMethods {
         res = "Please enter all the fields";
       }
     } on FirebaseAuthException catch(err) {
-      if (err.code == 'invalid-email') {
-        return "Email format is invalid.";
-      }
+      res = err.code;
     } catch (err) {
       res = err.toString();
     }

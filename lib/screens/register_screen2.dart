@@ -107,19 +107,22 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
         .of(context)
         .size;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 60),
-      width: double.infinity,
-      child: Column(
-        children: [
-          const HeaderLoginRegister(),
-          _buildImageInput(),
-          buildTextFormField('Enter your username', _usernameController, false, usernameIsValid(username), 1),
-          buildTextFormField('Enter your bio', _bioController, false, null, 0),
-          buildErrorText(errorText),
-          _buildButton('Register'),
-        ],
-      ),
+    return Form(
+      key: formKey,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 60),
+        width: double.infinity,
+        child: Column(
+          children: [
+            const HeaderLoginRegister(),
+            _buildImageInput(),
+            buildTextFormField('Enter your username', _usernameController, false, usernameIsValid(username), 1),
+            buildTextFormField('Enter your bio', _bioController, false, null, 0),
+            buildErrorText(errorText),
+            _buildButton('Register', formKey),
+          ],
+        ),
+      )
     );
   }
 
@@ -173,10 +176,8 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
     );
   }
 
-  void registerUser() async {
+  void registerUser(formKey) async {
     if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
-
       // set loading to true
       setState(() {
         _isLoading = true;
@@ -194,6 +195,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
       setState(() {
         _isLoading = false;
       });
+      print(res);
       // if string returned is success, user has been created
       if (res == "Success") {
         Navigator.of(context).pushReplacement(
@@ -205,9 +207,14 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
           ),
         );
       }
+      else if (res == 'username-already-in-use') {
+        setState(() {
+          errorText = "Username is already in use by another account";
+        });
+      }
       else {
         setState(() {
-          errorText = "A server error happened";
+          errorText = "A server error happened : $res";
         });
       }
     } else {
@@ -216,12 +223,12 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
       });
     }
   }
-  Widget _buildButton(displayTxt) {
+  Widget _buildButton(displayTxt, formKey) {
     return Column(
       children: [
         const SizedBox(height: 25),
         InkWell(
-          onTap: () => registerUser(),
+          onTap: () => registerUser(formKey),
           child: Container(
             width: double.infinity,
             alignment: Alignment.center,

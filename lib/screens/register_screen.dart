@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/screens/register_screen2.dart';
 import 'package:instatek/utils/colors.dart';
+import '../resources/auth_methods.dart';
 import '../widgets/header_login_register.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -19,6 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late String email = "";
   late String password1 = "";
   late String password2 = "";
+  late String errorText = "";
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -97,11 +99,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  Column buildErrorText(value) {
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        Text(value),
+        const SizedBox(height: 10),
+      ],
+    );
+  }
+
   Widget _buildBodyContainer() {
     // For the spacing
     var size = MediaQuery
         .of(context)
         .size;
+
 
     return Form(
       key: formKey,
@@ -115,6 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             buildTextFormField('Enter your email', _emailController, false, emailIsValid(email), 1),
             buildTextFormField('Enter your password', _passwordController, true, passwordIsValid(password1), 2),
             buildTextFormField('Enter your password again', _passwordController2, true, password2IsValid(password1, password2), 3),
+            buildErrorText(errorText),
             _buildButton('Register', formKey),
             Flexible(flex: 2, child: Container()),
             _buildNavLink("Already have an account ?", "Login"),
@@ -130,7 +144,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
       return 'Please enter an email in the correct format';
     }
-    // If email is not in db
     return null;
   }
 
@@ -154,7 +167,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void nextStepRegister(formKey) async {
     if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
+      if (await AuthMethods().emailDoesntExist(_emailController.text)) {
+        setState(() {
+          errorText = "Email is already in use by another account";
+        });
+        return;
+      }
+
       // Go to second page of Register
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(

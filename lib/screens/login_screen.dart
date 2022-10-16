@@ -154,7 +154,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void loginUser(formKey) async {
     if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
 
       // If the form is valid, display a snackbar. In the real world,
       // you'd often call a server or save the information in a database.
@@ -182,19 +181,25 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         );
-      } else {
+      }
+      else if (res == "user-not-found" || res == "wrong-password") {
         setState(() {
           errorText = "Your credentials are not matching.";
         });
+      }
+      else {
+        setState(() {
+          errorText = "A server error happened : $res";
+        });
         // show the error
-        ScaffoldMessenger.of(context).showSnackBar(
+/*        ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: CustomSnackBarContent(errorText: "Your credentials are not matching."),
             behavior: SnackBarBehavior.floating,
             backgroundColor: Colors.transparent,
             elevation: 0,
           )
-        );
+        );*/
       }
     } else {
       setState(() {
