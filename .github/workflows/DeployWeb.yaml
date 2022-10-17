@@ -21,7 +21,3 @@ jobs:
           port: 22
           script: |
             cd ~/InstaTek
-            git checkout prod
-            git pull
-            docker build -t instatekweb .
-            docker run -d -p 8080:80 --name instatek instatekweb
