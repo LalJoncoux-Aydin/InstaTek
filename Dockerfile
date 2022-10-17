@@ -26,3 +26,4 @@ COPY . /app/
 WORKDIR /app/
 RUN flutter build web
 
+EXPOSE 3000
