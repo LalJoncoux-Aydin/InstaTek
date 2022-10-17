@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Flexible(flex: 2, child: Container()),
             const HeaderLoginRegister(),
-            buildTextFormField('Enter your email', _emailController, false, emailIsValid(email), 1),
+            buildTextFormField('Enter your email prod', _emailController, false, emailIsValid(email), 1),
             buildTextFormField('Enter your password', _passwordController, true, passwordIsValid(password), 2),
             buildErrorText(errorText),
             _buildButton('Login', formKey),
