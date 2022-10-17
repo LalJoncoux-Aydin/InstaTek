@@ -23,5 +23,7 @@ jobs:
             cd ~/InstaTek
             git checkout prod
             git pull
+            docker stop instatek
+            docker rm instatek
             docker build -t instatekweb .
             docker run -d -p 8080:80 --name instatek instatekweb
