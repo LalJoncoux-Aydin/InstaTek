@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instatek/models/user.dart';
-import 'package:instatek/resources/auth_methods.dart';
+import 'package:instatek/methods//auth_methods.dart';
 
 class UserProvider with ChangeNotifier {
   late User _user;
