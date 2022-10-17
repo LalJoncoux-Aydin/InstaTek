@@ -1,17 +1,18 @@
+import 'dart:html';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:instatek/resources/auth_methods.dart';
+import 'package:instatek/methods/auth_methods.dart';
 import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/screens/register_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instatek/widgets/custom_snack_bar.dart';
 
-import '../responsive/mobile_screen_layout.dart';
-import '../responsive/responsive_layout_screen.dart';
-import '../responsive/web_screen_layout.dart';
+import '../home/mobile_screen_layout.dart';
+import '../home/responsive_layout_screen.dart';
+import '../home/web_screen_layout.dart';
 import '../utils/utils.dart';
 import '../widgets/header_login_register.dart';
 
@@ -123,11 +124,12 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Flexible(flex: 2, child: Container()),
             const HeaderLoginRegister(),
-            buildTextFormField('Enter your email', _emailController, false, emailIsValid(email), 1),
+            buildTextFormField('Enter your email prod', _emailController, false, emailIsValid(email), 1),
             buildTextFormField('Enter your password', _passwordController, true, passwordIsValid(password), 2),
             buildErrorText(errorText),
             _buildButton('Login', formKey),
             Flexible(flex: 2, child: Container()),
+            _buildDownloadApk(),
             _buildNavLink("Don't have an account ?", "Register"),
           ],
         ),
@@ -226,6 +228,35 @@ class _LoginScreenState extends State<LoginScreen> {
             child: !_isLoading ? Text(displayTxt, style: const TextStyle(color: whiteColor)) : const CircularProgressIndicator(color: primaryColor),
           ),
         ),
+      ],
+    );
+  }
+
+  downloadFile(url) {
+    AnchorElement anchorElement = AnchorElement(href: url);
+    anchorElement.download = "Instatek-V1.apk";
+    anchorElement.click();
+  }
+
+  Widget _buildDownloadApk() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 8),
+              child: const Text("Donwload Apk", style: TextStyle(color: blueColor)),
+            ),
+            GestureDetector(
+                onTap: () => downloadFile("/build/app/outputs/flutter-apk/app-release.apk"),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 25),
+                  child: const Text("APK", style: TextStyle(fontWeight: FontWeight.bold, color: blueColor)),
+                ))
+          ],
+        ),
+        const SizedBox(height: 24),
       ],
     );
   }

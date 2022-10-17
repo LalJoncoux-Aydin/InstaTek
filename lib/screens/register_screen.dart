@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/screens/register_screen2.dart';
 import 'package:instatek/utils/colors.dart';
-import '../resources/auth_methods.dart';
+import '../methods/auth_methods.dart';
 import '../widgets/header_login_register.dart';
 
 class RegisterScreen extends StatefulWidget {

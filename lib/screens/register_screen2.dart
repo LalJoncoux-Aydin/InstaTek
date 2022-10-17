@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instatek/providers/user_provider.dart';
-import 'package:instatek/resources/auth_methods.dart';
 import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instatek/widgets/header_login_register.dart';
 
-import '../responsive/mobile_screen_layout.dart';
-import '../responsive/responsive_layout_screen.dart';
-import '../responsive/web_screen_layout.dart';
+import '../methods/auth_methods.dart';
+import '../home/mobile_screen_layout.dart';
+import '../home/responsive_layout_screen.dart';
+import '../home/web_screen_layout.dart';
 import '../utils/utils.dart';
 
 class RegisterScreen2 extends StatefulWidget {
