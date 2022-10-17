@@ -196,7 +196,6 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
       setState(() {
         _isLoading = false;
       });
-      print(res);
       // if string returned is success, user has been created
       if (res == "Success") {
         Navigator.of(context).pushReplacement(

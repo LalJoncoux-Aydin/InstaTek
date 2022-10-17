@@ -16,20 +16,24 @@ class WebScreenLayout extends StatefulWidget {
 
 class _WebScreenLayoutState extends State<WebScreenLayout> with SingleTickerProviderStateMixin {
   String username = "";
+  late model.User myUser;
   late UserProvider userProvider;
 
   @override
   void initState() {
-    addData();
     super.initState();
+    setupUser();
   }
 
-  addData() async {
+  setupUser() async {
     userProvider = Provider.of(context, listen: false);
     await userProvider.refreshUser();
-    setState(() {
-      username = userProvider.getUsername;
-    });
+    if (userProvider.isUser == true) {
+      setState(() {
+        myUser = userProvider.getUser;
+        username = myUser.username;
+      });
+    }
   }
 
   @override

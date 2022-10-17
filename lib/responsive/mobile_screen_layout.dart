@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/utils/global_variables.dart';
+import 'package:instatek/providers/user_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:instatek/models/user.dart' as model;
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
@@ -12,16 +15,29 @@ class MobileScreenLayout extends StatefulWidget {
 
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
 //  late AnimationController _controller;
-//  String username = "";
+  String username = "";
   int _page = 0;
   late PageController pageController;
+  late UserProvider userProvider;
+  late model.User myUser;
 
   @override
   void initState() {
     super.initState();
     pageController = PageController();
-    // getUsername();
+    setupUser();
     // _controller = AnimationController(vsync: this);
+  }
+
+  setupUser() async {
+    userProvider = Provider.of(context, listen: false);
+    await userProvider.refreshUser();
+    if (userProvider.isUser == true) {
+      setState(() {
+        myUser = userProvider.getUser;
+        username = myUser.username;
+      });
+    }
   }
 
   @override
@@ -40,12 +56,6 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
     });
   }
 
-  /*void getUsername() async {
-    DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
-    setState(() {
-      username = (snap.data() as Map<String, dynamic>)['username']!;
-    });
-  }*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
