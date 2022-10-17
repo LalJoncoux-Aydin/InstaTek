@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -123,11 +124,12 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Flexible(flex: 2, child: Container()),
             const HeaderLoginRegister(),
-            buildTextFormField('Enter your email', _emailController, false, emailIsValid(email), 1),
+            buildTextFormField('Enter your email prod', _emailController, false, emailIsValid(email), 1),
             buildTextFormField('Enter your password', _passwordController, true, passwordIsValid(password), 2),
             buildErrorText(errorText),
             _buildButton('Login', formKey),
             Flexible(flex: 2, child: Container()),
+            _buildDownloadApk(),
             _buildNavLink("Don't have an account ?", "Register"),
           ],
         ),
@@ -226,6 +228,35 @@ class _LoginScreenState extends State<LoginScreen> {
             child: !_isLoading ? Text(displayTxt, style: const TextStyle(color: whiteColor)) : const CircularProgressIndicator(color: primaryColor),
           ),
         ),
+      ],
+    );
+  }
+
+  downloadFile(url) {
+    AnchorElement anchorElement = AnchorElement(href: url);
+    anchorElement.download = "Instatek-V1.apk";
+    anchorElement.click();
+  }
+
+  Widget _buildDownloadApk() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 8),
+              child: const Text("Donwload Apk", style: TextStyle(color: blueColor)),
+            ),
+            GestureDetector(
+                onTap: () => downloadFile("/build/app/outputs/flutter-apk/app-release.apk"),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 25),
+                  child: const Text("APK", style: TextStyle(fontWeight: FontWeight.bold, color: blueColor)),
+                ))
+          ],
+        ),
+        const SizedBox(height: 24),
       ],
     );
   }
