@@ -1,0 +1,27 @@
+name: Deploy Web Docker on VPS
+
+on:
+  push:
+    branches:
+      - prod
+  pull_request:
+    branches:
+      - prod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          script: |
+            cd ~/InstaTek
+            git checkout prod
+            git pull
+            docker build -t instatekweb .
+            docker run -d -p 8080:80 --name instatek instatekweb
