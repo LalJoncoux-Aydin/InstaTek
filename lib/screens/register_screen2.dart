@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/resources/auth_methods.dart';
 import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/utils/colors.dart';

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:instatek/providers/user_provider.dart';
+import 'package:instatek/resources/auth_methods.dart';
 import 'package:provider/provider.dart';
 import 'package:instatek/models/user.dart' as model;
 
@@ -15,17 +16,19 @@ class WebScreenLayout extends StatefulWidget {
 
 class _WebScreenLayoutState extends State<WebScreenLayout> with SingleTickerProviderStateMixin {
   String username = "";
+  late UserProvider userProvider;
 
   @override
   void initState() {
+    addData();
     super.initState();
-    getUsername();
   }
 
-  void getUsername() async {
-    DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
+  addData() async {
+    userProvider = Provider.of(context, listen: false);
+    await userProvider.refreshUser();
     setState(() {
-      username = (snap.data() as Map<String, dynamic>)['username']!;
+      username = userProvider.getUsername;
     });
   }
 
@@ -36,11 +39,9 @@ class _WebScreenLayoutState extends State<WebScreenLayout> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    model.User user = Provider.of<UserProvider>(context).getUser;
-
     return Scaffold(
       body: Center(
-        child: Text(user.username),
+        child: Text(username),
       ),
     );
   }
