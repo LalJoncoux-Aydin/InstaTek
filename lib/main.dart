@@ -2,14 +2,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:instatek/providers/user_provider.dart';
-import 'package:instatek/responsive/mobile_screen_layout.dart';
-import 'package:instatek/responsive/responsive_layout_screen.dart';
-import 'package:instatek/responsive/web_screen_layout.dart';
 import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/screens/register_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+
+import 'home/mobile_screen_layout.dart';
+import 'home/responsive_layout_screen.dart';
+import 'home/web_screen_layout.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
