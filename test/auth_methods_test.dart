@@ -1,22 +1,26 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:instatek/methods/auth_methods.dart';
-import 'package:instatek/screens/login_screen.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+import 'package:flutter/lib/main.dart' as app;
 
-  runTestAuthentification();
-}
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-void runTestAuthentification() async {
-  bool result = await AuthMethods().usernameDoesntExist("tutu458");
+  group('end-to-end test', () {
+    testWidgets('go to the list and detail views', (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
 
-  test('This username shouldnt exist.', () {
-    expect(result, true);
+      expect(find.text('Sample Items'), findsOneWidget);
+      expect(find.textContaining('SampleItem'), findsNWidgets(3));
+
+      final Finder sampleItem = find.text('SampleItem 1');
+
+      await tester.tap(sampleItem);
+
+      await tester.pumpAndSettle();
+
+      expect(find.text('Item Details'), findsOneWidget);
+    });
   });
 }
