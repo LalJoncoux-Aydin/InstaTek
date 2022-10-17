@@ -26,4 +26,5 @@ COPY . /app/
 WORKDIR /app/
 RUN flutter build web
 
-EXPOSE 3000
+FROM nginx:1.21.1-alpine
+COPY --from=build-env /app/build/web /usr/share/nginx/html
