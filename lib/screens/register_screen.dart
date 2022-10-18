@@ -99,6 +99,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+
+  Column buildPasswordStrength() {
+    double strength = 0.0;
+    String type = "";
+
+    if (RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(password1) == true) {
+      //return 'Please enter a password with 8 characters length - 1 letters in Upper Case - 1 Special Character (!@#\$&*) - 1 numerals (0-9)';}
+      strength = 3 / 3;
+      type = "Your password is strong.";
+    }
+    if (RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z]).{8,}$').hasMatch(password1) == false) {
+      strength = 2 / 3;
+      type = "Your password is not strong enough.";
+    }
+    if (RegExp(r'^.{8,}$').hasMatch(password1) == false) {
+      strength = 1 / 3;
+      type = "Your password is not long enough.";
+    }
+    if (password1 == null || password1.isEmpty) {
+      strength = 0.0;
+      type = "";
+    }
+
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        Container(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(type),
+          ),
+        ),
+        const SizedBox(height: 10),
+        LinearProgressIndicator(
+          value: strength,
+          backgroundColor: Colors.grey[300],
+          color: strength <= 1 / 3
+              ? Colors.red
+              : strength == 2 / 3
+              ? Colors.yellow
+              : strength == 3 / 3
+              ? Colors.green
+              : Colors.transparent,
+          minHeight: 5,
+        ),
+        const SizedBox(height: 15),
+      ],
+    );
+  }
+
   Column buildErrorText(value) {
     return Column(
       children: [
@@ -127,6 +177,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const HeaderLoginRegister(),
             buildTextFormField('Enter your email', _emailController, false, emailIsValid(email), 1),
             buildTextFormField('Enter your password', _passwordController, true, passwordIsValid(password1), 2),
+            buildPasswordStrength(),
             buildTextFormField('Enter your password again', _passwordController2, true, password2IsValid(password1, password2), 3),
             buildErrorText(errorText),
             _buildButton('Register', formKey),
@@ -146,7 +197,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
     return null;
   }
-
   String? passwordIsValid(value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
@@ -155,7 +205,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
     return null;
   }
-
   String? password2IsValid(pass1, pass2) {
     if (pass2 == null || pass2.isEmpty) {
       return 'Please enter some text';
@@ -186,7 +235,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
     }
   }
-
   Widget _buildButton(displayTxt, formKey) {
     return Column(
       children: [
