@@ -14,6 +14,64 @@ Users can comment and like your post.
 You can search for a user’s name, and access their profile with all their previous posts.
 A user can only edit and delete his own post and comments below, except the admin which has this right for all users.
 
+# Register
+<p align="center">
+  <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-27-02.png" width="450px"/>
+</p>
+
+# Login
+<p align="center">
+  <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-26-45.png" width="450px"/>
+</p>
+
+
+# Feed
+<p align="center">
+  <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-27-19.png" width="450px"/>
+</p>
+
+# Comments
+<p align="center">
+  <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-27-33.png" width="450px"/>
+</p>
+
+# Upload
+<p align="center">
+  <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-27-58.png" width="450px"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-28-09.png" width="450px"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-28-31.png" width="450px"/>
+</p>
+
+# Post
+<p align="center">
+  <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-28-20.png" width="450px"/>
+</p>
+
+# Search User
+<p align="center">
+  <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-27-44.png" width="450px"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-28-40.png" width="450px"/>
+</p>
+
+# Profile
+
+<p align="center">
+  <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-28-50.png" width="450px"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-29-01.png" width="450px"/>
+</p>
+
 # Flutter
 
 <p align="center">
