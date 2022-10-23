@@ -65,3 +65,16 @@ flutter run
 ```
 
 ## Repository structure
+
+# Norme Commit
+
+  ### [ADD] -- if you add files, features, and so on
+  ### [FIX] -- if you were working on a bug or any form of default that you corrected 
+  ### [DEL] -- if you removed files, features, assets, and so on
+  ### [UP] -- if you change something without adding any features or content
+
+# Auteurs
+
+* **Camille Sayous** _alias_ [@CamilleSA](https://github.com/CamilleSA)
+* **Lal Joncoux-Aydin** _alias_ [@LalJoncoux-Aydin](https://github.com/LalJoncoux-Aydin)
+* **Oscar Rénier** _alias_ [@racso-dev](https://github.com/racso-dev)
