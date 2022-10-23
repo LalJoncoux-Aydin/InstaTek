@@ -16,21 +16,21 @@ class AddPostScreen extends StatefulWidget {
 
 class _AddPostScreenState extends State<AddPostScreen> {
   Uint8List? _file;
-  final TextEditingController _descriptionController = TextEditingController();
+  //final TextEditingController _descriptionController = TextEditingController();
 
-  _selectImage(BuildContext context) async {
+  Future<Future> _selectImage(BuildContext context) async {
     return showDialog(
         context: context,
-        builder: (context) {
+        builder: (BuildContext context) {
           return SimpleDialog(
             title: const Text('Create a Post'),
-            children: [
+            children: <Widget>[
               SimpleDialogOption(
                 padding: const EdgeInsets.all(20),
                 child: const Text('Take a photo'),
                 onPressed: () async {
                   Navigator.of(context).pop();
-                  Uint8List file = await pickImage(
+                  final Uint8List file = await pickImage(
                     ImageSource.camera,
                   );
                   setState(() {
@@ -43,7 +43,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 child: const Text('Choose from gallery'),
                 onPressed: () async {
                   Navigator.of(context).pop();
-                  Uint8List file = await pickImage(
+                  final Uint8List file = await pickImage(
                     ImageSource.gallery,
                   );
                   setState(() {
@@ -60,7 +60,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
               ),
             ],
           );
-        });
+        },);
   }
 
   @override
@@ -71,7 +71,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             child: IconButton(
             icon: const Icon(Icons.upload),
             onPressed: () => _selectImage(context),
-          ))
+          ),)
         : Scaffold(
             appBar: AppBar(
                 backgroundColor: mobileBackgroundColor,
@@ -81,7 +81,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 ),
                 title: const Text('Post to'),
                 centerTitle: false,
-                actions: [
+                actions: <Widget>[
                   TextButton(
                       onPressed: () {},
                       child: const Text('Post',
@@ -89,14 +89,14 @@ class _AddPostScreenState extends State<AddPostScreen> {
                             color: Colors.blueAccent,
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
-                          )))
-                ]),
+                          ),),)
+                ],),
             body: Column(
-              children: [
+              children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     CircleAvatar(
                       backgroundImage: NetworkImage(
                         user.photoUrl,
@@ -104,8 +104,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.45,
-                      child: TextField(
-                        decoration: const InputDecoration(
+                      child: const TextField(
+                        decoration: InputDecoration(
                           hintText: 'Write a caption...',
                           border: InputBorder.none,
                         ),
@@ -123,13 +123,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
                           image: MemoryImage(_file!),
                           fit: BoxFit.fill,
                           alignment: FractionalOffset.topCenter,
-                        ))),
+                        ),),),
                       ),
                     ),
                     const Divider(),
                   ],
                 )
               ],
-            ));
+            ),);
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:instatek/models/user.dart' as model;
+import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/utils/global_variables.dart';
-import 'package:instatek/providers/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:instatek/models/user.dart' as model;
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
@@ -60,10 +60,10 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        children: homeScreenItems,
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         onPageChanged: onPageChanged,
+        children: homeScreenItems,
       ),
       bottomNavigationBar: CupertinoTabBar(
         backgroundColor: mobileBackgroundColor,
@@ -82,14 +82,14 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
                 color: (_page == 1) ? primaryColor : secondaryColor,
               ),
               label: '',
-              backgroundColor: primaryColor),
+              backgroundColor: primaryColor,),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.add_circle,
                 color: (_page == 2) ? primaryColor : secondaryColor,
               ),
               label: '',
-              backgroundColor: primaryColor),
+              backgroundColor: primaryColor,),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.favorite,

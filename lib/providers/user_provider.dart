@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:instatek/methods/auth_methods.dart';
 import 'package:instatek/models/user.dart';
-import 'package:instatek/methods//auth_methods.dart';
 
 class UserProvider with ChangeNotifier {
   late User _user;
@@ -11,7 +11,7 @@ class UserProvider with ChangeNotifier {
   String get getUsername => _user.username;
 
   Future<void> refreshUser() async {
-    User? user = await _authMethods.getUserDetails();
+    final User? user = await _authMethods.getUserDetails();
     if (user != null) {
       _user = user;
       notifyListeners();

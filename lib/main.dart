@@ -1,12 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/screens/login_screen.dart';
-import 'package:instatek/screens/register_screen.dart';
+//import 'package:instatek/screens/register_screen.dart';
 import 'package:instatek/utils/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 import 'home/mobile_screen_layout.dart';
 import 'home/responsive_layout_screen.dart';
@@ -21,7 +22,7 @@ void main() async {
             appId: '1:254429523809:web:160dbab7037581ac0d5f20',
             messagingSenderId: '254429523809',
             projectId: 'instatek-6fa75',
-            storageBucket: 'instatek-6fa75.appspot.com'));
+            storageBucket: 'instatek-6fa75.appspot.com',),);
   } else {
     await Firebase.initializeApp();
   }
@@ -35,15 +36,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider(),)
+      providers: <SingleChildWidget>[
+        ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider(),)
       ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'InstaTek',
-          home: StreamBuilder(
+          home: StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
+            builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
               if (snapshot.connectionState == ConnectionState.active) {
                 if (snapshot.hasData) {
                   return const ResponsiveLayout(
@@ -55,16 +56,16 @@ class MyApp extends StatelessWidget {
                 }
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
+                return Center(
                   child: CircularProgressIndicator(
                     color: primaryColor,
-                  )
+                  ),
                 );
               }
               return const LoginScreen();
             },
           ),
-        )
+        ),
     );
   }
 }

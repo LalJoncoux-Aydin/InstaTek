@@ -4,10 +4,10 @@ import 'package:instatek/utils/global_variables.dart';
 import 'package:provider/provider.dart';
 
 class ResponsiveLayout extends StatefulWidget {
+  const ResponsiveLayout({Key? key, required this.webScreenLayout, required this.mobileScreenLayout}) : super(key:key);
   final Widget webScreenLayout;
   final Widget mobileScreenLayout;
 
-  const ResponsiveLayout({Key? key, required this.webScreenLayout, required this.mobileScreenLayout}) : super(key:key);
 
   @override
   State<ResponsiveLayout> createState() => _ResponsiveLayoutState();
@@ -21,7 +21,7 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerPr
   }
 
   addData() async {
-    UserProvider userProvider = Provider.of(context, listen: false);
+    final UserProvider userProvider = Provider.of(context, listen: false);
     await userProvider.refreshUser();
   }
 
@@ -33,7 +33,7 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerPr
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context, constraints) {
+      builder: (BuildContext context, BoxConstraints constraints) {
         if (constraints.maxWidth > webScreenSize) {
           return widget.webScreenLayout;
         }

@@ -1,24 +1,23 @@
-import 'dart:typed_data';
+//import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:instatek/providers/user_provider.dart';
-import 'package:instatek/screens/login_screen.dart';
+//import 'package:instatek/providers/user_provider.dart';
+//import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/utils/colors.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+//import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instatek/widgets/header_login_register.dart';
-
-import '../methods/auth_methods.dart';
 import '../home/mobile_screen_layout.dart';
 import '../home/responsive_layout_screen.dart';
 import '../home/web_screen_layout.dart';
+import '../methods/auth_methods.dart';
 import '../utils/utils.dart';
 
 class RegisterScreen2 extends StatefulWidget {
+  const RegisterScreen2({Key? key, required this.emailController, required this.passwordController}) : super(key: key);
   final TextEditingController emailController;
   final TextEditingController passwordController;
-  const RegisterScreen2({Key? key, required this.emailController, required this.passwordController}) : super(key: key);
 
   @override
   State<RegisterScreen2> createState() => _RegisterScreenState2();
@@ -31,7 +30,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
   bool _isLoading = false;
   late String username = "";
   late String errorText = "";
-  final formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -45,39 +44,39 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
     return Scaffold(
         body: SafeArea(
             child: Container(
-                child: _buildBodyContainer())
-        ));
+                child: _buildBodyContainer(),),
+        ),);
   }
 
-  void updateUsername(newUsername) {
+  void updateUsername(dynamic newUsername) {
     setState(() {
       username = newUsername;
     });
   }
 
-  void updateInput(value, typeInput) {
+  void updateInput(dynamic value, dynamic typeInput) {
     if (typeInput == 1) {
       updateUsername(value);
     }
   }
 
-  Column buildTextFormField(hintText, textEditingController, isPass, isValid, typeInput) {
-    final inputBorder = OutlineInputBorder(
-        borderSide: Divider.createBorderSide(context, color: blueColor)
+  Column buildTextFormField(dynamic hintText, dynamic textEditingController, dynamic isPass, dynamic isValid, dynamic typeInput) {
+    final OutlineInputBorder inputBorder = OutlineInputBorder(
+        borderSide: Divider.createBorderSide(context, color: blueColor),
     );
 
     return Column(
-      children: [
+      children: <Widget>[
         const SizedBox(height: 10),
         TextFormField(
-          validator: (value) {
+          validator: (String? value) {
             return isValid;
           },
           controller: textEditingController,
-          onChanged: (changedText) => updateInput(changedText, typeInput),
+          onChanged: (String changedText) => updateInput(changedText, typeInput),
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: const TextStyle(fontSize: 15, color: blueColor),
+            hintStyle: TextStyle(fontSize: 15, color: blueColor),
             border: inputBorder,
             focusedBorder: inputBorder,
             enabledBorder: inputBorder,
@@ -92,9 +91,9 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
     );
   }
 
-  Column buildErrorText(value) {
+  Column buildErrorText(dynamic value) {
     return Column(
-      children: [
+      children: <Widget> [
         const SizedBox(height: 10),
         Text(value),
         const SizedBox(height: 10),
@@ -104,9 +103,9 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
 
   Widget _buildBodyContainer() {
     // For the spacing
-    var size = MediaQuery
+    /*var size = MediaQuery
         .of(context)
-        .size;
+        .size;*/
 
     return Form(
       key: formKey,
@@ -114,7 +113,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
         padding: const EdgeInsets.symmetric(horizontal: 60),
         width: double.infinity,
         child: Column(
-          children: [
+          children: <Widget>[
             const HeaderLoginRegister(),
             _buildImageInput(),
             buildTextFormField('Enter your username', _usernameController, false, usernameIsValid(username), 1),
@@ -123,11 +122,11 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
             _buildButton('Register', formKey),
           ],
         ),
-      )
+      ),
     );
   }
 
-  String? usernameIsValid(value) {
+  String? usernameIsValid(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
     }
@@ -136,28 +135,26 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
   }
 
   void selectImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
+   final Uint8List im = await pickImage(ImageSource.gallery);
     setState(() {
       _image = im;
     });
   }
   Widget _buildImageInput() {
     return Column(
-      children: [
+      children: <Widget>[
         // image input
         const SizedBox(height: 10),
         Stack(
-          children: [
-            _image != null
-                ? CircleAvatar(
+          children: <Widget>[
+            if (_image != null) CircleAvatar(
               radius: 64,
               backgroundImage: MemoryImage(_image!),
               backgroundColor: Colors.red,
-            )
-                : const CircleAvatar(
+            ) else const CircleAvatar(
               radius: 64,
               backgroundImage: NetworkImage(
-                  'https://cdn-icons-png.flaticon.com/512/847/847969.png'),
+                  'https://cdn-icons-png.flaticon.com/512/847/847969.png',),
               // backgroundColor: Colors.red,
             ),
             Positioned(
@@ -166,7 +163,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
               child: IconButton(
                 onPressed: selectImage,
                 icon: const Icon(
-                    Icons.add_a_photo
+                    Icons.add_a_photo,
                 ),
               ),
             )
@@ -177,7 +174,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
     );
   }
 
-  void registerUser(formKey) async {
+  void registerUser(dynamic formKey) async {
     if (formKey.currentState!.validate()) {
       // set loading to true
       setState(() {
@@ -185,7 +182,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
       });
 
       // signup user using our auth method
-      String res = await AuthMethods().registerUser(
+      final String res = await AuthMethods().registerUser(
         email: widget.emailController.text,
         password: widget.passwordController.text,
         username: _usernameController.text,
@@ -198,9 +195,9 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
       });
       // if string returned is success, user has been created
       if (res == "Success") {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const ResponsiveLayout(
+        await Navigator.of(context).pushReplacement(
+          MaterialPageRoute<dynamic>(
+            builder: (BuildContext context) => const ResponsiveLayout(
               mobileScreenLayout: MobileScreenLayout(),
               webScreenLayout: WebScreenLayout(),
             ),
@@ -223,9 +220,9 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
       });
     }
   }
-  Widget _buildButton(displayTxt, formKey) {
+  Widget _buildButton(dynamic displayTxt, dynamic formKey) {
     return Column(
-      children: [
+      children: <Widget>[
         const SizedBox(height: 25),
         InkWell(
           onTap: () => registerUser(formKey),
@@ -233,13 +230,13 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
             width: double.infinity,
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(vertical: 12),
-            decoration: const ShapeDecoration(
-              shape: RoundedRectangleBorder(
+            decoration: ShapeDecoration(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4),),
               ),
               color: blueColor,
             ),
-            child: !_isLoading ? Text(displayTxt, style: const TextStyle(color: whiteColor)) : const CircularProgressIndicator(color: primaryColor),
+            child: !_isLoading ? Text(displayTxt, style: TextStyle(color: whiteColor)) : CircularProgressIndicator(color: primaryColor),
           ),
         ),
       ],

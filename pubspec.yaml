@@ -39,9 +39,11 @@ dependencies:
   flutter_svg: ^1.1.5
   image_picker: ^0.8.5+3
   provider: ^6.0.3
+  universal_html: ^2.0.8
   uuid: ^3.0.6
 
 dev_dependencies:
+  blackfoot_flutter_lint: ^1.0.6
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter

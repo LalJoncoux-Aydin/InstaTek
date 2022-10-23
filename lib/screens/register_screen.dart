@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+//import 'package:flutter/services.dart';
 import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/screens/register_screen2.dart';
 import 'package:instatek/utils/colors.dart';
@@ -21,7 +21,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late String password1 = "";
   late String password2 = "";
   late String errorText = "";
-  final formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -36,29 +36,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
         body: SafeArea(
             child: Container(
-                child: _buildBodyContainer())
-        ));
+                child: _buildBodyContainer(),),
+        ),);
   }
 
-  void updateEmail(newMail) {
+  void updateEmail(dynamic newMail) {
     setState(() {
       email = newMail;
     });
   }
 
-  void updatePassword(newPassword) {
+  void updatePassword(dynamic newPassword) {
     setState(() {
       password1 = newPassword;
     });
   }
 
-  void updatePassword2(newPassword) {
+  void updatePassword2(dynamic newPassword) {
     setState(() {
       password2 = newPassword;
     });
   }
 
-  void updateInput(value, typeInput) {
+  void updateInput(dynamic value, dynamic typeInput) {
     if (typeInput == 1) {
       updateEmail(value);
     } else if (typeInput == 2) {
@@ -68,23 +68,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  Column buildTextFormField(hintText, textEditingController, isPass, isValid, typeInput) {
-    final inputBorder = OutlineInputBorder(
-        borderSide: Divider.createBorderSide(context, color: blueColor)
+  Column buildTextFormField(dynamic hintText, dynamic textEditingController, dynamic isPass, dynamic isValid, dynamic typeInput) {
+    final OutlineInputBorder inputBorder = OutlineInputBorder(
+        borderSide: Divider.createBorderSide(context, color: blueColor),
     );
 
     return Column(
-      children: [
+      children: <Widget>[
         const SizedBox(height: 10),
         TextFormField(
-          validator: (value) {
+          validator: (String? value) {
             return isValid;
           },
           controller: textEditingController,
-          onChanged: (changedText) => updateInput(changedText, typeInput),
+          onChanged: (String changedText) => updateInput(changedText, typeInput),
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: const TextStyle(fontSize: 15, color: blueColor),
+            hintStyle: TextStyle(fontSize: 15, color: blueColor),
             border: inputBorder,
             focusedBorder: inputBorder,
             enabledBorder: inputBorder,
@@ -99,9 +99,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Column buildErrorText(value) {
+  Column buildErrorText(dynamic value) {
     return Column(
-      children: [
+      children: <Widget>[
         const SizedBox(height: 10),
         Text(value),
         const SizedBox(height: 10),
@@ -111,9 +111,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget _buildBodyContainer() {
     // For the spacing
-    var size = MediaQuery
+    /*var size = MediaQuery
         .of(context)
-        .size;
+        .size;*/
 
 
     return Form(
@@ -122,7 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 60),
         width: double.infinity,
         child: Column(
-          children: [
+          children: <Widget>[
             Flexible(flex: 2, child: Container()),
             const HeaderLoginRegister(),
             buildTextFormField('Enter your email', _emailController, false, emailIsValid(email), 1),
@@ -134,11 +134,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
             _buildNavLink("Already have an account ?", "Login"),
           ],
         ),
-      )
+      ),
     );
   }
 
-  String? emailIsValid(value) {
+  String? emailIsValid(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
     } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
@@ -147,7 +147,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return null;
   }
 
-  String? passwordIsValid(value) {
+  String? passwordIsValid(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
     } else if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
@@ -156,7 +156,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return null;
   }
 
-  String? password2IsValid(pass1, pass2) {
+  String? password2IsValid(dynamic pass1, dynamic pass2) {
     if (pass2 == null || pass2.isEmpty) {
       return 'Please enter some text';
     } else if (pass1 != pass2) {
@@ -165,7 +165,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return null;
   }
 
-  void nextStepRegister(formKey) async {
+  void nextStepRegister(dynamic formKey) async {
     if (formKey.currentState!.validate()) {
       if (await AuthMethods().emailDoesntExist(_emailController.text)) {
         setState(() {
@@ -175,21 +175,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }
 
       // Go to second page of Register
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) =>
+      await Navigator.of(context).pushReplacement(
+        MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) =>
               RegisterScreen2(
                   emailController: _emailController,
-                  passwordController: _passwordController
+                  passwordController: _passwordController,
               ),
         ),
       );
     }
   }
 
-  Widget _buildButton(displayTxt, formKey) {
+  Widget _buildButton(dynamic displayTxt, dynamic formKey) {
     return Column(
-      children: [
+      children: <Widget>[
         const SizedBox(height: 25),
         InkWell(
           onTap: () => nextStepRegister(formKey),
@@ -197,13 +197,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
             width: double.infinity,
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(vertical: 12),
-            decoration: const ShapeDecoration(
-              shape: RoundedRectangleBorder(
+            decoration: ShapeDecoration(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4),),
               ),
               color: blueColor,
             ),
-            child: Text(displayTxt, style: const TextStyle(color: whiteColor)),
+            child: Text(displayTxt, style: TextStyle(color: whiteColor)),
           ),
         ),
       ],
@@ -211,25 +211,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void navigateToLogin() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginScreen()));
+    Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) => const LoginScreen()));
   }
-  Widget _buildNavLink(displayText1, displayText2) {
+  Widget _buildNavLink(dynamic displayText1, dynamic displayText2) {
     return Column(
-      children: [
+      children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Container(
               padding: const EdgeInsets.symmetric(vertical: 41, horizontal: 8),
-              child: Text(displayText1, style: const TextStyle(color: blueColor)),
+              child: Text(displayText1, style: TextStyle(color: blueColor)),
             ),
             GestureDetector(
                 onTap: navigateToLogin,
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(displayText2,
-                      style: const TextStyle(fontWeight: FontWeight.bold, color: blueColor)),
-                ))
+                      style: TextStyle(fontWeight: FontWeight.bold, color: blueColor),),
+                ),)
           ],
         )
       ],

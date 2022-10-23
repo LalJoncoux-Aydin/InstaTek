@@ -1,44 +1,44 @@
+//import 'dart:convert';
 import 'dart:typed_data';
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:instatek/models/user.dart' as model;
+//import 'package:flutter/cupertino.dart';
 import 'package:instatek/methods/storage_methods.dart';
+import 'package:instatek/models/user.dart' as model;
 
 class AuthMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<model.User?> getUserDetails() async {
-    User currentUser = _auth.currentUser!;
+    final User currentUser = _auth.currentUser!;
 
-    DocumentSnapshot documentSnapshot = await _firestore.collection('users').doc(currentUser.uid).get();
+    final DocumentSnapshot<Object?> documentSnapshot = await _firestore.collection('users').doc(currentUser.uid).get();
     return model.User.fromSnap(documentSnapshot);
   }
 
-  Future<bool> usernameDoesntExist(username) async {
-    QuerySnapshot querySnapshot = await _firestore.collection('users').get();
+  Future<bool> usernameDoesntExist(dynamic username) async {
+    final QuerySnapshot<Object?> querySnapshot = await _firestore.collection('users').get();
 
-    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-    for (var user in allData) {
-      String userStr = user.toString();
-      String usernameOffset = userStr.substring(userStr.indexOf("username: "));
-      String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1, usernameOffset.indexOf(",") == -1 ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","));
+    final List<Object?> allData = querySnapshot.docs.map((QueryDocumentSnapshot<Object?> doc) => doc.data()).toList();
+    for (Object? user in allData) {
+      final String userStr = user.toString();
+      final String usernameOffset = userStr.substring(userStr.indexOf("username: "));
+      final String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1, (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","));
       if (username == usernameOld) {
         return true;
       }
     }
     return false;
   }
-  Future<bool> emailDoesntExist(email) async {
-    QuerySnapshot querySnapshot = await _firestore.collection('users').get();
+  Future<bool> emailDoesntExist(dynamic email) async {
+    final QuerySnapshot<Object?> querySnapshot = await _firestore.collection('users').get();
 
-    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-    for (var user in allData) {
-      String userStr = user.toString();
-      String usernameOffset = userStr.substring(userStr.indexOf("email: "));
-      String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1, usernameOffset.indexOf(",") == -1 ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","));
+    final List<Object?> allData = querySnapshot.docs.map((QueryDocumentSnapshot<Object?> doc) => doc.data()).toList();
+    for (Object? user in allData) {
+      final String userStr = user.toString();
+      final String usernameOffset = userStr.substring(userStr.indexOf("email: "));
+      final String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1, (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","));
       if (email == usernameOld) {
         return true;
       }
@@ -60,20 +60,19 @@ class AuthMethods {
         return "username-already-in-use";
       }
       else if (email.isNotEmpty && password.isNotEmpty && username.isNotEmpty && bio.isNotEmpty && profilePicture != null) {
-        UserCredential cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+        final UserCredential cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
         String? photoUrl;
-        if (profilePicture != null) {
           photoUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
-        }
+        
 
-        model.User user = model.User(
+        final model.User user = model.User(
           username: username,
           uid: cred.user!.uid,
-          photoUrl: photoUrl ?? '',
+          photoUrl: photoUrl,
           email: email,
           bio: bio,
-          followers: [],
-          following: [],
+          followers: <dynamic>[],
+          following: <dynamic>[],
         );
 
         await _firestore.collection("users").doc(cred.user!.uid).set(user.toJson());

@@ -7,7 +7,7 @@ class HeaderLoginRegister extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: <Widget>[
         const SizedBox(height: 30),
         SvgPicture.asset(
           'assets/instatek_logo.svg',

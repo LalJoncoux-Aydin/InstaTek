@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:instatek/screens/add_post_screen.dart';
 import 'package:instatek/screens/feed_screen.dart';
 
-const webScreenSize = 600;
+int webScreenSize = 600;
 
-const homeScreenItems = [
-  FeedScreen(),
-  Text('search'),
-  AddPostScreen(),
-  Text('notif'),
-  Text('profile'),
+ List<Widget> homeScreenItems = <Widget>[
+  const FeedScreen(),
+  const Text('search'),
+  const AddPostScreen(),
+  const Text('notif'),
+  const Text('profile'),
 ];
