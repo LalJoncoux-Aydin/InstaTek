@@ -17,12 +17,12 @@ class FeedScreen extends StatelessWidget {
           color: primaryColor,
           height: 32,
         ),
-        actions: [
+        actions: <Widget>[
           IconButton(
               onPressed: () {},
               icon: const Icon(
                 Icons.messenger_outline,
-              ))
+              ),)
         ],
       ),
       body: const PostCard(),

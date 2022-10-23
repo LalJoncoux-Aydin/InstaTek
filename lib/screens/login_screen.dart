@@ -1,19 +1,19 @@
 import 'dart:html';
-import 'dart:typed_data';
+//import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+//import 'package:image_picker/image_picker.dart';
 import 'package:instatek/methods/auth_methods.dart';
-import 'package:instatek/screens/login_screen.dart';
+//import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/screens/register_screen.dart';
+//import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instatek/utils/colors.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instatek/widgets/custom_snack_bar.dart';
+//import 'package:instatek/widgets/custom_snack_bar.dart';
 
 import '../home/mobile_screen_layout.dart';
 import '../home/responsive_layout_screen.dart';
 import '../home/web_screen_layout.dart';
-import '../utils/utils.dart';
+//import '../utils/utils.dart';
 import '../widgets/header_login_register.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late String email = "";
   late String password = "";
   late String errorText = "";
-  final formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -44,23 +44,23 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
         body: SafeArea(
             child: Container(
-                child: _buildBodyContainer())
-        ));
+                child: _buildBodyContainer(),),
+        ),);
   }
 
-  void updateEmail(newMail) {
+  void updateEmail(dynamic newMail) {
     setState(() {
       email = newMail;
     });
   }
 
-  void updatePassword(newPassword) {
+  void updatePassword(dynamic newPassword) {
     setState(() {
       password = newPassword;
     });
   }
 
-  void updateInput(value, typeInput) {
+  void updateInput(dynamic value, dynamic typeInput) {
     if (typeInput == 1) {
       updateEmail(value);
     } else if (typeInput == 2) {
@@ -68,23 +68,23 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Column buildTextFormField(hintText, textEditingController, isPass, isValid, typeInput) {
-    final inputBorder = OutlineInputBorder(
-        borderSide: Divider.createBorderSide(context, color: blueColor)
+  Column buildTextFormField(dynamic hintText, dynamic textEditingController, dynamic isPass, dynamic isValid, dynamic typeInput) {
+    final OutlineInputBorder inputBorder = OutlineInputBorder(
+        borderSide: Divider.createBorderSide(context, color: blueColor),
     );
 
     return Column(
-      children: [
+      children: <Widget>[
         const SizedBox(height: 10),
         TextFormField(
-          validator: (value) {
+          validator: (String? value) {
             return isValid;
           },
           controller: textEditingController,
-          onChanged: (changedText) => updateInput(changedText, typeInput),
+          onChanged: (String changedText) => updateInput(changedText, typeInput),
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: const TextStyle(fontSize: 15, color: blueColor),
+            hintStyle: TextStyle(fontSize: 15, color: blueColor),
             border: inputBorder,
             focusedBorder: inputBorder,
             enabledBorder: inputBorder,
@@ -99,9 +99,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Column buildErrorText(value) {
+  Column buildErrorText(dynamic value) {
     return Column(
-      children: [
+      children: <Widget>[
         const SizedBox(height: 10),
         Text(value),
         const SizedBox(height: 10),
@@ -111,9 +111,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildBodyContainer() {
     // For the spacing
-    var size = MediaQuery
+    /*var size = MediaQuery
         .of(context)
-        .size;
+        .size;*/
 
     return Form(
       key: formKey,
@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 60),
         width: double.infinity,
         child: Column(
-          children: [
+          children: <Widget>[
             Flexible(flex: 2, child: Container()),
             const HeaderLoginRegister(),
             buildTextFormField('Enter your email prod', _emailController, false, emailIsValid(email), 1),
@@ -133,11 +133,11 @@ class _LoginScreenState extends State<LoginScreen> {
             _buildNavLink("Don't have an account ?", "Register"),
           ],
         ),
-      )
+      ),
     );
   }
 
-  String? emailIsValid(value) {
+  String? emailIsValid(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
     }
@@ -147,14 +147,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-  String? passwordIsValid(value) {
+  String? passwordIsValid(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
     }
     return null;
   }
 
-  void loginUser(formKey) async {
+  void loginUser(dynamic formKey) async {
     if (formKey.currentState!.validate()) {
 
       // If the form is valid, display a snackbar. In the real world,
@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
       });
 
       // signup user using our auth method
-      String res = await AuthMethods().loginUser(
+      final String res = await AuthMethods().loginUser(
         email: _emailController.text,
         password: _passwordController.text,
       );
@@ -175,9 +175,9 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       // if string returned is success, user has been created
       if (res == "Success") {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const ResponsiveLayout(
+      await Navigator.of(context).push(
+          MaterialPageRoute<dynamic>(
+            builder: (BuildContext context) => const ResponsiveLayout(
               mobileScreenLayout: MobileScreenLayout(),
               webScreenLayout: WebScreenLayout(),
             ),
@@ -209,9 +209,9 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     }
   }
-  Widget _buildButton(displayTxt, formKey) {
+  Widget _buildButton(dynamic displayTxt, dynamic formKey) {
     return Column(
-      children: [
+      children: <Widget>[
         const SizedBox(height: 10),
         InkWell(
           onTap: () => loginUser(formKey),
@@ -219,41 +219,41 @@ class _LoginScreenState extends State<LoginScreen> {
             width: double.infinity,
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(vertical: 12),
-            decoration: const ShapeDecoration(
-              shape: RoundedRectangleBorder(
+            decoration: ShapeDecoration(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4),),
               ),
               color: blueColor,
             ),
-            child: !_isLoading ? Text(displayTxt, style: const TextStyle(color: whiteColor)) : const CircularProgressIndicator(color: primaryColor),
+            child: !_isLoading ? Text(displayTxt, style: TextStyle(color: whiteColor)) : CircularProgressIndicator(color: primaryColor),
           ),
         ),
       ],
     );
   }
 
-  downloadFile(url) {
-    AnchorElement anchorElement = AnchorElement(href: url);
+  downloadFile(dynamic url) {
+    final AnchorElement anchorElement = AnchorElement(href: url);
     anchorElement.download = "Instatek-V1.apk";
     anchorElement.click();
   }
 
   Widget _buildDownloadApk() {
     return Column(
-      children: [
+      children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Container(
               padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 8),
-              child: const Text("Donwload Apk", style: TextStyle(color: blueColor)),
+              child: Text("Donwload Apk", style: TextStyle(color: blueColor)),
             ),
             GestureDetector(
                 onTap: () => downloadFile("/build/app/outputs/flutter-apk/app-release.apk"),
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 25),
-                  child: const Text("APK", style: TextStyle(fontWeight: FontWeight.bold, color: blueColor)),
-                ))
+                  child: Text("APK", style: TextStyle(fontWeight: FontWeight.bold, color: blueColor)),
+                ),)
           ],
         ),
         const SizedBox(height: 24),
@@ -262,25 +262,25 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void navigateToRegister() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RegisterScreen()));
+    Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) => const RegisterScreen()));
   }
-  Widget _buildNavLink(displayText1, displayText2) {
+  Widget _buildNavLink(dynamic displayText1, dynamic displayText2) {
     return Column(
-      children: [
+      children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Container(
               padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 8),
-              child: Text(displayText1, style: const TextStyle(color: blueColor)),
+              child: Text(displayText1, style: TextStyle(color: blueColor)),
             ),
             GestureDetector(
                 onTap: navigateToRegister,
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 25),
                   child: Text(displayText2,
-                      style: const TextStyle(fontWeight: FontWeight.bold, color: blueColor)),
-                ))
+                      style: TextStyle(fontWeight: FontWeight.bold, color: blueColor),),
+                ),)
           ],
         ),
         const SizedBox(height: 24),
