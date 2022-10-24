@@ -10,9 +10,9 @@ import 'package:instatek/screens/register_screen.dart';
 import 'package:instatek/utils/colors.dart';
 //import 'package:instatek/widgets/custom_snack_bar.dart';
 
-import '../home/mobile_screen_layout.dart';
-import '../home/responsive_layout_screen.dart';
-import '../home/web_screen_layout.dart';
+import '../layout/mobile_screen_layout.dart';
+import '../layout/responsive_layout_screen.dart';
+import '../layout/web_screen_layout.dart';
 //import '../utils/utils.dart';
 import '../widgets/header_login_register.dart';
 

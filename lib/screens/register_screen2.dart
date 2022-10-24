@@ -8,9 +8,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:instatek/utils/colors.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instatek/widgets/header_login_register.dart';
-import '../home/mobile_screen_layout.dart';
-import '../home/responsive_layout_screen.dart';
-import '../home/web_screen_layout.dart';
+import '../layout/mobile_screen_layout.dart';
+import '../layout/responsive_layout_screen.dart';
+import '../layout/web_screen_layout.dart';
 import '../methods/auth_methods.dart';
 import '../utils/utils.dart';
 
