@@ -130,6 +130,12 @@ flutter run
   ### [FIX] -- if you were working on a bug or any form of default that you corrected 
   ### [DEL] -- if you removed files, features, assets, and so on
   ### [UP] -- if you change something without adding any features or content
+ 
+# Norme branching
+  
+  ### feat/ -- New feature
+  ### pages/ -- New page
+  ### up/ -- Upgrade
 
 # Auteurs
 
