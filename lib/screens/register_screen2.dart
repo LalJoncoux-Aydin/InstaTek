@@ -1,8 +1,11 @@
+import 'dart:html';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/widgets/header_login_register.dart';
+
 import '../layout/mobile_screen_layout.dart';
 import '../layout/responsive_layout_screen.dart';
 import '../layout/web_screen_layout.dart';
@@ -176,6 +179,14 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
         _isLoading = true;
       });
 
+      if (_image == null) {
+        await http.get(
+            Uri.parse('https://cdn-icons-png.flaticon.com/512/847/847969.png'))
+            .then((http.Response response) {
+          _image = response.bodyBytes;
+        });
+      }
+
       // signup user using our auth method
       final String res = await AuthMethods().registerUser(
         email: widget.emailController.text,
@@ -211,7 +222,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
       }
     } else {
       setState(() {
-        errorText = "";
+        errorText = "An internal error happened";
       });
     }
   }
