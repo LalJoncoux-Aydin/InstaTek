@@ -1,12 +1,7 @@
-//import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-//import 'package:instatek/providers/user_provider.dart';
-//import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/utils/colors.dart';
-//import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instatek/widgets/header_login_register.dart';
 import '../layout/mobile_screen_layout.dart';
 import '../layout/responsive_layout_screen.dart';

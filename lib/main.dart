@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/screens/login_screen.dart';
-//import 'package:instatek/screens/register_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';

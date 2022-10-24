@@ -1,19 +1,11 @@
 import 'dart:html';
-//import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-//import 'package:image_picker/image_picker.dart';
 import 'package:instatek/methods/auth_methods.dart';
-//import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/screens/register_screen.dart';
-//import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instatek/utils/colors.dart';
-//import 'package:instatek/widgets/custom_snack_bar.dart';
-
 import '../layout/mobile_screen_layout.dart';
 import '../layout/responsive_layout_screen.dart';
 import '../layout/web_screen_layout.dart';
-//import '../utils/utils.dart';
 import '../widgets/header_login_register.dart';
 
 class LoginScreen extends StatefulWidget {

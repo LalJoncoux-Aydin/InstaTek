@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-//import 'package:instatek/models/user.dart';
-//import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/widgets/like_animation.dart';
-//import 'package:provider/provider.dart';
 
 class PostCard extends StatefulWidget {
   const PostCard({super.key});

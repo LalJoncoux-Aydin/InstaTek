@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter/services.dart';
 import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/screens/register_screen2.dart';
 import 'package:instatek/utils/colors.dart';
