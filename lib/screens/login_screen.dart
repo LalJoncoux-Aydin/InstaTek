@@ -1,19 +1,15 @@
-import 'dart:html';
-//import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-//import 'package:image_picker/image_picker.dart';
 import 'package:instatek/methods/auth_methods.dart';
-//import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/screens/register_screen.dart';
-//import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instatek/utils/colors.dart';
-//import 'package:instatek/widgets/custom_snack_bar.dart';
+import 'package:instatek/widgets/custom_download_apk_widget.dart';
+import 'package:instatek/widgets/custom_error_text_widget.dart';
 
-import '../home/mobile_screen_layout.dart';
-import '../home/responsive_layout_screen.dart';
-import '../home/web_screen_layout.dart';
-//import '../utils/utils.dart';
+import '../layout/mobile_screen_layout.dart';
+import '../layout/responsive_layout_screen.dart';
+import '../layout/web_screen_layout.dart';
+import '../widgets/custom_nav_link_widget.dart';
+import '../widgets/custom_text_form_field_widget.dart';
+import '../widgets/custom_validation_button.dart';
 import '../widgets/header_login_register.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -41,11 +37,43 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    double paddingGlobal = 0;
+    if (size.width >= 1366) {
+      paddingGlobal = 500;
+    } else {
+      paddingGlobal = 60;
+    }
+
+
     return Scaffold(
-        body: SafeArea(
-            child: Container(
-                child: _buildBodyContainer(),),
-        ),);
+      body: SafeArea(
+        child: Form(
+          key: formKey,
+          child: Column(children: <Widget>[
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
+                  width: double.infinity,
+                  child: Column(
+                    children: <Widget>[
+                      const HeaderLoginRegister(),
+                      CustomTextFormField(hintText: 'Enter your email', textEditingController: _emailController, isPass: false, isValid: emailIsValid(email), updateInput: updateEmail),
+                      CustomTextFormField(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true, isValid: passwordIsValid(password), updateInput: updatePassword),
+                      CustomErrorText(displayStr: errorText),
+                      CustomValidationButton(displayText: 'Login', formKey: formKey, loadingState: _isLoading, onTapFunction: loginUser),
+                      const CustomDownloadApk(),
+                      CustomNavLink(displayText1: "Don't have an account ?", displayText2: "Register", onTapFunction: navigateToRegister),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],),
+        ),
+      ),
+    );
   }
 
   void updateEmail(dynamic newMail) {
@@ -53,90 +81,6 @@ class _LoginScreenState extends State<LoginScreen> {
       email = newMail;
     });
   }
-
-  void updatePassword(dynamic newPassword) {
-    setState(() {
-      password = newPassword;
-    });
-  }
-
-  void updateInput(dynamic value, dynamic typeInput) {
-    if (typeInput == 1) {
-      updateEmail(value);
-    } else if (typeInput == 2) {
-      updatePassword(value);
-    }
-  }
-
-  Column buildTextFormField(dynamic hintText, dynamic textEditingController, dynamic isPass, dynamic isValid, dynamic typeInput) {
-    final OutlineInputBorder inputBorder = OutlineInputBorder(
-        borderSide: Divider.createBorderSide(context, color: blueColor),
-    );
-
-    return Column(
-      children: <Widget>[
-        const SizedBox(height: 10),
-        TextFormField(
-          validator: (String? value) {
-            return isValid;
-          },
-          controller: textEditingController,
-          onChanged: (String changedText) => updateInput(changedText, typeInput),
-          decoration: InputDecoration(
-            hintText: hintText,
-            hintStyle: TextStyle(fontSize: 15, color: blueColor),
-            border: inputBorder,
-            focusedBorder: inputBorder,
-            enabledBorder: inputBorder,
-            filled: true,
-            contentPadding: const EdgeInsets.all(20),
-          ),
-          keyboardType: TextInputType.text,
-          obscureText: isPass,
-        ),
-        const SizedBox(height: 10),
-      ],
-    );
-  }
-
-  Column buildErrorText(dynamic value) {
-    return Column(
-      children: <Widget>[
-        const SizedBox(height: 10),
-        Text(value),
-        const SizedBox(height: 10),
-      ],
-    );
-  }
-
-  Widget _buildBodyContainer() {
-    // For the spacing
-    /*var size = MediaQuery
-        .of(context)
-        .size;*/
-
-    return Form(
-      key: formKey,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 60),
-        width: double.infinity,
-        child: Column(
-          children: <Widget>[
-            Flexible(flex: 2, child: Container()),
-            const HeaderLoginRegister(),
-            buildTextFormField('Enter your email prod', _emailController, false, emailIsValid(email), 1),
-            buildTextFormField('Enter your password', _passwordController, true, passwordIsValid(password), 2),
-            buildErrorText(errorText),
-            _buildButton('Login', formKey),
-            Flexible(flex: 2, child: Container()),
-            _buildDownloadApk(),
-            _buildNavLink("Don't have an account ?", "Register"),
-          ],
-        ),
-      ),
-    );
-  }
-
   String? emailIsValid(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
@@ -147,6 +91,11 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
+  void updatePassword(dynamic newPassword) {
+    setState(() {
+      password = newPassword;
+    });
+  }
   String? passwordIsValid(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
@@ -157,25 +106,21 @@ class _LoginScreenState extends State<LoginScreen> {
   void loginUser(dynamic formKey) async {
     if (formKey.currentState!.validate()) {
 
-      // If the form is valid, display a snackbar. In the real world,
-      // you'd often call a server or save the information in a database.
-      // set loading to true
       setState(() {
         _isLoading = true;
       });
-
-      // signup user using our auth method
       final String res = await AuthMethods().loginUser(
         email: _emailController.text,
         password: _passwordController.text,
       );
-
       setState(() {
         _isLoading = false;
       });
-      // if string returned is success, user has been created
+
+      // if res is Success, go to next page
       if (res == "Success") {
-      await Navigator.of(context).push(
+        if (!mounted) return;
+        await Navigator.of(context).push(
           MaterialPageRoute<dynamic>(
             builder: (BuildContext context) => const ResponsiveLayout(
               mobileScreenLayout: MobileScreenLayout(),
@@ -193,15 +138,6 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           errorText = "A server error happened : $res";
         });
-        // show the error
-/*        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: CustomSnackBarContent(errorText: "Your credentials are not matching."),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          )
-        );*/
       }
     } else {
       setState(() {
@@ -209,82 +145,8 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     }
   }
-  Widget _buildButton(dynamic displayTxt, dynamic formKey) {
-    return Column(
-      children: <Widget>[
-        const SizedBox(height: 10),
-        InkWell(
-          onTap: () => loginUser(formKey),
-          child: Container(
-            width: double.infinity,
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            decoration: ShapeDecoration(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(4),),
-              ),
-              color: blueColor,
-            ),
-            child: !_isLoading ? Text(displayTxt, style: TextStyle(color: whiteColor)) : CircularProgressIndicator(color: primaryColor),
-          ),
-        ),
-      ],
-    );
-  }
-
-  downloadFile(dynamic url) {
-    final AnchorElement anchorElement = AnchorElement(href: url);
-    anchorElement.download = "Instatek-V1.apk";
-    anchorElement.click();
-  }
-
-  Widget _buildDownloadApk() {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 8),
-              child: Text("Donwload Apk", style: TextStyle(color: blueColor)),
-            ),
-            GestureDetector(
-                onTap: () => downloadFile("/build/app/outputs/flutter-apk/app-release.apk"),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 25),
-                  child: Text("APK", style: TextStyle(fontWeight: FontWeight.bold, color: blueColor)),
-                ),)
-          ],
-        ),
-        const SizedBox(height: 24),
-      ],
-    );
-  }
 
   void navigateToRegister() {
     Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) => const RegisterScreen()));
-  }
-  Widget _buildNavLink(dynamic displayText1, dynamic displayText2) {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 8),
-              child: Text(displayText1, style: TextStyle(color: blueColor)),
-            ),
-            GestureDetector(
-                onTap: navigateToRegister,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 25),
-                  child: Text(displayText2,
-                      style: TextStyle(fontWeight: FontWeight.bold, color: blueColor),),
-                ),)
-          ],
-        ),
-        const SizedBox(height: 24),
-      ],
-    );
   }
 }

@@ -1,8 +1,6 @@
-//import 'dart:convert';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:flutter/cupertino.dart';
 import 'package:instatek/methods/storage_methods.dart';
 import 'package:instatek/models/user.dart' as model;
 
@@ -61,8 +59,7 @@ class AuthMethods {
       }
       else if (email.isNotEmpty && password.isNotEmpty && username.isNotEmpty && bio.isNotEmpty && profilePicture != null) {
         final UserCredential cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-        String? photoUrl;
-          photoUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
+        final String photoUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
         
 
         final model.User user = model.User(

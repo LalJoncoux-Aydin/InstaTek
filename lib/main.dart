@@ -4,14 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/screens/login_screen.dart';
-//import 'package:instatek/screens/register_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-import 'home/mobile_screen_layout.dart';
-import 'home/responsive_layout_screen.dart';
-import 'home/web_screen_layout.dart';
+import 'layout/mobile_screen_layout.dart';
+import 'layout/responsive_layout_screen.dart';
+import 'layout/web_screen_layout.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
