@@ -26,4 +26,4 @@ jobs:
             docker stop instatek
             docker rm instatek
             docker build -t instatekweb .
-            docker run -d -p 8080:80 --name instatek instatekweb
+            docker run -d -p 80:80 --name instatek instatekweb

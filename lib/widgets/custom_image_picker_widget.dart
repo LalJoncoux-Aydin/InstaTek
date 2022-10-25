@@ -23,7 +23,6 @@ class CustomImagePicker extends StatelessWidget {
               radius: 64,
               backgroundImage: NetworkImage(
                 'https://cdn-icons-png.flaticon.com/512/847/847969.png',),
-              // backgroundColor: Colors.red,
             ),
             Positioned(
               bottom: -10,
