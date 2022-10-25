@@ -23,7 +23,7 @@ class CustomTextFormField extends StatelessWidget {
             return isValid;
           },
           controller: textEditingController,
-          onChanged: (String changedText) => updateInput!(changedText),
+          onChanged: (String changedText) => updateInput(changedText),
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: TextStyle(fontSize: 15, color: blueColor),

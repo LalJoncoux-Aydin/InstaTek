@@ -29,7 +29,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
     // _controller = AnimationController(vsync: this);
   }
 
-  setupUser() async {
+  void setupUser() async {
     userProvider = Provider.of(context, listen: false);
     await userProvider.refreshUser();
     if (userProvider.isUser == true) {

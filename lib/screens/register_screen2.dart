@@ -40,29 +40,38 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
 
   @override
   Widget build(BuildContext context) {
-    // For the spacing
-    /*var size = MediaQuery
-        .of(context)
-        .size;*/
+    final Size size = MediaQuery.of(context).size;
+    double paddingGlobal = 0;
+    if (size.width >= 1366) {
+      paddingGlobal = 500;
+    } else {
+      paddingGlobal = 60;
+    }
 
     return Scaffold(
       body: SafeArea(
         child: Form(
           key: formKey,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 60),
-            width: double.infinity,
-            child: Column(
-              children: <Widget>[
-                const HeaderLoginRegister(),
-                CustomImagePicker(imagePick: _image, onPressedFunction: selectImage),
-                CustomTextFormField(hintText: 'Enter your username', textEditingController: _usernameController, isPass: false, isValid: usernameIsValid(username), updateInput: updateUsername),
-                CustomTextFormField(hintText: 'Enter your bio', textEditingController: _bioController, isPass: false, isValid: null, updateInput: updateBio),
-                CustomErrorText(displayStr: errorText),
-                CustomValidationButton(displayText: 'Register', formKey: formKey, loadingState: _isLoading, onTapFunction: registerUser),
-              ],
-            ),
-          ),
+          child: Column(children: <Widget>[
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
+                  width: double.infinity,
+                  child: Column(
+                    children: <Widget>[
+                      const HeaderLoginRegister(),
+                      CustomImagePicker(imagePick: _image, onPressedFunction: selectImage),
+                      CustomTextFormField(hintText: 'Enter your username', textEditingController: _usernameController, isPass: false, isValid: usernameIsValid(username), updateInput: updateUsername),
+                      CustomTextFormField(hintText: 'Enter your bio', textEditingController: _bioController, isPass: false, isValid: null, updateInput: updateBio),
+                      CustomErrorText(displayStr: errorText),
+                      CustomValidationButton(displayText: 'Register', formKey: formKey, loadingState: _isLoading, onTapFunction: registerUser),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],),
         ),
       ),
     );
@@ -100,7 +109,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
 
       if (_image == null) {
         await http.get(
-            Uri.parse('https://cdn-icons-png.flaticon.com/512/847/847969.png'))
+            Uri.parse('https://cdn-icons-png.flaticon.com/512/847/847969.png'),)
             .then((http.Response response) {
           _image = response.bodyBytes;
         });
@@ -120,6 +129,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
       });
       // if string returned is success, user has been created
       if (res == "Success") {
+        if (!mounted) return;
         await Navigator.of(context).pushReplacement(
           MaterialPageRoute<dynamic>(
             builder: (BuildContext context) => const ResponsiveLayout(

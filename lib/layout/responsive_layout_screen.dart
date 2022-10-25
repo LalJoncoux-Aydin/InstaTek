@@ -20,7 +20,7 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerPr
     addData();
   }
 
-  addData() async {
+  void addData() async {
     final UserProvider userProvider = Provider.of(context, listen: false);
     await userProvider.refreshUser();
   }

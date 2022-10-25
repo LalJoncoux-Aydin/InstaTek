@@ -21,7 +21,7 @@ class _WebScreenLayoutState extends State<WebScreenLayout> with SingleTickerProv
     setupUser();
   }
 
-  setupUser() async {
+  void setupUser() async {
     userProvider = Provider.of(context, listen: false);
     await userProvider.refreshUser();
     if (userProvider.isUser == true) {

@@ -36,34 +36,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // For the spacing
-    /*var size = MediaQuery
-        .of(context)
-        .size;*/
+    final Size size = MediaQuery.of(context).size;
+    double paddingGlobal = 0;
+    if (size.width >= 1366) {
+      paddingGlobal = 500;
+    } else {
+      paddingGlobal = 60;
+    }
 
     return Scaffold(
-        body: SafeArea(
-            child: Form(
-              key: formKey,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 60),
-                width: double.infinity,
-                child: Column(
-                  children: <Widget>[
-                    Flexible(flex: 2, child: Container()),
-                    const HeaderLoginRegister(),
-                    CustomTextFormField(hintText: 'Enter your email', textEditingController: _emailController, isPass: false, isValid: emailIsValid(email), updateInput: updateEmail),
-                    CustomTextFormField(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true, isValid: passwordIsValid(password1), updateInput: updatePassword),
-                    CustomTextFormField(hintText: 'Enter your password again', textEditingController: _passwordController2, isPass: true, isValid: password2IsValid(password1, password2), updateInput: updatePassword2),
-                    CustomErrorText(displayStr: errorText),
-                    CustomValidationButton(displayText: 'Register', formKey: formKey, loadingState: _isLoading, onTapFunction: nextStepRegister),
-                    Flexible(flex: 2, child: Container()),
-                    CustomNavLink(displayText1: "Already have an account ?", displayText2: "Login", onTapFunction: navigateToLogin),
-                  ],
+      body: SafeArea(
+        child: Form(
+          key: formKey,
+          child: Column(children: <Widget>[
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
+                  width: double.infinity,
+                  child: Column(
+                    children: <Widget>[
+                      const HeaderLoginRegister(),
+                      CustomTextFormField(hintText: 'Enter your email', textEditingController: _emailController, isPass: false, isValid: emailIsValid(email), updateInput: updateEmail),
+                      CustomTextFormField(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true, isValid: passwordIsValid(password1), updateInput: updatePassword),
+                      CustomTextFormField(hintText: 'Enter your password again', textEditingController: _passwordController2, isPass: true, isValid: password2IsValid(password1, password2), updateInput: updatePassword2),
+                      CustomErrorText(displayStr: errorText),
+                      CustomValidationButton(displayText: 'Register', formKey: formKey, loadingState: _isLoading, onTapFunction: nextStepRegister),
+                      CustomNavLink(displayText1: "Already have an account ?", displayText2: "Login", onTapFunction: navigateToLogin),
+                    ],
+                  ),
                 ),
               ),
-            ),
+            )
+          ],),
         ),
+      ),
     );
   }
 
@@ -127,7 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _isLoading = false;
       });
 
-
+      if (!mounted) return;
       // Go to second page of Register
       await Navigator.of(context).pushReplacement(
         MaterialPageRoute<dynamic>(

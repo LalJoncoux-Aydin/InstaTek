@@ -37,33 +37,42 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    /*var size = MediaQuery
-        .of(context)
-        .size;*/
+    final Size size = MediaQuery.of(context).size;
+    double paddingGlobal = 0;
+    if (size.width >= 1366) {
+      paddingGlobal = 500;
+    } else {
+      paddingGlobal = 60;
+    }
+
 
     return Scaffold(
-        body: SafeArea(
-          child: Form(
-            key: formKey,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 60),
-              width: double.infinity,
-              child: Column(
-                children: <Widget>[
-                  Flexible(flex: 2, child: Container()),
-                  const HeaderLoginRegister(),
-                  CustomTextFormField(hintText: 'Enter your email', textEditingController: _emailController, isPass: false, isValid: emailIsValid(email), updateInput: updateEmail),
-                  CustomTextFormField(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true, isValid: passwordIsValid(password), updateInput: updatePassword),
-                  CustomErrorText(displayStr: errorText),
-                  CustomValidationButton(displayText: 'Login', formKey: formKey, loadingState: _isLoading, onTapFunction: loginUser),
-                  Flexible(flex: 2, child: Container()),
-                  const CustomDownloadApk(),
-                  CustomNavLink(displayText1: "Don't have an account ?", displayText2: "Register", onTapFunction: navigateToRegister),
-                ],
+      body: SafeArea(
+        child: Form(
+          key: formKey,
+          child: Column(children: <Widget>[
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
+                  width: double.infinity,
+                  child: Column(
+                    children: <Widget>[
+                      const HeaderLoginRegister(),
+                      CustomTextFormField(hintText: 'Enter your email', textEditingController: _emailController, isPass: false, isValid: emailIsValid(email), updateInput: updateEmail),
+                      CustomTextFormField(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true, isValid: passwordIsValid(password), updateInput: updatePassword),
+                      CustomErrorText(displayStr: errorText),
+                      CustomValidationButton(displayText: 'Login', formKey: formKey, loadingState: _isLoading, onTapFunction: loginUser),
+                      const CustomDownloadApk(),
+                      CustomNavLink(displayText1: "Don't have an account ?", displayText2: "Register", onTapFunction: navigateToRegister),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
+            )
+          ],),
         ),
+      ),
     );
   }
 
@@ -110,7 +119,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // if res is Success, go to next page
       if (res == "Success") {
-      await Navigator.of(context).push(
+        if (!mounted) return;
+        await Navigator.of(context).push(
           MaterialPageRoute<dynamic>(
             builder: (BuildContext context) => const ResponsiveLayout(
               mobileScreenLayout: MobileScreenLayout(),
