@@ -19,6 +19,7 @@ jobs:
           script: |
             cd ~/InstaTek
             git checkout prod
+            git stash
             git pull
             docker stop instatek
             docker rm instatek
