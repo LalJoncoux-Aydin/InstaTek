@@ -22,13 +22,15 @@ class AuthMethods {
     for (Object? user in allData) {
       final String userStr = user.toString();
       final String usernameOffset = userStr.substring(userStr.indexOf("username: "));
-      final String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1, (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","));
+      final String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1,
+          (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","));
       if (username == usernameOld) {
         return true;
       }
     }
     return false;
   }
+
   Future<bool> emailDoesntExist(dynamic email) async {
     final QuerySnapshot<Object?> querySnapshot = await _firestore.collection('users').get();
 
@@ -36,14 +38,14 @@ class AuthMethods {
     for (Object? user in allData) {
       final String userStr = user.toString();
       final String usernameOffset = userStr.substring(userStr.indexOf("email: "));
-      final String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1, (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","));
+      final String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1,
+          (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","));
       if (email == usernameOld) {
         return true;
       }
     }
     return false;
   }
-
 
   Future<String> registerUser({
     required String email,
@@ -56,11 +58,13 @@ class AuthMethods {
     try {
       if (await usernameDoesntExist(username)) {
         return "username-already-in-use";
-      }
-      else if (email.isNotEmpty && password.isNotEmpty && username.isNotEmpty && bio.isNotEmpty && profilePicture != null) {
+      } else if (email.isNotEmpty &&
+          password.isNotEmpty &&
+          username.isNotEmpty &&
+          bio.isNotEmpty &&
+          profilePicture != null) {
         final UserCredential cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
         final String photoUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
-        
 
         final model.User user = model.User(
           username: username,
@@ -68,6 +72,7 @@ class AuthMethods {
           photoUrl: photoUrl,
           email: email,
           bio: bio,
+          isAdmin: false,
           followers: <dynamic>[],
           following: <dynamic>[],
         );
@@ -78,7 +83,7 @@ class AuthMethods {
       } else {
         res = "Please enter all the fields";
       }
-    } on FirebaseAuthException catch(err) {
+    } on FirebaseAuthException catch (err) {
       res = err.code;
     } catch (err) {
       res = err.toString();
@@ -101,7 +106,7 @@ class AuthMethods {
       } else {
         res = "Please enter all the fields";
       }
-    } on FirebaseAuthException catch(err) {
+    } on FirebaseAuthException catch (err) {
       res = err.code;
     } catch (err) {
       res = err.toString();
