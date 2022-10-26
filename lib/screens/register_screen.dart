@@ -121,7 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       setState(() {
         _isLoading = true;
       });
-      if (await AuthMethods().emailDoesntExist(_emailController.text)) {
+      if (!await AuthMethods().emailDoesntExist(_emailController.text)) {
         setState(() {
           errorText = "Email is already in use by another account";
         });

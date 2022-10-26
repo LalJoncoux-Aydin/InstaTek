@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:instatek/widgets/custom_image_picker_widget.dart';
 import 'package:instatek/widgets/header_login_register.dart';
+import '../layout/admin_screen_layout.dart';
 import '../layout/mobile_screen_layout.dart';
 import '../layout/responsive_layout_screen.dart';
 import '../layout/web_screen_layout.dart';
@@ -135,6 +136,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
             builder: (BuildContext context) => const ResponsiveLayout(
               mobileScreenLayout: MobileScreenLayout(),
               webScreenLayout: WebScreenLayout(),
+              adminScreenLayout: AdminScreenLayout(),
             ),
           ),
         );

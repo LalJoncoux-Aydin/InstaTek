@@ -4,9 +4,10 @@ import 'package:instatek/utils/global_variables.dart';
 import 'package:provider/provider.dart';
 
 class ResponsiveLayout extends StatefulWidget {
-  const ResponsiveLayout({Key? key, required this.webScreenLayout, required this.mobileScreenLayout}) : super(key:key);
+  const ResponsiveLayout({Key? key, required this.webScreenLayout, required this.mobileScreenLayout, required this.adminScreenLayout}) : super(key:key);
   final Widget webScreenLayout;
   final Widget mobileScreenLayout;
+  final Widget adminScreenLayout;
 
 
   @override
@@ -14,6 +15,8 @@ class ResponsiveLayout extends StatefulWidget {
 }
 
 class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerProviderStateMixin {
+  late UserProvider userProvider;
+
   @override
   void initState() {
     super.initState();
@@ -21,7 +24,7 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerPr
   }
 
   void addData() async {
-    final UserProvider userProvider = Provider.of(context, listen: false);
+    userProvider = Provider.of(context, listen: false);
     await userProvider.refreshUser();
   }
 
@@ -34,8 +37,10 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerPr
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        if (constraints.maxWidth > webScreenSize) {
+        if (constraints.maxWidth > webScreenSize && userProvider.getUser.isAdmin == false) {
           return widget.webScreenLayout;
+        } else if (constraints.maxWidth > webScreenSize && userProvider.getUser.isAdmin == true) {
+          return widget.adminScreenLayout;
         }
         return widget.mobileScreenLayout;
       },
