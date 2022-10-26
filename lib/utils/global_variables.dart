@@ -11,9 +11,3 @@ List<Widget> homeScreenItems = <Widget>[
   const Text('notif'),
   const Text('profile'),
 ];
-
-List<Widget> adminScreenItems = <Widget>[
- const Text('posts'),
- const Text('users'),
- const Text('history'),
-];

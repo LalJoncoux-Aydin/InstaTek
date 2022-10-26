@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/providers/user_provider.dart';
+import 'package:instatek/screens/admin/admin_history_screen.dart';
+import 'package:instatek/screens/admin/admin_post_screen.dart';
+import 'package:instatek/screens/admin/admin_user_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/utils/global_variables.dart';
 import 'package:provider/provider.dart';
@@ -15,15 +18,15 @@ class AdminScreenLayout extends StatefulWidget {
 
 class AdminScreenLayoutState extends State<AdminScreenLayout> {
   String username = "";
-  int _page = 0;
-  late PageController pageController;
   late UserProvider userProvider;
   late model.User myUser;
+  int _selectedIndex = 0;
+  NavigationRailLabelType labelType = NavigationRailLabelType.all;
+  double groupAligment = 0.0;
 
   @override
   void initState() {
     super.initState();
-    pageController = PageController();
     setupUser();
   }
 
@@ -41,56 +44,54 @@ class AdminScreenLayoutState extends State<AdminScreenLayout> {
   @override
   void dispose() {
     super.dispose();
-    pageController.dispose();
-  }
-
-  void navigationTapped(int page) {
-    pageController.jumpToPage(page);
-  }
-
-  void onPageChanged(int page) {
-    setState(() {
-      _page = page;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: pageController,
-        onPageChanged: onPageChanged,
-        children: adminScreenItems,
-      ),
-      bottomNavigationBar: CupertinoTabBar(
-        backgroundColor: mobileBackgroundColor,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.photo,
-              color: (_page == 0) ? primaryColor : secondaryColor,
-            ),
-            label: '',
-            backgroundColor: primaryColor,
+      body: Row(
+        children: <Widget>[
+          NavigationRail(
+            selectedIndex: _selectedIndex,
+            groupAlignment: groupAligment,
+            onDestinationSelected: (int index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
+            labelType: labelType,
+            destinations: const <NavigationRailDestination>[
+              NavigationRailDestination(
+                icon: Icon(Icons.photo_library),
+                selectedIcon: Icon(Icons.photo_library_outlined),
+                label: Text('Posts'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.person),
+                selectedIcon: Icon(Icons.person_outline),
+                label: Text('Users'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.history),
+                selectedIcon: Icon(Icons.history),
+                label: Text('History'),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              color: (_page == 1) ? primaryColor : secondaryColor,
+          const VerticalDivider(thickness: 1, width: 1),
+          // This is the main content.
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('selectedIndex: $_selectedIndex'),
+                if (_selectedIndex == 0) const AdminPostScreen() else const SizedBox(),
+                if (_selectedIndex == 1) const AdminUserScreen() else const SizedBox(),
+                if (_selectedIndex == 2) const AdminHistoryScreen() else const SizedBox(),
+              ],
             ),
-            label: '',
-            backgroundColor: primaryColor,),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.history,
-              color: (_page == 2) ? primaryColor : secondaryColor,
-            ),
-            label: '',
-            backgroundColor: primaryColor,),
+          ),
         ],
-        onTap: navigationTapped,
-        //currentIndex: _page,
       ),
     );
   }
