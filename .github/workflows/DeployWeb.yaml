@@ -18,7 +18,7 @@ jobs:
           port: 22
           script: |
             cd ~/InstaTek
-            git checkout prod
+            git checkout prod_V1_1
             git pull
             docker stop instatek
             docker image rm instatekweb
