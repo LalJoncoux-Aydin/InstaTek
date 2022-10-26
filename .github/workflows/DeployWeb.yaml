@@ -1,9 +1,6 @@
 name: Deploy Web Docker on VPS
 
 on:
-  push:
-    branches:
-      - prod
   pull_request:
     branches:
       - prod
@@ -24,6 +21,7 @@ jobs:
             git checkout prod
             git pull
             docker stop instatek
+            docker image rm instatekweb
             docker rm instatek
             docker build -t instatekweb .
-            docker run -d -p 8080:80 --name instatek instatekweb
+            docker run -d -p 80:80 --name instatek instatekweb
