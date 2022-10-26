@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: <Widget>[
                       const HeaderLoginRegister(),
-                      CustomTextFormField(hintText: 'Enter your email', textEditingController: _emailController, isPass: false, isValid: emailIsValid(email), updateInput: updateEmail),
+                      CustomTextFormField(hintText: 'Enter your email - bienvenue en prod', textEditingController: _emailController, isPass: false, isValid: emailIsValid(email), updateInput: updateEmail),
                       CustomTextFormField(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true, isValid: passwordIsValid(password), updateInput: updatePassword),
                       CustomErrorText(displayStr: errorText),
                       CustomValidationButton(displayText: 'Login', formKey: formKey, loadingState: _isLoading, onTapFunction: loginUser),
