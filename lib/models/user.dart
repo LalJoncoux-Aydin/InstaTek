@@ -6,7 +6,7 @@ class User {
   const User({
     required this.username,
     required this.uid,
-    required this.photoUrl,
+    required this.avatarUrl,
     required this.email,
     required this.bio,
     required this.isAdmin,
@@ -15,7 +15,7 @@ class User {
   });
   final String email;
   final String uid;
-  final String photoUrl;
+  final String avatarUrl;
   final String username;
   final String bio;
   final bool isAdmin;
@@ -30,7 +30,7 @@ class User {
         username: snapshot["username"],
         uid: snapshot["uid"],
         email: snapshot["email"],
-        photoUrl: snapshot["photoUrl"],
+        avatarUrl: snapshot["avatarUrl"],
         bio: snapshot["bio"],
         isAdmin: snapshot["isAdmin"],
         followers: snapshot["followers"],
@@ -45,7 +45,7 @@ class User {
         "username": username,
         "uid": uid,
         "email": email,
-        "photoUrl": photoUrl,
+        "avatarUrl": avatarUrl,
         "bio": bio,
         "isAdmin": isAdmin,
         "followers": followers,

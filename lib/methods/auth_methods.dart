@@ -68,12 +68,12 @@ class AuthMethods {
           bio.isNotEmpty &&
           profilePicture != null) {
         final UserCredential cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-        final String photoUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
+        final String avatarUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
 
         final model.User user = model.User(
           username: username,
           uid: cred.user!.uid,
-          photoUrl: photoUrl,
+          avatarUrl: avatarUrl,
           email: email,
           bio: bio,
           isAdmin: false,
