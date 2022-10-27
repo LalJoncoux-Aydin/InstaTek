@@ -4,6 +4,7 @@ import 'package:instatek/screens/register_screen.dart';
 import 'package:instatek/widgets/custom_download_apk_widget.dart';
 import 'package:instatek/widgets/custom_error_text_widget.dart';
 
+import '../layout/admin_screen_layout.dart';
 import '../layout/mobile_screen_layout.dart';
 import '../layout/responsive_layout_screen.dart';
 import '../layout/web_screen_layout.dart';
@@ -125,6 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
             builder: (BuildContext context) => const ResponsiveLayout(
               mobileScreenLayout: MobileScreenLayout(),
               webScreenLayout: WebScreenLayout(),
+              adminScreenLayout: AdminScreenLayout(),
             ),
           ),
         );

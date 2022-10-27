@@ -4,7 +4,7 @@ import 'package:instatek/screens/feed_screen.dart';
 
 int webScreenSize = 600;
 
- List<Widget> homeScreenItems = <Widget>[
+List<Widget> homeScreenItems = <Widget>[
   const FeedScreen(),
   const Text('search'),
   const AddPostScreen(),

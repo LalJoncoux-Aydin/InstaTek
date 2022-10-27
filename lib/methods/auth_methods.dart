@@ -39,12 +39,14 @@ class AuthMethods {
       final String userStr = user.toString();
       final String usernameOffset = userStr.substring(userStr.indexOf("email: "));
       final String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1,
-          (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","));
+          (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","),);
+      print(email);
+      print(usernameOld);
       if (email == usernameOld) {
-        return true;
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
   Future<String> registerUser({
