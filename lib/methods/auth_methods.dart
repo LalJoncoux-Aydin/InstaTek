@@ -22,8 +22,10 @@ class AuthMethods {
     for (Object? user in allData) {
       final String userStr = user.toString();
       final String usernameOffset = userStr.substring(userStr.indexOf("username: "));
-      final String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1,
-          (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","));
+      final String usernameOld = usernameOffset.substring(
+        usernameOffset.indexOf(" ") + 1,
+        (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","),
+      );
       if (username == usernameOld) {
         return true;
       }
@@ -38,8 +40,10 @@ class AuthMethods {
     for (Object? user in allData) {
       final String userStr = user.toString();
       final String usernameOffset = userStr.substring(userStr.indexOf("email: "));
-      final String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1,
-          (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","));
+      final String usernameOld = usernameOffset.substring(
+        usernameOffset.indexOf(" ") + 1,
+        (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","),
+      );
       if (email == usernameOld) {
         return true;
       }
