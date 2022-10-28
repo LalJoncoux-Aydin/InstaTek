@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import '../utils/colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField({Key? key, required this.hintText, required this.textEditingController, required this.isPass, required this.isValid, required this.updateInput}): super(key: key);
+  const CustomTextFormField({
+    Key? key,
+    required this.hintText,
+    required this.textEditingController,
+    required this.isPass,
+    required this.isValid,
+    required this.updateInput,
+  }) : super(key: key);
 
   final String hintText;
   final TextEditingController textEditingController;
@@ -10,7 +17,8 @@ class CustomTextFormField extends StatelessWidget {
   final String? isValid;
   final void Function(String) updateInput;
 
-  @override  Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     final OutlineInputBorder inputBorder = OutlineInputBorder(
       borderSide: Divider.createBorderSide(context, color: blueColor),
     );
@@ -26,7 +34,7 @@ class CustomTextFormField extends StatelessWidget {
           onChanged: (String changedText) => updateInput(changedText),
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(fontSize: 15, color: blueColor),
+            hintStyle: const TextStyle(fontSize: 15, color: blueColor),
             border: inputBorder,
             focusedBorder: inputBorder,
             enabledBorder: inputBorder,

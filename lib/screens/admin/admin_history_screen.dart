@@ -10,8 +10,6 @@ class AdminHistoryScreen extends StatefulWidget {
 class _AdminHistoryScreenState extends State<AdminHistoryScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Text("History"),
-    );
+    return const Text("History");
   }
 }

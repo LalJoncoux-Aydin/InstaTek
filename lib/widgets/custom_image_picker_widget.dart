@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:instatek/utils/global_variables.dart';
 
 class CustomImagePicker extends StatelessWidget {
   const CustomImagePicker({Key? key, required this.imagePick, required this.onPressedFunction}) : super(key: key);
@@ -15,16 +16,20 @@ class CustomImagePicker extends StatelessWidget {
         const SizedBox(height: 10),
         Stack(
           children: <Widget>[
-            if (imagePick != null) CircleAvatar(
-              radius: 64,
-              backgroundImage: MemoryImage(imagePick!),
-              backgroundColor: Colors.red,
-            ) else const CircleAvatar(
-              radius: 64,
-              backgroundImage: NetworkImage(
-                'https://cdn-icons-png.flaticon.com/512/847/847969.png',),
-              // backgroundColor: Colors.red,
-            ),
+            if (imagePick != null)
+              CircleAvatar(
+                radius: 64,
+                backgroundImage: MemoryImage(imagePick!),
+                backgroundColor: Colors.red,
+              )
+            else
+              const CircleAvatar(
+                radius: 64,
+                backgroundImage: NetworkImage(
+                  defaultAvatarUrl,
+                ),
+                // backgroundColor: Colors.red,
+              ),
             Positioned(
               bottom: -10,
               left: 80,

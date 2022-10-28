@@ -22,8 +22,10 @@ class AuthMethods {
     for (Object? user in allData) {
       final String userStr = user.toString();
       final String usernameOffset = userStr.substring(userStr.indexOf("username: "));
-      final String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1,
-          (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","));
+      final String usernameOld = usernameOffset.substring(
+        usernameOffset.indexOf(" ") + 1,
+        (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","),
+      );
       if (username == usernameOld) {
         return true;
       }
@@ -38,10 +40,10 @@ class AuthMethods {
     for (Object? user in allData) {
       final String userStr = user.toString();
       final String usernameOffset = userStr.substring(userStr.indexOf("email: "));
-      final String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1,
-          (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","),);
-      print(email);
-      print(usernameOld);
+      final String usernameOld = usernameOffset.substring(
+        usernameOffset.indexOf(" ") + 1,
+        (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","),
+      );
       if (email == usernameOld) {
         return false;
       }
@@ -66,12 +68,12 @@ class AuthMethods {
           bio.isNotEmpty &&
           profilePicture != null) {
         final UserCredential cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-        final String photoUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
+        final String avatarUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
 
         final model.User user = model.User(
           username: username,
           uid: cred.user!.uid,
-          photoUrl: photoUrl,
+          avatarUrl: avatarUrl,
           email: email,
           bio: bio,
           isAdmin: false,
