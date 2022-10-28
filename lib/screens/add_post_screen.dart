@@ -16,7 +16,7 @@ class AddPostScreen extends StatefulWidget {
 
 class _AddPostScreenState extends State<AddPostScreen> {
   Uint8List? _file;
-  //final TextEditingController _descriptionController = TextEditingController();
+  //final TextEditingController _de scriptionController = TextEditingController();
 
   Future<Future> _selectImage(BuildContext context) async {
     return showDialog(
