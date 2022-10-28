@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 import '../utils/colors.dart';
 
 class CustomNavLink extends StatelessWidget {
-  const CustomNavLink({Key? key, required this.displayText1, required this.displayText2, required this.onTapFunction}) : super(key: key);
+  const CustomNavLink({Key? key, required this.displayText1, required this.displayText2, required this.onTapFunction})
+      : super(key: key);
 
   final String displayText1;
   final String displayText2;
@@ -18,14 +19,15 @@ class CustomNavLink extends StatelessWidget {
           children: <Widget>[
             Container(
               padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 8),
-              child: Text(displayText1, style: TextStyle(color: blueColor)),
+              child: Text(displayText1, style: const TextStyle(color: blueColor)),
             ),
             GestureDetector(
               onTap: onTapFunction,
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 25),
-                child: Text(displayText2, style: TextStyle(fontWeight: FontWeight.bold, color: blueColor)),
-              ),)
+                child: Text(displayText2, style: const TextStyle(fontWeight: FontWeight.bold, color: blueColor)),
+              ),
+            )
           ],
         ),
         const SizedBox(height: 24),
