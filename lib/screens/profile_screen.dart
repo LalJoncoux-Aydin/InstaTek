@@ -23,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late int following = 0;
   late String photoUrl;
   late String bio;
-  bool isLoading = false;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -42,6 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         following = myUser.following.length;
         photoUrl = myUser.photoUrl;
         bio = myUser.bio;
+        _isLoading = true;
       });
     }
   }
@@ -61,41 +62,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
       paddingGlobal = 60;
     }
 
-    return isLoading ? const CustomLoadingScreen() : Scaffold(
-      appBar: AppBar(
-        backgroundColor: mobileBackgroundColor,
-        title: Text(
+    if (_isLoading == false) {
+      setupUser();
+      return const CustomLoadingScreen();
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: mobileBackgroundColor,
+          title: Text(
             username,
+          ),
+          centerTitle: false,
         ),
-        centerTitle: false,
-      ),
-      body: SafeArea(
-        child: Column(children: <Widget>[
-          Expanded(
-            child: SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
-                width: double.infinity,
-                child: Column(
-                  children: <Widget>[
-                    CustomHeaderProfile(
-                      photoUrl: photoUrl,
-                      followers: followers,
-                      following: following,
-                    ),
-                    CustomNameContainerProfile(
-                      username: username,
-                      bio: bio,
-                    ),
-                    const Divider(),
-                    // TODO : posts
-                  ],
+        body: SafeArea(
+          child: Column(children: <Widget>[
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
+                  width: double.infinity,
+                  child: Column(
+                    children: <Widget>[
+                      CustomHeaderProfile(
+                        photoUrl: photoUrl,
+                        followers: followers,
+                        following: following,
+                      ),
+                      // TODO : posts
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],),
-      ),
-    );
+          ],),
+        ),
+      );
+    }
   }
 }
