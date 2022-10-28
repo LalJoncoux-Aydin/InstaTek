@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:instatek/utils/global_variables.dart';
 import 'package:instatek/widgets/custom_image_picker_widget.dart';
 import 'package:instatek/widgets/header_login_register.dart';
 import '../layout/mobile_screen_layout.dart';
@@ -52,26 +53,45 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
       body: SafeArea(
         child: Form(
           key: formKey,
-          child: Column(children: <Widget>[
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
-                  width: double.infinity,
-                  child: Column(
-                    children: <Widget>[
-                      const HeaderLoginRegister(),
-                      CustomImagePicker(imagePick: _image, onPressedFunction: selectImage),
-                      CustomTextFormField(hintText: 'Enter your username', textEditingController: _usernameController, isPass: false, isValid: usernameIsValid(username), updateInput: updateUsername),
-                      CustomTextFormField(hintText: 'Enter your bio', textEditingController: _bioController, isPass: false, isValid: null, updateInput: updateBio),
-                      CustomErrorText(displayStr: errorText),
-                      CustomValidationButton(displayText: 'Register', formKey: formKey, loadingState: _isLoading, onTapFunction: registerUser),
-                    ],
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
+                    width: double.infinity,
+                    child: Column(
+                      children: <Widget>[
+                        const HeaderLoginRegister(),
+                        CustomImagePicker(imagePick: _image, onPressedFunction: selectImage),
+                        CustomTextFormField(
+                          hintText: 'Enter your username',
+                          textEditingController: _usernameController,
+                          isPass: false,
+                          isValid: usernameIsValid(username),
+                          updateInput: updateUsername,
+                        ),
+                        CustomTextFormField(
+                          hintText: 'Enter your bio',
+                          textEditingController: _bioController,
+                          isPass: false,
+                          isValid: null,
+                          updateInput: updateBio,
+                        ),
+                        CustomErrorText(displayStr: errorText),
+                        CustomValidationButton(
+                          displayText: 'Register',
+                          formKey: formKey,
+                          loadingState: _isLoading,
+                          onTapFunction: registerUser,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            )
-          ],),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -82,6 +102,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
       username = newUsername;
     });
   }
+
   String? usernameIsValid(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
@@ -94,7 +115,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
   }
 
   void selectImage() async {
-   final Uint8List im = await pickImage(ImageSource.gallery);
+    final Uint8List im = await pickImage(ImageSource.gallery);
     setState(() {
       _image = im;
     });
@@ -108,8 +129,10 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
       });
 
       if (_image == null) {
-        await http.get(
-            Uri.parse('https://cdn-icons-png.flaticon.com/512/847/847969.png'),)
+        await http
+            .get(
+          Uri.parse(defaultAvatarUrl),
+        )
             .then((http.Response response) {
           _image = response.bodyBytes;
         });
@@ -121,7 +144,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
         password: widget.passwordController.text,
         username: _usernameController.text,
         bio: _bioController.text,
-        profilePicture : _image,
+        profilePicture: _image,
       );
 
       setState(() {
@@ -138,13 +161,11 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
             ),
           ),
         );
-      }
-      else if (res == 'username-already-in-use') {
+      } else if (res == 'username-already-in-use') {
         setState(() {
           errorText = "Username is already in use by another account";
         });
-      }
-      else {
+      } else {
         setState(() {
           errorText = "A server error happened : $res";
         });
