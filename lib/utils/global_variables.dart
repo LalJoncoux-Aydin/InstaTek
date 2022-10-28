@@ -3,6 +3,7 @@ import 'package:instatek/screens/add_post_screen.dart';
 import 'package:instatek/screens/feed_screen.dart';
 
 int webScreenSize = 600;
+const String defaultAvatarUrl = 'https://cdn-icons-png.flaticon.com/512/847/847969.png';
 
 List<Widget> homeScreenItems = <Widget>[
   const FeedScreen(),

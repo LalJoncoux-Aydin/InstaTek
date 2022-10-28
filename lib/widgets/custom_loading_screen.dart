@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instatek/utils/colors.dart';
 
@@ -18,8 +17,8 @@ class CustomLoadingScreenState extends State<CustomLoadingScreen> {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text("Loading"),
+            children: const <Widget>[
+              Text("Loading"),
               CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(greenColor),
               ),

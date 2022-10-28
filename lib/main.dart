@@ -17,12 +17,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(
-        options: const FirebaseOptions(
-            apiKey: 'AIzaSyDdn1q0EK9RU1JMBtqPhfNNjMGUQV5TieE',
-            appId: '1:254429523809:web:160dbab7037581ac0d5f20',
-            messagingSenderId: '254429523809',
-            projectId: 'instatek-6fa75',
-            storageBucket: 'instatek-6fa75.appspot.com',),);
+      options: const FirebaseOptions(
+        apiKey: 'AIzaSyDdn1q0EK9RU1JMBtqPhfNNjMGUQV5TieE',
+        appId: '1:254429523809:web:160dbab7037581ac0d5f20',
+        messagingSenderId: '254429523809',
+        projectId: 'instatek-6fa75',
+        storageBucket: 'instatek-6fa75.appspot.com',
+      ),
+    );
   } else {
     await Firebase.initializeApp();
   }
@@ -37,36 +39,38 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: <SingleChildWidget>[
-        ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider(),)
+        ChangeNotifierProvider<UserProvider>(
+          create: (_) => UserProvider(),
+        )
       ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'InstaTek',
-          home: StreamBuilder<User?>(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
-              if (snapshot.connectionState == ConnectionState.active) {
-                if (snapshot.hasData) {
-                  return const ResponsiveLayout(
-                    mobileScreenLayout: MobileScreenLayout(),
-                    webScreenLayout: WebScreenLayout(),
-                    adminScreenLayout: AdminScreenLayout(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('${snapshot.error}'));
-                }
-              }
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: primaryColor,
-                  ),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'InstaTek',
+        home: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+            if (snapshot.connectionState == ConnectionState.active) {
+              if (snapshot.hasData) {
+                return const ResponsiveLayout(
+                  mobileScreenLayout: MobileScreenLayout(),
+                  webScreenLayout: WebScreenLayout(),
+                  adminScreenLayout: AdminScreenLayout(),
                 );
+              } else if (snapshot.hasError) {
+                return Center(child: Text('${snapshot.error}'));
               }
-              return const LoginScreen();
-            },
-          ),
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: primaryColor,
+                ),
+              );
+            }
+            return const LoginScreen();
+          },
         ),
+      ),
     );
   }
 }

@@ -10,8 +10,6 @@ class AdminUserScreen extends StatefulWidget {
 class _AdminUserScreenState extends State<AdminUserScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Text("User"),
-    );
+    return const Text("User");
   }
 }
