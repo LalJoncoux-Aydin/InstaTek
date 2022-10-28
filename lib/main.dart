@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:instatek/layout/admin_screen_layout.dart';
 import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/screens/login_screen.dart';
 import 'package:instatek/utils/colors.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
                 return const ResponsiveLayout(
                   mobileScreenLayout: MobileScreenLayout(),
                   webScreenLayout: WebScreenLayout(),
+                  adminScreenLayout: AdminScreenLayout(),
                 );
               } else if (snapshot.hasError) {
                 return Center(child: Text('${snapshot.error}'));

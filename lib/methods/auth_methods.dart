@@ -45,10 +45,10 @@ class AuthMethods {
         (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","),
       );
       if (email == usernameOld) {
-        return true;
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
   Future<String> registerUser({

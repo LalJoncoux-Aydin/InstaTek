@@ -12,8 +12,8 @@ class WebScreenLayout extends StatefulWidget {
 
 class _WebScreenLayoutState extends State<WebScreenLayout> with SingleTickerProviderStateMixin {
   String username = "";
-  late model.User myUser;
   late UserProvider userProvider;
+  late model.User myUser;
 
   @override
   void initState() {
