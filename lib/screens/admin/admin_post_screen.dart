@@ -10,8 +10,6 @@ class AdminPostScreen extends StatefulWidget {
 class _AdminPostScreenState extends State<AdminPostScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Text("Post"),
-    );
+    return const Text("Post");
   }
 }
