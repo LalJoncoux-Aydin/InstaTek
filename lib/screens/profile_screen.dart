@@ -88,6 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         followers: followers,
                         following: following,
                       ),
+                      const Divider(),
                       // TODO : posts
                     ],
                   ),

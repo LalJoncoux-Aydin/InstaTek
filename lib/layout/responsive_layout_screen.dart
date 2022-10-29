@@ -45,10 +45,10 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading == false) {
+/*    if (_isLoading == false) {
       setupUser();
       return const CustomLoadingScreen();
-    } else {
+    } else {*/
       return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           if (constraints.maxWidth > webScreenSize && myUser.isAdmin == false) {
@@ -60,6 +60,6 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerPr
           return widget.mobileScreenLayout;
         },
       );
-    }
+  //  }
   }
 }

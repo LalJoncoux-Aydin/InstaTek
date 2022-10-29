@@ -11,16 +11,16 @@ class CustomHeaderProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    double paddingHeader = 0;
-    if (size.width >= 1366) {
+    //final Size size = MediaQuery.of(context).size;
+    const double paddingHeader = 10;
+/*    if (size.width >= 1366) {
       paddingHeader = 50;
     } else {
       paddingHeader = 10;
-    }
+    }*/
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: paddingHeader),
+      padding: const EdgeInsets.symmetric(horizontal: paddingHeader),
       width: double.infinity,
       child: Row(
         children: <Widget>[
