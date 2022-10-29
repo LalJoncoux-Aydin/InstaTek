@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:instatek/utils/colors.dart';
 
 class CustomLoadingScreen extends StatefulWidget {
   const CustomLoadingScreen({super.key});
@@ -12,15 +11,15 @@ class CustomLoadingScreenState extends State<CustomLoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: mobileBackgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
-              Text("Loading"),
+            children: <Widget>[
+              const Text("Loading"),
               CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(greenColor),
+                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.onBackground),
               ),
             ],
           ),
