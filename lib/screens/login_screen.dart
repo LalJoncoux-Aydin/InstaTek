@@ -4,6 +4,7 @@ import 'package:instatek/screens/register_screen.dart';
 import 'package:instatek/widgets/custom_download_apk_widget.dart';
 import 'package:instatek/widgets/custom_error_text_widget.dart';
 
+import '../layout/admin_screen_layout.dart';
 import '../layout/mobile_screen_layout.dart';
 import '../layout/responsive_layout_screen.dart';
 import '../layout/web_screen_layout.dart';
@@ -45,32 +46,54 @@ class _LoginScreenState extends State<LoginScreen> {
       paddingGlobal = 60;
     }
 
-
     return Scaffold(
       body: SafeArea(
         child: Form(
           key: formKey,
-          child: Column(children: <Widget>[
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
-                  width: double.infinity,
-                  child: Column(
-                    children: <Widget>[
-                      const HeaderLoginRegister(),
-                      CustomTextFormField(hintText: 'Enter your email - V1.1', textEditingController: _emailController, isPass: false, isValid: emailIsValid(email), updateInput: updateEmail),
-                      CustomTextFormField(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true, isValid: passwordIsValid(password), updateInput: updatePassword),
-                      CustomErrorText(displayStr: errorText),
-                      CustomValidationButton(displayText: 'Login', formKey: formKey, loadingState: _isLoading, onTapFunction: loginUser),
-                      const CustomDownloadApk(),
-                      CustomNavLink(displayText1: "Don't have an account ?", displayText2: "Register", onTapFunction: navigateToRegister),
-                    ],
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
+                    width: double.infinity,
+                    child: Column(
+                      children: <Widget>[
+                        const HeaderLoginRegister(),
+                        CustomTextFormField(
+                          hintText: 'Enter your email - V1.1',
+                          textEditingController: _emailController,
+                          isPass: false,
+                          isValid: emailIsValid(email),
+                          updateInput: updateEmail,
+                        ),
+                        CustomTextFormField(
+                          hintText: 'Enter your password',
+                          textEditingController: _passwordController,
+                          isPass: true,
+                          isValid: passwordIsValid(password),
+                          updateInput: updatePassword,
+                        ),
+                        CustomErrorText(displayStr: errorText),
+                        CustomValidationButton(
+                          displayText: 'Login',
+                          formKey: formKey,
+                          loadingState: _isLoading,
+                          onTapFunction: loginUser,
+                        ),
+                        const CustomDownloadApk(),
+                        CustomNavLink(
+                          displayText1: "Don't have an account ?",
+                          displayText2: "Register",
+                          onTapFunction: navigateToRegister,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            )
-          ],),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -81,6 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
       email = newMail;
     });
   }
+
   String? emailIsValid(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
@@ -96,6 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
       password = newPassword;
     });
   }
+
   String? passwordIsValid(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
@@ -105,7 +130,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void loginUser(dynamic formKey) async {
     if (formKey.currentState!.validate()) {
-
       setState(() {
         _isLoading = true;
       });
@@ -125,16 +149,15 @@ class _LoginScreenState extends State<LoginScreen> {
             builder: (BuildContext context) => const ResponsiveLayout(
               mobileScreenLayout: MobileScreenLayout(),
               webScreenLayout: WebScreenLayout(),
+              adminScreenLayout: AdminScreenLayout(),
             ),
           ),
         );
-      }
-      else if (res == "user-not-found" || res == "wrong-password") {
+      } else if (res == "user-not-found" || res == "wrong-password") {
         setState(() {
           errorText = "Your credentials are not matching.";
         });
-      }
-      else {
+      } else {
         setState(() {
           errorText = "A server error happened : $res";
         });

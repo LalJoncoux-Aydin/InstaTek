@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="512" height="512" viewBox="0 0 512 512" xml:space="preserve">
+<desc>Created with Fabric.js 3.5.0</desc>
+<defs>
+</defs>
+<rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+<g transform="matrix(0.1001 0 0 -0.1001 256.395 256.4064)" id="746171">
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; is-custom-font: none; font-file-url: none; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke" transform=" translate(-2561.5328, -2561.7578)" d="M 1851 5109 c -657 -74 -1219 -432 -1555 -989 c -138 -229 -223 -463 -273 -745 c -26 -151 -23 -500 5 -655 c 120 -657 508 -1187 1087 -1487 c 310 -160 591 -228 945 -227 c 431 0 785 107 1145 345 l 119 79 l 696 -693 c 469 -468 708 -700 735 -713 c 54 -25 167 -25 215 0 c 120 63 175 193 135 317 c -17 51 -54 91 -717 755 l -699 701 l 77 114 c 371 548 453 1234 222 1869 c -75 208 -219 450 -375 631 c -260 300 -628 533 -1005 634 c -230 62 -542 89 -757 64 z m 357 -510 c 380 -41 677 -182 943 -448 c 271 -271 415 -579 451 -963 c 32 -343 -60 -693 -263 -998 c -84 -127 -282 -325 -409 -409 c -512 -341 -1143 -359 -1664 -47 c -376 224 -641 602 -728 1039 c -32 160 -32 414 0 574 c 90 451 367 835 767 1062 c 267 152 604 223 903 190 z" stroke-linecap="round"/>
+</g>
+<g transform="matrix(2.6501 0 0 2.6501 199.0419 196.954)" id="375137">
+<path style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; is-custom-font: none; font-file-url: none; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke" transform=" translate(-67.5, -67.5)" d="M 132.5 67.5 C 132.5 103.399 103.399 132.5 67.5 132.5 C 31.6015 132.5 2.5 103.399 2.5 67.5 C 2.5 31.6015 31.6015 2.5 67.5 2.5 C 103.399 2.5 132.5 31.6015 132.5 67.5 Z" stroke-linecap="round"/>
+</g>
+</svg>
