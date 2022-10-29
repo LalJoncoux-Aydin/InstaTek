@@ -1,11 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/widgets/custom_loading_screen.dart';
 import 'package:provider/provider.dart';
+import '../methods/firestore_methods.dart';
+import '../methods/storage_methods.dart';
 import '../providers/user_provider.dart';
 import '../widgets/custom_header_profile_widget.dart';
 import '../widgets/custom_name_container_profile_widget.dart';
+import '../widgets/custom_posts_container_profile_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, required this.uid}) : super(key: key);
@@ -23,6 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late int following = 0;
   late String photoUrl;
   late String bio;
+  late String uid;
   bool _isLoading = false;
 
   @override
@@ -42,6 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         following = myUser.following.length;
         photoUrl = myUser.avatarUrl;
         bio = myUser.bio;
+        uid = myUser.uid;
         _isLoading = true;
       });
     }
@@ -88,8 +95,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         followers: followers,
                         following: following,
                       ),
+                      CustomNameContainerProfile(username: username, bio: bio),
                       const Divider(),
-                      // TODO : posts
+                      CustomPostsContainerProfile(uid: uid),
                     ],
                   ),
                 ),

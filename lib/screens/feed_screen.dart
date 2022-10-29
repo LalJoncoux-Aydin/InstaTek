@@ -48,6 +48,8 @@ class _FeedScreenState extends State<FeedScreen> {
             );
           }
           return ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (BuildContext ctx, int index) => Container(
               margin: EdgeInsets.symmetric(
