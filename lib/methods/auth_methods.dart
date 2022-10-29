@@ -71,7 +71,7 @@ class AuthMethods {
         final String avatarUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
 
         final model.User user = model.User(
-          username: username,
+          username: username.toLowerCase(),
           uid: cred.user!.uid,
           avatarUrl: avatarUrl,
           email: email,
