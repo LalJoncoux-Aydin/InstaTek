@@ -40,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         username = myUser.username;
         followers = myUser.followers.length;
         following = myUser.following.length;
-        photoUrl = myUser.photoUrl;
+        photoUrl = myUser.avatarUrl;
         bio = myUser.bio;
         _isLoading = true;
       });

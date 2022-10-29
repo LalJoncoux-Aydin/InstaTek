@@ -24,8 +24,8 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
   @override
   void initState() {
     super.initState();
-    pageController = PageController();
     setupUser();
+    pageController = PageController();
     // _controller = AnimationController(vsync: this);
   }
 
