@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:instatek/utils/colors.dart';
 
 class CustomTableProfileFollow extends StatelessWidget {
-  const CustomTableProfileFollow({Key? key, required this.followers, required this.following}) : super(key: key);
+  const CustomTableProfileFollow({Key? key, required this.followers, required this.following, required this.postSize}) : super(key: key);
 
   final int followers;
   final int following;
+  final int postSize;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +32,7 @@ class CustomTableProfileFollow extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Column>[
+              buildStatColumn(postSize, "posts", paddingNumber, sizeLabel, labelPadding),
               buildStatColumn(followers, "followers", paddingNumber, sizeLabel, labelPadding),
               buildStatColumn(following, "following", paddingNumber, sizeLabel, labelPadding),
             ],

@@ -3,11 +3,12 @@ import 'custom_profile_picture_profile.dart';
 import 'custom_table_profile_follow.dart';
 
 class CustomHeaderProfile extends StatelessWidget {
-  const CustomHeaderProfile({Key? key, required this.photoUrl, required this.followers, required this.following}) : super(key: key);
+  const CustomHeaderProfile({Key? key, required this.photoUrl, required this.followers, required this.following, required this.postSize}) : super(key: key);
 
   final String photoUrl;
   final int followers;
   final int following;
+  final int postSize;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class CustomHeaderProfile extends StatelessWidget {
       child: Row(
         children: <Widget>[
           CustomProfilePictureProfile(photoUrl: photoUrl),
-          CustomTableProfileFollow(followers: followers, following: following),
+          CustomTableProfileFollow(followers: followers, following: following, postSize: postSize),
         ],
       ),
     );

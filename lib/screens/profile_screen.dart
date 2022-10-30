@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/utils/colors.dart';
@@ -26,9 +27,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late String username = "";
   late int followers = 0;
   late int following = 0;
+  late int postSize = 0;
   late String photoUrl;
   late String bio;
-  late String uid;
+  late String uid = "";
   bool _isLoading = false;
 
   @override
@@ -50,6 +52,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         bio = myUser.bio;
         uid = myUser.uid;
         _isLoading = true;
+      });
+    }
+    if (uid != "") {
+      final QuerySnapshot<Map<String, dynamic>> postSnap = await FirebaseFirestore.instance
+          .collection('posts')
+          .where('uid', isEqualTo: uid)
+          .get();
+      setState(() {
+        postSize = postSnap.docs.length;
       });
     }
   }
@@ -94,6 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         photoUrl: photoUrl,
                         followers: followers,
                         following: following,
+                        postSize: postSize,
                       ),
                       CustomNameContainerProfile(username: username, bio: bio),
                       const Divider(),
