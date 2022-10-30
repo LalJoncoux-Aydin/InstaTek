@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/widgets/custom_loading_screen.dart';
+import 'package:instatek/widgets/user/profile/infobar/custom_infobar_profile_widget.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
-import '../widgets/custom_header_profile_widget.dart';
-import '../widgets/custom_name_container_profile_widget.dart';
-import '../widgets/custom_posts_container_profile_widget.dart';
+import '../widgets/user/profile/posts/custom_posts_container_profile_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, required this.uid}) : super(key: key);
@@ -27,6 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late String photoUrl;
   late String bio;
   late String uid = "";
+  late GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
   @override
@@ -97,8 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: double.infinity,
                   child: Column(
                     children: <Widget>[
-                      CustomHeaderProfile(photoUrl: photoUrl, followers: followers, following: following, postSize: postSize,),
-                      CustomNameContainerProfile(username: username, bio: bio),
+                      CustomInfobarProfile(photoUrl: photoUrl, followers: followers, following: following, postSize: postSize, username: username, bio: bio, formKey: formKey),
                       const Divider(),
                       CustomPostsContainerProfile(uid: uid),
                     ],

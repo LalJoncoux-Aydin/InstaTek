@@ -37,12 +37,6 @@ class CustomTableProfileFollow extends StatelessWidget {
               buildStatColumn(following, "following", paddingNumber, sizeLabel, labelPadding),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const <Text>[
-              Text("Sign out"),
-            ],
-          ),
         ],
       ),
     );
