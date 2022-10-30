@@ -7,7 +7,7 @@ import 'package:instatek/screens/comments_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/utils/global_variables.dart';
 import 'package:instatek/utils/utils.dart';
-import 'package:instatek/widgets/like_animation.dart';
+import 'package:instatek/widgets/posts/like_animation.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 

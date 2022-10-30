@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:instatek/widgets/custom_validation_button.dart';
+import 'package:instatek/widgets/tools/custom_validation_button.dart';
 import 'custom_profile_picture_profile.dart';
 import 'custom_table_profile_follow.dart';
 

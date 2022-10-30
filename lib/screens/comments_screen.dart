@@ -5,7 +5,7 @@ import 'package:instatek/models/user.dart';
 import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/utils/utils.dart';
-import 'package:instatek/widgets/comment_card.dart';
+import 'package:instatek/widgets/posts/comment_card.dart';
 import 'package:provider/provider.dart';
 
 class CommentsScreen extends StatefulWidget {

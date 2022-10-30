@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../utils/colors.dart';
+import '../../utils/colors.dart';
 
 class CustomNavLink extends StatelessWidget {
   const CustomNavLink({Key? key, required this.displayText1, required this.displayText2, required this.onTapFunction})

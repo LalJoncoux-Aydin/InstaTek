@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../utils/colors.dart';
+import '../../utils/colors.dart';
 
 class CustomDownloadApk extends StatelessWidget {
   const CustomDownloadApk({Key? key}) : super(key: key);

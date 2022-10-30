@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:instatek/utils/global_variables.dart';
-import 'package:instatek/widgets/custom_image_picker_widget.dart';
+import 'package:instatek/widgets/tools/custom_image_picker_widget.dart';
 import 'package:instatek/widgets/auth/header_login_register.dart';
 import '../../layout/admin_screen_layout.dart';
 import '../../layout/mobile_screen_layout.dart';
@@ -11,9 +11,9 @@ import '../../layout/responsive_layout_screen.dart';
 import '../../layout/web_screen_layout.dart';
 import '../../methods/auth_methods.dart';
 import '../../utils/utils.dart';
-import '../../widgets/custom_error_text_widget.dart';
-import '../../widgets/custom_text_form_field_widget.dart';
-import '../../widgets/custom_validation_button.dart';
+import '../../widgets/tools/custom_error_text_widget.dart';
+import '../../widgets/tools/custom_text_form_field_widget.dart';
+import '../../widgets/tools/custom_validation_button.dart';
 
 class RegisterScreen2 extends StatefulWidget {
   const RegisterScreen2({Key? key, required this.emailController, required this.passwordController}) : super(key: key);

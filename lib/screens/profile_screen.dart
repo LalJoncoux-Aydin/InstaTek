@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/utils/colors.dart';
-import 'package:instatek/widgets/custom_loading_screen.dart';
+import 'package:instatek/widgets/tools/custom_loading_screen.dart';
 import 'package:instatek/widgets/user/profile/infobar/custom_infobar_profile_widget.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';

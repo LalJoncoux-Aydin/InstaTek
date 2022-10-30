@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:instatek/methods/auth_methods.dart';
 import 'package:instatek/screens/auth/register_screen.dart';
-import 'package:instatek/widgets/custom_download_apk_widget.dart';
-import 'package:instatek/widgets/custom_error_text_widget.dart';
+import 'package:instatek/widgets/auth/custom_download_apk_widget.dart';
+import 'package:instatek/widgets/tools/custom_error_text_widget.dart';
 
 import '../../layout/admin_screen_layout.dart';
 import '../../layout/mobile_screen_layout.dart';
 import '../../layout/responsive_layout_screen.dart';
 import '../../layout/web_screen_layout.dart';
-import '../../widgets/custom_nav_link_widget.dart';
-import '../../widgets/custom_text_form_field_widget.dart';
-import '../../widgets/custom_validation_button.dart';
+import '../../widgets/auth/custom_nav_link_widget.dart';
+import '../../widgets/tools/custom_text_form_field_widget.dart';
+import '../../widgets/tools/custom_validation_button.dart';
 import '../../widgets/auth/header_login_register.dart';
 
 class LoginScreen extends StatefulWidget {

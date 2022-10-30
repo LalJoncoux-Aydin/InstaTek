@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/utils/global_variables.dart';
-import 'package:instatek/widgets/post_card.dart';
+import 'package:instatek/widgets/posts/post_card.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({Key? key}) : super(key: key);
