@@ -1,13 +1,9 @@
-import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/widgets/custom_loading_screen.dart';
 import 'package:provider/provider.dart';
-import '../methods/firestore_methods.dart';
-import '../methods/storage_methods.dart';
 import '../providers/user_provider.dart';
 import '../widgets/custom_header_profile_widget.dart';
 import '../widgets/custom_name_container_profile_widget.dart';
@@ -101,12 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: double.infinity,
                   child: Column(
                     children: <Widget>[
-                      CustomHeaderProfile(
-                        photoUrl: photoUrl,
-                        followers: followers,
-                        following: following,
-                        postSize: postSize,
-                      ),
+                      CustomHeaderProfile(photoUrl: photoUrl, followers: followers, following: following, postSize: postSize,),
                       CustomNameContainerProfile(username: username, bio: bio),
                       const Divider(),
                       CustomPostsContainerProfile(uid: uid),

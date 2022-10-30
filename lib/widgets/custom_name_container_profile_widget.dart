@@ -23,7 +23,7 @@ class CustomNameContainerProfile extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
       width: double.infinity,
-      child: Row(
+      child: Column(
         children: <Container>[
           Container(
             alignment: Alignment.centerLeft,

@@ -19,10 +19,9 @@ class CustomPostsContainerProfile extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          List<QueryDocumentSnapshot<Map<String, dynamic>>> docs = snapshot.data!.docs;
+          final List<QueryDocumentSnapshot<Map<String, dynamic>>> docs = snapshot.data!.docs;
 
           return ListView.builder(
-            scrollDirection: Axis.vertical,
             shrinkWrap: true,
             itemCount: docs.length,
             itemBuilder: (BuildContext ctx, int index) => Container(
