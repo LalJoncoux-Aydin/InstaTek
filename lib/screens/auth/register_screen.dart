@@ -6,7 +6,7 @@ import '../../widgets/custom_error_text_widget.dart';
 import '../../widgets/custom_nav_link_widget.dart';
 import '../../widgets/custom_text_form_field_widget.dart';
 import '../../widgets/custom_validation_button.dart';
-import '../../widgets/header_login_register.dart';
+import '../../widgets/auth/header_login_register.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
