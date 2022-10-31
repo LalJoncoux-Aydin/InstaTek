@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:instatek/methods/auth_methods.dart';
 import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/widgets/tools/custom_loading_screen.dart';
@@ -7,6 +8,7 @@ import 'package:instatek/widgets/user/profile/infobar/custom_infobar_profile_wid
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import '../widgets/user/profile/posts/custom_posts_container_profile_widget.dart';
+import 'auth/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, required this.uid}) : super(key: key);
@@ -81,11 +83,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
+        backgroundColor: mobileBackgroundColor,
         appBar: AppBar(
           backgroundColor: mobileBackgroundColor,
           title: Text(
             username,
           ),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.logout,
+                color: whiteColor,
+              ),
+              onPressed: (){
+                AuthMethods().signOut();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginScreen(),),);
+                },
+            ),
+          ],
           centerTitle: false,
         ),
         body: SafeArea(
