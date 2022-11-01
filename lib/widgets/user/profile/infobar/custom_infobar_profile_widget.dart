@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:instatek/widgets/tools/custom_validation_button.dart';
+import 'custom_name_profile_widget.dart';
 import 'custom_profile_picture_profile.dart';
 import 'custom_table_profile_follow.dart';
 
@@ -16,23 +17,27 @@ class CustomInfobarProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double paddingHeader = 10;
     final Size size = MediaQuery.of(context).size;
-    double paddingGlobal = 0;
-    double paddingTopName = 0;
-    double paddingTopBio = 0;
+    double paddingImageTable = 0;
+    double paddingName = 0;
+    double paddingButtonTop = 0;
+    double paddingButtonBottom = 0;
     if (size.width >= 1366) {
-      paddingGlobal = 10;
+      paddingImageTable = 10;
+      paddingName = 10;
+      paddingButtonTop = 1;
+      paddingButtonBottom = 1;
     } else {
-      paddingGlobal = 10;
-      paddingTopName = 10;
-      paddingTopBio = 1;
+      paddingImageTable = 2;
+      paddingName = 15;
+      paddingButtonTop = 5;
+      paddingButtonBottom = 2;
     }
 
     return Column(
       children: <Container>[
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: paddingHeader),
+          padding: EdgeInsets.only(top: paddingImageTable),
           width: double.infinity,
           child: Row(
             children: <Widget>[
@@ -42,32 +47,12 @@ class CustomInfobarProfile extends StatelessWidget {
           ),
         ),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
+          padding: EdgeInsets.only(top: paddingName),
           width: double.infinity,
-          child: Column(
-            children: <Container>[
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(top: paddingTopName),
-                child: Text(
-                  username,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(top: paddingTopBio),
-                child: Text(
-                  bio,
-                ),
-              ),
-            ],
-          ),
+          child: CustomNameProfile(username: username, bio: bio),
         ),
         Container(
-          padding: const EdgeInsets.only(top: 5),
+          padding: EdgeInsets.only(top: paddingButtonTop, bottom: paddingButtonBottom),
           width: double.infinity,
           child: Form(
             key: formKey,

@@ -8,8 +8,17 @@ class CustomPostsContainerProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 1.7);
+    final Size size = MediaQuery.of(context).size;
+    double paddingPosts = 0;
+    if (size.width >= 1366) {
+      paddingPosts = 10;
+    } else {
+      paddingPosts = 5;
+    }
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
+      padding: EdgeInsets.only(top: paddingPosts),
       width: double.infinity,
       child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: FirebaseFirestore.instance.collection('posts').where('uid', isEqualTo: uid).snapshots(),
@@ -21,11 +30,17 @@ class CustomPostsContainerProfile extends StatelessWidget {
           }
           final List<QueryDocumentSnapshot<Map<String, dynamic>>> docs = snapshot.data!.docs;
 
-          return ListView.builder(
+          return GridView.builder(
             shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 200,
+                childAspectRatio: correctRatio,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
+            ),
             itemCount: docs.length,
             itemBuilder: (BuildContext ctx, int index) => Container(
-              child: Image.network(docs[index].data()['postUrl'].toString()),
+                  child: Image.network(docs[index].data()['postUrl'].toString()),
             ),
           );
         },

@@ -71,11 +71,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    double paddingGlobal = 0;
+    double paddingGlobalHorizontal = 0;
+    double paddingGlobalVertical = 0;
+
     if (size.width >= 1366) {
-      paddingGlobal = 500;
+      paddingGlobalHorizontal = 50;
+      paddingGlobalVertical = 40;
     } else {
-      paddingGlobal = 60;
+      paddingGlobalHorizontal = 20;
+      paddingGlobalVertical = 20;
     }
 
     if (_isLoading == false) {
@@ -95,32 +99,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Icons.logout,
                 color: whiteColor,
               ),
-              onPressed: (){
-                AuthMethods().signOut();
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginScreen(),),);
+              onPressed: () async {
+                await AuthMethods().signOut();
+                if (!mounted) return;
+                await Navigator.of(context).pushReplacement(MaterialPageRoute<dynamic>(builder: (BuildContext context) => const LoginScreen(),),);
                 },
             ),
           ],
           centerTitle: false,
         ),
         body: SafeArea(
-          child: Column(children: <Widget>[
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
-                  width: double.infinity,
-                  child: Column(
-                    children: <Widget>[
-                      CustomInfobarProfile(photoUrl: photoUrl, followers: followers, following: following, postSize: postSize, username: username, bio: bio, formKey: formKey),
-                      const Divider(),
-                      CustomPostsContainerProfile(uid: uid),
-                    ],
-                  ),
-                ),
+          child: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: paddingGlobalHorizontal, vertical: paddingGlobalVertical),
+              width: double.infinity,
+              child: Column(
+                children: <Widget>[
+                  CustomInfobarProfile(photoUrl: photoUrl, followers: followers, following: following, postSize: postSize, username: username, bio: bio, formKey: formKey),
+                  const Divider(),
+                  CustomPostsContainerProfile(uid: uid),
+                ],
               ),
             ),
-          ],),
+          ),
         ),
       );
     }

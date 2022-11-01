@@ -11,18 +11,18 @@ class CustomTableProfileFollow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    late double paddingNumber = 0;
     late double sizeLabel = 0;
     late double labelPadding = 0;
+    late double numPadding = 0;
 
     if (size.width >= 1366) {
-      paddingNumber = 50;
       sizeLabel = 30;
-      labelPadding = 15;
-    } else {
-      paddingNumber = 10;
-      sizeLabel = 18;
+      numPadding = 5;
       labelPadding = 5;
+    } else {
+      sizeLabel = 18;
+      numPadding = 3;
+      labelPadding = 3;
     }
 
     return Expanded(
@@ -32,9 +32,9 @@ class CustomTableProfileFollow extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Column>[
-              buildStatColumn(postSize, "posts", paddingNumber, sizeLabel, labelPadding),
-              buildStatColumn(followers, "followers", paddingNumber, sizeLabel, labelPadding),
-              buildStatColumn(following, "following", paddingNumber, sizeLabel, labelPadding),
+              buildStatColumn(postSize, "posts", numPadding, sizeLabel, labelPadding),
+              buildStatColumn(followers, "followers", numPadding, sizeLabel, labelPadding),
+              buildStatColumn(following, "following", numPadding, sizeLabel, labelPadding),
             ],
           ),
         ],
@@ -46,15 +46,16 @@ class CustomTableProfileFollow extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
+      children: <Container>[
         Container(
-          padding: EdgeInsets.symmetric(horizontal: numPadding, vertical: numPadding),
-        ),
-        Text(
-          num.toString(),
-          style: TextStyle(
-            fontSize: sizeLabel,
-            fontWeight: FontWeight.bold,
+          margin: EdgeInsets.only(bottom: numPadding),
+          child: Text(
+            num.toString(),
+            style: TextStyle(
+              fontSize: sizeLabel,
+              fontWeight: FontWeight.bold,
+              color: whiteColor,
+            ),
           ),
         ),
         Container(
