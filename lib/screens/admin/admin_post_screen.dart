@@ -56,11 +56,13 @@ class _AdminPostScreenState extends State<AdminPostScreen> {
                                 ];
                               },
                               onSelected: (String value) {
+                                if (value == 'delete') {
+                                  FirebaseFirestore.instance
+                                      .collection('posts')
+                                      .doc(data['postId'])
+                                      .delete();
+                                }
                                 //print(data['uid']);
-                                FirebaseFirestore.instance
-                                    .collection('users')
-                                    .doc(data['uid'])
-                                    .delete();
                               },
                             )),
                       ),
@@ -70,7 +72,6 @@ class _AdminPostScreenState extends State<AdminPostScreen> {
               })
               .toList()
               .cast(),
-          
         );
       },
     );
