@@ -23,7 +23,9 @@ class _AdminPostScreenState extends State<AdminPostScreen> {
           return const Text('Something went wrong');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text('Loading');
+          return const Center(
+              child: CircularProgressIndicator(),
+            );
         }
 
         return ListView(
@@ -45,11 +47,11 @@ class _AdminPostScreenState extends State<AdminPostScreen> {
                             ),
                             title: Text('${data['username']}'),
                             subtitle: Text(
-                                'Description: ${data['description']}\nDate: ${data['datePublished'].toDate()}\nUID: ${data['uid']}\npostId: ${data['postId']}'),
-                            trailing: PopupMenuButton(
-                              itemBuilder: (context) {
-                                return [
-                                  PopupMenuItem(
+                                'Description: ${data['description']}\nDate: ${data['datePublished'].toDate()}\nUID: ${data['uid']}\npostId: ${data['postId']}',),
+                            trailing: PopupMenuButton<String>(
+                              itemBuilder: (BuildContext context) {
+                                return <PopupMenuEntry<String>>[
+                                  PopupMenuItem<String>(
                                     value: 'delete',
                                     child: Text('Delete ${data['username']}'),
                                   ),
@@ -64,7 +66,7 @@ class _AdminPostScreenState extends State<AdminPostScreen> {
                                 }
                                 //print(data['uid']);
                               },
-                            )),
+                            ),),
                       ),
                     ),
                   ),

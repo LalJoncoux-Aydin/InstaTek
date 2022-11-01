@@ -47,11 +47,11 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
                             ),
                             title: Text('${data['username']}'),
                             subtitle: Text(
-                                'Email: ${data['email']}\nBio: ${data['bio']}\nAdmin: ${data['isAdmin']}\nUID: ${data['uid']}'),
-                            trailing: PopupMenuButton(
-                              itemBuilder: (context) {
-                                return [
-                                  PopupMenuItem(
+                                'Email: ${data['email']}\nBio: ${data['bio']}\nAdmin: ${data['isAdmin']}\nUID: ${data['uid']}',),
+                            trailing: PopupMenuButton<String>(
+                              itemBuilder: (BuildContext context) {
+                                return <PopupMenuEntry<String>>[
+                                  PopupMenuItem<String>(
                                     value: 'delete',
                                     child: Text('Delete ${data['username']}'),
                                   ),
@@ -64,7 +64,7 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
                                     .doc(data['uid'])
                                     .delete();
                               },
-                            )),
+                            ),),
                       ),
                     ),
                   ),
