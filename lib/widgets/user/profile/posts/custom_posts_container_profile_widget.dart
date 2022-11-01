@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../utils/colors.dart';
+
 class CustomPostsContainerProfile extends StatelessWidget {
   const CustomPostsContainerProfile({Key? key, required this.uid}) : super(key: key);
 
@@ -40,6 +42,9 @@ class CustomPostsContainerProfile extends StatelessWidget {
             ),
             itemCount: docs.length,
             itemBuilder: (BuildContext ctx, int index) => Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: greyColor),
+                  ),
                   child: Image.network(docs[index].data()['postUrl'].toString()),
             ),
           );
