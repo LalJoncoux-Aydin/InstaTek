@@ -52,11 +52,11 @@ class AdminScreenLayoutState extends State<AdminScreenLayout> {
         backgroundColor: blueColor,
         centerTitle: true,
         title: SvgPicture.asset(
-                'assets/instatek_logo.svg',
-                color: primaryColor,
-                height: 32,
-              ),
+          'assets/instatek_logo.svg',
+          color: primaryColor,
+          height: 32,
         ),
+      ),
       body: Row(
         children: <Widget>[
           NavigationRail(
@@ -79,7 +79,7 @@ class AdminScreenLayoutState extends State<AdminScreenLayout> {
                 selectedIcon: Icon(Icons.person_outline),
                 label: Text('Users'),
               ),
-             /* NavigationRailDestination(
+              /* NavigationRailDestination(
                 icon: Icon(Icons.history),
                 selectedIcon: Icon(Icons.history),
                 label: Text('History'),
@@ -89,14 +89,24 @@ class AdminScreenLayoutState extends State<AdminScreenLayout> {
           const VerticalDivider(thickness: 1, width: 1),
           // This is the main content.
           Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-               // Text('selectedIndex: $_selectedIndex'),
-                if (_selectedIndex == 0) const AdminPostScreen() else const SizedBox(),
-                if (_selectedIndex == 1) const AdminUserScreen() else const SizedBox(),
-              //  if (_selectedIndex == 2) const AdminHistoryScreen() else const SizedBox(),
-              ],
+            child: SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    // Text('selectedIndex: $_selectedIndex'),
+                    if (_selectedIndex == 0)
+                      const AdminPostScreen()
+                    else
+                      const SizedBox(),
+                    if (_selectedIndex == 1)
+                      const AdminUserScreen()
+                    else
+                      const SizedBox(),
+                    //  if (_selectedIndex == 2) const AdminHistoryScreen() else const SizedBox(),
+                  ],
+                ),
+              ),
             ),
           ),
         ],
