@@ -79,11 +79,11 @@ class AdminScreenLayoutState extends State<AdminScreenLayout> {
                 selectedIcon: Icon(Icons.person_outline),
                 label: Text('Users'),
               ),
-              NavigationRailDestination(
+             /* NavigationRailDestination(
                 icon: Icon(Icons.history),
                 selectedIcon: Icon(Icons.history),
                 label: Text('History'),
-              ),
+              ),*/
             ],
           ),
           const VerticalDivider(thickness: 1, width: 1),
@@ -95,7 +95,7 @@ class AdminScreenLayoutState extends State<AdminScreenLayout> {
                // Text('selectedIndex: $_selectedIndex'),
                 if (_selectedIndex == 0) const AdminPostScreen() else const SizedBox(),
                 if (_selectedIndex == 1) const AdminUserScreen() else const SizedBox(),
-                if (_selectedIndex == 2) const AdminHistoryScreen() else const SizedBox(),
+              //  if (_selectedIndex == 2) const AdminHistoryScreen() else const SizedBox(),
               ],
             ),
           ),

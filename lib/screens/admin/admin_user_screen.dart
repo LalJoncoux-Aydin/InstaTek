@@ -13,17 +13,19 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
       FirebaseFirestore.instance.collection('users').snapshots();
   @override
   Widget build(BuildContext context) {
-    
     return StreamBuilder<QuerySnapshot<Object>>(
-      
       stream: _usersStream,
-      builder: (BuildContext context,
-          AsyncSnapshot<QuerySnapshot<Object>> snapshot) {
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<QuerySnapshot<Object>> snapshot,
+      ) {
         if (snapshot.hasError) {
           return const Text('Something went wrong');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text('Loading');
+           return const Center(
+              child: CircularProgressIndicator(),
+            );
         }
 
         return ListView(
@@ -39,26 +41,30 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
                       width: 800,
                       child: Card(
                         child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage('${data['avatarUrl']}'),
-                          ) ,
-                          title: Text('${data['username']}'),
-                          subtitle: Text('Email: ${data['email']}\nBio: ${data['bio']}\nAdmin: ${data['isAdmin']}\nUID: ${data['uid']}'),
-                          trailing: PopupMenuButton(
-                            itemBuilder: (context) {
-                              return [
-                                PopupMenuItem(
-                                  value: 'delete',
-                                  child: Text('Delete ${data['username']}'),
-                                ),
-                              ];
-                            },
-                            onSelected: (String value) {
-                              //print(data['uid']);
-                              FirebaseFirestore.instance.collection('users').doc(data['uid']).delete();
-                            },
-                          )
-                        ),
+                            leading: CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage('${data['avatarUrl']}'),
+                            ),
+                            title: Text('${data['username']}'),
+                            subtitle: Text(
+                                'Email: ${data['email']}\nBio: ${data['bio']}\nAdmin: ${data['isAdmin']}\nUID: ${data['uid']}'),
+                            trailing: PopupMenuButton(
+                              itemBuilder: (context) {
+                                return [
+                                  PopupMenuItem(
+                                    value: 'delete',
+                                    child: Text('Delete ${data['username']}'),
+                                  ),
+                                ];
+                              },
+                              onSelected: (String value) {
+                                //print(data['uid']);
+                                FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(data['uid'])
+                                    .delete();
+                              },
+                            )),
                       ),
                     ),
                   ),
