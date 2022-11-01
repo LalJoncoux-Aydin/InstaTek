@@ -48,27 +48,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: SafeArea(
         child: Form(
           key: formKey,
-          child: Column(children: <Widget>[
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
-                  width: double.infinity,
-                  child: Column(
-                    children: <Widget>[
-                      const HeaderLoginRegister(),
-                      CustomTextFormField(hintText: 'Enter your email', textEditingController: _emailController, isPass: false, isValid: emailIsValid(email), updateInput: updateEmail),
-                      CustomTextFormField(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true, isValid: passwordIsValid(password1), updateInput: updatePassword),
-                      CustomTextFormField(hintText: 'Enter your password again', textEditingController: _passwordController2, isPass: true, isValid: password2IsValid(password1, password2), updateInput: updatePassword2),
-                      CustomErrorText(displayStr: errorText),
-                      CustomValidationButton(displayText: 'Register', formKey: formKey, loadingState: _isLoading, onTapFunction: nextStepRegister),
-                      CustomNavLink(displayText1: "Already have an account ?", displayText2: "Login", onTapFunction: navigateToLogin),
-                    ],
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
+                    width: double.infinity,
+                    child: Column(
+                      children: <Widget>[
+                        const HeaderLoginRegister(),
+                        CustomTextFormField(
+                          hintText: 'Enter your email',
+                          textEditingController: _emailController,
+                          isPass: false,
+                          isValid: emailIsValid(email),
+                          updateInput: updateEmail,
+                        ),
+                        CustomTextFormField(
+                          hintText: 'Enter your password',
+                          textEditingController: _passwordController,
+                          isPass: true,
+                          isValid: passwordIsValid(password1),
+                          updateInput: updatePassword,
+                        ),
+                        CustomTextFormField(
+                          hintText: 'Enter your password again',
+                          textEditingController: _passwordController2,
+                          isPass: true,
+                          isValid: password2IsValid(password1, password2),
+                          updateInput: updatePassword2,
+                        ),
+                        CustomErrorText(displayStr: errorText),
+                        CustomValidationButton(
+                          displayText: 'Register',
+                          formKey: formKey,
+                          loadingState: _isLoading,
+                          onTapFunction: nextStepRegister,
+                        ),
+                        CustomNavLink(
+                          displayText1: "Already have an account ?",
+                          displayText2: "Login",
+                          onTapFunction: navigateToLogin,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            )
-          ],),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -79,6 +108,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       email = newMail;
     });
   }
+
   String? emailIsValid(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
@@ -93,6 +123,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       password1 = newPassword;
     });
   }
+
   String? passwordIsValid(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
@@ -107,6 +138,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       password2 = newPassword;
     });
   }
+
   String? password2IsValid(dynamic pass1, dynamic pass2) {
     if (pass2 == null || pass2.isEmpty) {
       return 'Please enter some text';
@@ -138,17 +170,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // Go to second page of Register
       await Navigator.of(context).pushReplacement(
         MaterialPageRoute<dynamic>(
-          builder: (BuildContext context) =>
-              RegisterScreen2(
-                  emailController: _emailController,
-                  passwordController: _passwordController,
-              ),
+          builder: (BuildContext context) => RegisterScreen2(
+            emailController: _emailController,
+            passwordController: _passwordController,
+          ),
         ),
       );
     }
   }
 
   void navigateToLogin() {
-    Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) => const LoginScreen()));
+    Navigator.of(context).pop(MaterialPageRoute<dynamic>(builder: (BuildContext context) => const LoginScreen()));
   }
 }

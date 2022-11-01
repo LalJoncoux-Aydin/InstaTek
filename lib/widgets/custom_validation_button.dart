@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../utils/colors.dart';
-
 class CustomValidationButton extends StatelessWidget {
   const CustomValidationButton({
     Key? key,
@@ -27,17 +25,20 @@ class CustomValidationButton extends StatelessWidget {
             width: double.infinity,
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(vertical: 12),
-            decoration: const ShapeDecoration(
-              shape: RoundedRectangleBorder(
+            decoration: ShapeDecoration(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(4),
                 ),
               ),
-              color: blueColor,
+              color: Theme.of(context).colorScheme.onBackground,
             ),
             child: !loadingState
-                ? Text(displayText, style: const TextStyle(color: whiteColor))
-                : const CircularProgressIndicator(color: primaryColor),
+                ? Text(
+                    displayText,
+                    style: Theme.of(context).textTheme.button!.copyWith(color: Theme.of(context).primaryColor),
+                  )
+                : CircularProgressIndicator(color: Theme.of(context).colorScheme.onBackground),
           ),
         ),
       ],

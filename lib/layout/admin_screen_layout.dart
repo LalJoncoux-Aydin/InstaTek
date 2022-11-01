@@ -68,16 +68,17 @@ class AdminScreenLayoutState extends State<AdminScreenLayout> {
               });
             },
             labelType: labelType,
-            destinations: const <NavigationRailDestination>[
+            destinations: <NavigationRailDestination>[
               NavigationRailDestination(
-                icon: Icon(Icons.photo_library),
-                selectedIcon: Icon(Icons.photo_library_outlined),
-                label: Text('Posts'),
+                icon: Icon(Icons.photo_library, color: Theme.of(context).iconTheme.color),
+                selectedIcon:
+                    Icon(Icons.photo_library_outlined, color: Theme.of(context).iconTheme.color!.withOpacity(1.0)),
+                label: const Text('Posts'),
               ),
               NavigationRailDestination(
-                icon: Icon(Icons.person),
-                selectedIcon: Icon(Icons.person_outline),
-                label: Text('Users'),
+                icon: Icon(Icons.person, color: Theme.of(context).iconTheme.color),
+                selectedIcon: Icon(Icons.person_outline, color: Theme.of(context).iconTheme.color!.withOpacity(1.0)),
+                label: const Text('Users'),
               ),
               /* NavigationRailDestination(
                 icon: Icon(Icons.history),

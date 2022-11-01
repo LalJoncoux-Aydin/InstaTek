@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:instatek/custom_icons.dart';
 import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/providers/user_provider.dart';
-import 'package:instatek/utils/colors.dart';
 import 'package:instatek/utils/global_variables.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +16,7 @@ class MobileScreenLayout extends StatefulWidget {
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
 //  late AnimationController _controller;
   String username = "";
-  int _page = 0;
+  int _currentPage = 0;
   late PageController pageController;
   late UserProvider userProvider;
   late model.User myUser;
@@ -52,7 +52,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
 
   void onPageChanged(int page) {
     setState(() {
-      _page = page;
+      _currentPage = page;
     });
   }
 
@@ -66,66 +66,104 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         children: homeScreenItems,
       ),
       bottomNavigationBar: CupertinoTabBar(
-        backgroundColor: mobileBackgroundColor,
+        currentIndex: _currentPage,
+        backgroundColor: Theme.of(context).colorScheme.background,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Icon(
-                Icons.home,
-                color: (_page == 0) ? primaryColor : secondaryColor,
+                (_currentPage == 0) ? Icons.home : Icons.home_outlined,
+                color: Theme.of(context).iconTheme.color,
               ),
             ),
             label: '',
-            backgroundColor: primaryColor,
+            backgroundColor: Theme.of(context).colorScheme.background,
           ),
           BottomNavigationBarItem(
+            activeIcon: Container(
+              padding: const EdgeInsets.symmetric(vertical: 13),
+              child: Icon(
+                CustomIcons.search,
+                color: Theme.of(context).iconTheme.color,
+                size: 24,
+              ),
+            ),
+            icon: Container(
+              padding: const EdgeInsets.symmetric(vertical: 13),
+              child: Center(
+                child: Icon(
+                  CustomIcons.search_outline,
+                  color: Theme.of(context).iconTheme.color,
+                  size: 24,
+                ),
+              ),
+            ),
+            label: '',
+            backgroundColor: Theme.of(context).colorScheme.background,
+          ),
+          BottomNavigationBarItem(
+            activeIcon: Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Icon(
+                Icons.add_box,
+                color: Theme.of(context).iconTheme.color,
+                size: 26,
+              ),
+            ),
             icon: Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Icon(
-                Icons.search,
-                color: (_page == 1) ? primaryColor : secondaryColor,
+                Icons.add_box_outlined,
+                color: Theme.of(context).iconTheme.color,
+                size: 26,
               ),
             ),
             label: '',
-            backgroundColor: primaryColor,
+            backgroundColor: Theme.of(context).colorScheme.background,
           ),
           BottomNavigationBarItem(
-            icon: Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Icon(
-                Icons.add_circle,
-                color: (_page == 2) ? primaryColor : secondaryColor,
-              ),
-            ),
-            label: '',
-            backgroundColor: primaryColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Container(
+            activeIcon: Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Icon(
                 Icons.favorite,
-                color: (_page == 3) ? primaryColor : secondaryColor,
+                color: Theme.of(context).iconTheme.color,
+                size: 26,
               ),
             ),
-            label: '',
-            backgroundColor: primaryColor,
-          ),
-          BottomNavigationBarItem(
             icon: Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Icon(
-                Icons.person,
-                color: (_page == 4) ? primaryColor : secondaryColor,
+                Icons.favorite_outline,
+                color: Theme.of(context).iconTheme.color,
+                size: 26,
               ),
             ),
             label: '',
-            backgroundColor: primaryColor,
+            backgroundColor: Theme.of(context).colorScheme.background,
+          ),
+          BottomNavigationBarItem(
+            activeIcon: Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Icon(
+                Icons.person,
+                color: Theme.of(context).iconTheme.color,
+                size: 26,
+              ),
+            ),
+            icon: Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Icon(
+                Icons.person_outline,
+                color: Theme.of(context).iconTheme.color,
+                size: 26,
+              ),
+            ),
+            label: '',
+            backgroundColor: Theme.of(context).colorScheme.background,
           ),
         ],
         onTap: navigationTapped,
-        //currentIndex: _page,
       ),
     );
   }

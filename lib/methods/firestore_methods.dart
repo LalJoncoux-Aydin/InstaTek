@@ -22,7 +22,7 @@ class FireStoreMethods {
       final Post post = Post(
         description: description,
         uid: uid,
-        username: username,
+        username: username.toLowerCase(),
         likes: <String>[],
         postId: postId,
         datePublished: DateTime.now(),
