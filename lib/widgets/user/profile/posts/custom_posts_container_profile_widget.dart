@@ -10,13 +10,13 @@ class CustomPostsContainerProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 1.7);
+    double correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 1.7);
     final Size size = MediaQuery.of(context).size;
     double paddingPosts = 0;
     if (size.width >= 1366) {
       paddingPosts = 10;
     } else {
-      paddingPosts = 5;
+      paddingPosts = 15;
     }
 
     return Container(
@@ -30,20 +30,20 @@ class CustomPostsContainerProfile extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          final List<QueryDocumentSnapshot<Map<String, dynamic>>> docs = snapshot.data!.docs;
+          List<QueryDocumentSnapshot<Map<String, dynamic>>> docs = snapshot.data!.docs;
+          docs.sort((QueryDocumentSnapshot<Map<String, dynamic>> a, QueryDocumentSnapshot<Map<String, dynamic>> b) => a.data()['datePublished'].toDate().toString().compareTo(b.data()['datePublished'].toDate().toString()));
+          docs = docs.reversed.toList();
 
           return GridView.builder(
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
                 childAspectRatio: correctRatio,
-                mainAxisSpacing: 10.0,
-                crossAxisSpacing: 10.0,
             ),
             itemCount: docs.length,
             itemBuilder: (BuildContext ctx, int index) => Container(
                   decoration: BoxDecoration(
-                      border: Border.all(color: greyColor),
+                      border: Border.all(color: whiteColor),
                   ),
                   child: Image.network(docs[index].data()['postUrl'].toString()),
             ),

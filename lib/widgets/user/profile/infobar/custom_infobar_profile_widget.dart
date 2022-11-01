@@ -18,48 +18,54 @@ class CustomInfobarProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    double paddingGlobal = 0;
     double paddingImageTable = 0;
     double paddingName = 0;
     double paddingButtonTop = 0;
     double paddingButtonBottom = 0;
     if (size.width >= 1366) {
+      paddingGlobal = 30;
       paddingImageTable = 10;
       paddingName = 10;
       paddingButtonTop = 1;
       paddingButtonBottom = 1;
     } else {
+      paddingGlobal = 20;
       paddingImageTable = 2;
       paddingName = 15;
       paddingButtonTop = 5;
       paddingButtonBottom = 2;
     }
 
-    return Column(
-      children: <Container>[
-        Container(
-          padding: EdgeInsets.only(top: paddingImageTable),
-          width: double.infinity,
-          child: Row(
-            children: <Widget>[
-              CustomProfilePictureProfile(photoUrl: photoUrl),
-              CustomTableProfileFollow(followers: followers, following: following, postSize: postSize),
-            ],
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
+      child: Column(
+        children: <Container>[
+          Container(
+            padding: EdgeInsets.only(top: paddingImageTable),
+            width: double.infinity,
+            child: Row(
+              children: <Widget>[
+                CustomProfilePictureProfile(photoUrl: photoUrl),
+                CustomTableProfileFollow(followers: followers, following: following, postSize: postSize),
+              ],
+            ),
           ),
-        ),
-        Container(
-          padding: EdgeInsets.only(top: paddingName),
-          width: double.infinity,
-          child: CustomNameProfile(username: username, bio: bio),
-        ),
-        Container(
-          padding: EdgeInsets.only(top: paddingButtonTop, bottom: paddingButtonBottom),
-          width: double.infinity,
-          child: Form(
-            key: formKey,
-            child: CustomValidationButton(displayText: "Modify my account", formKey: formKey, loadingState: false, onTapFunction: modifyAccount),
+          Container(
+            padding: EdgeInsets.only(top: paddingName),
+            width: double.infinity,
+            child: CustomNameProfile(username: username, bio: bio),
           ),
-        )
-      ],
+          Container(
+            padding: EdgeInsets.only(top: paddingButtonTop, bottom: paddingButtonBottom),
+            width: double.infinity,
+            child: Form(
+              key: formKey,
+              child: CustomValidationButton(displayText: "Modify my account", formKey: formKey, loadingState: false, onTapFunction: modifyAccount),
+            ),
+          )
+        ],
+      )
     );
   }
 

@@ -78,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       paddingGlobalHorizontal = 50;
       paddingGlobalVertical = 40;
     } else {
-      paddingGlobalHorizontal = 20;
+      paddingGlobalHorizontal = 0;
       paddingGlobalVertical = 20;
     }
 
@@ -116,7 +116,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 children: <Widget>[
                   CustomInfobarProfile(photoUrl: photoUrl, followers: followers, following: following, postSize: postSize, username: username, bio: bio, formKey: formKey),
-                  const Divider(),
                   CustomPostsContainerProfile(uid: uid),
                 ],
               ),
