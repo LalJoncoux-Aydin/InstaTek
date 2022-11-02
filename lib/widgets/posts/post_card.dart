@@ -65,9 +65,9 @@ class _PostCardState extends State<PostCard> {
       // boundary needed for web
       decoration: BoxDecoration(
         border: Border.all(
-          color: width > webScreenSize ? secondaryColor : mobileBackgroundColor,
+          color: width > webScreenSize ? secondaryColor : Theme.of(context).primaryColor,
         ),
-        color: mobileBackgroundColor,
+        color: Theme.of(context).primaryColor,
       ),
       padding: const EdgeInsets.symmetric(
         vertical: 10,
@@ -77,7 +77,7 @@ class _PostCardState extends State<PostCard> {
           // HEADER SECTION OF THE POST
           Container(
             padding: const EdgeInsets.symmetric(
-              vertical: 4,
+              vertical: 10,
               horizontal: 16,
             ).copyWith(right: 0),
             child: Row(
@@ -99,10 +99,7 @@ class _PostCardState extends State<PostCard> {
                       children: <Widget>[
                         Text(
                           widget.snap['username'].toString(),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: primaryColor,
-                          ),
+                          style: Theme.of(context).textTheme.headline1,
                         ),
                       ],
                     ),
@@ -126,7 +123,10 @@ class _PostCardState extends State<PostCard> {
                                     (String e) => InkWell(
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                                        child: Text(e),
+                                        child: Text(
+                                          e,
+                                          style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
+                                        ),
                                       ),
                                       onTap: () {
                                         deletePost(
@@ -143,9 +143,9 @@ class _PostCardState extends State<PostCard> {
                         },
                       );
                     },
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.more_vert,
-                      color: primaryColor,
+                      color: Theme.of(context).primaryColor,
                     ),
                   )
                 else
@@ -195,9 +195,9 @@ class _PostCardState extends State<PostCard> {
                             color: Colors.red,
                             size: 100,
                           )
-                        : const Icon(
+                        : Icon(
                             Icons.favorite,
-                            color: primaryColor,
+                            color: Theme.of(context).primaryColor,
                             size: 100,
                           ),
                   ),
@@ -217,9 +217,9 @@ class _PostCardState extends State<PostCard> {
                           Icons.favorite,
                           color: Colors.red,
                         )
-                      : const Icon(
+                      : Icon(
                           Icons.favorite_border,
-                          color: primaryColor,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                   onPressed: () => FireStoreMethods().addOrRemoveLikeOnPost(
                     widget.snap['postId'].toString(),
@@ -229,9 +229,9 @@ class _PostCardState extends State<PostCard> {
                 ),
               ),
               IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.comment_outlined,
-                  color: primaryColor,
+                  color: Theme.of(context).iconTheme.color,
                 ),
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute<dynamic>(
@@ -242,9 +242,9 @@ class _PostCardState extends State<PostCard> {
                 ),
               ),
               IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.send_outlined,
-                  color: primaryColor,
+                  color: Theme.of(context).iconTheme.color,
                 ),
                 onPressed: () {},
               ),
@@ -252,9 +252,9 @@ class _PostCardState extends State<PostCard> {
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.bookmark_border,
-                      color: primaryColor,
+                      color: Theme.of(context).iconTheme.color,
                     ),
                     onPressed: () {},
                   ),
@@ -269,15 +269,9 @@ class _PostCardState extends State<PostCard> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                DefaultTextStyle(
-                  style: Theme.of(context).textTheme.subtitle2!.copyWith(fontWeight: FontWeight.w800),
-                  child: Text(
-                    '${widget.snap['likes'].length} likes',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2!
-                        .copyWith(color: primaryColor, fontWeight: FontWeight.w100),
-                  ),
+                Text(
+                  '${widget.snap['likes'].length} likes',
+                  style: Theme.of(context).textTheme.headline1,
                 ),
                 Container(
                   width: double.infinity,
@@ -286,16 +280,14 @@ class _PostCardState extends State<PostCard> {
                   ),
                   child: RichText(
                     text: TextSpan(
-                      style: const TextStyle(color: primaryColor),
                       children: <InlineSpan>[
                         TextSpan(
                           text: widget.snap['username'].toString(),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context).textTheme.headline1,
                         ),
                         TextSpan(
                           text: ' ${widget.snap['description']}',
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ],
                     ),
@@ -306,10 +298,7 @@ class _PostCardState extends State<PostCard> {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: Text(
                       'View all $numberOfComments comments',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: secondaryColor,
-                      ),
+                      style: Theme.of(context).textTheme.button,
                     ),
                   ),
                   onTap: () => Navigator.of(context).push(
@@ -324,9 +313,9 @@ class _PostCardState extends State<PostCard> {
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Text(
                     DateFormat.yMMMd().format(widget.snap['datePublished'].toDate()),
-                    style: const TextStyle(
-                      color: secondaryColor,
-                    ),
+                    style: Theme.of(context).textTheme.button!.copyWith(
+                          fontSize: Theme.of(context).textTheme.caption!.fontSize! - 2,
+                        ),
                   ),
                 ),
               ],

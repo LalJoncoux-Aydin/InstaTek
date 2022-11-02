@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instatek/methods/firestore_methods.dart';
 import 'package:instatek/providers/user_provider.dart';
-import 'package:instatek/utils/colors.dart';
 import 'package:instatek/utils/utils.dart';
 import 'package:provider/provider.dart';
 
@@ -131,7 +130,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
           )
         : Scaffold(
             appBar: AppBar(
-              backgroundColor: mobileBackgroundColor,
+              backgroundColor: Theme.of(context).colorScheme.background,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: clearImage,
@@ -147,9 +146,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     user.username,
                     user.avatarUrl,
                   ),
-                  child: const Text(
+                  child: Text(
                     "Post",
-                    style: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold, fontSize: 16.0),
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.button!.color,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                    ),
                   ),
                 )
               ],
@@ -174,6 +177,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         controller: _descriptionController,
                         decoration: const InputDecoration(hintText: "Write a caption...", border: InputBorder.none),
                         maxLines: 8,
+                        cursorColor: Theme.of(context).colorScheme.onBackground,
                       ),
                     ),
                     SizedBox(
@@ -184,7 +188,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         child: Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
                               alignment: FractionalOffset.topCenter,
                               image: MemoryImage(_file!),
                             ),

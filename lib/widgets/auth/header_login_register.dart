@@ -11,6 +11,7 @@ class HeaderLoginRegister extends StatelessWidget {
         const SizedBox(height: 30),
         SvgPicture.asset(
           'assets/instatek_logo.svg',
+          color: Theme.of(context).colorScheme.secondary,
           height: 60,
         ),
         const SizedBox(height: 30),

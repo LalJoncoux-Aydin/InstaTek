@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instatek/utils/colors.dart';
 import 'package:instatek/utils/global_variables.dart';
 import 'package:instatek/widgets/posts/post_card.dart';
 
@@ -18,29 +17,29 @@ class _FeedScreenState extends State<FeedScreen> {
     final double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: width > webScreenSize ? webBackgroundColor : mobileBackgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: width > webScreenSize
           ? null
           : AppBar(
-              backgroundColor: mobileBackgroundColor,
+              backgroundColor: Theme.of(context).colorScheme.background,
               centerTitle: false,
               title: SvgPicture.asset(
                 'assets/instatek_logo.svg',
-                color: primaryColor,
+                color: Theme.of(context).colorScheme.secondary,
                 height: 32,
               ),
               actions: <Widget>[
                 IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.messenger_outline_rounded,
-                    color: primaryColor,
+                    color: Theme.of(context).iconTheme.color,
                   ),
                   onPressed: () {},
                 ),
               ],
             ),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+        stream: FirebaseFirestore.instance.collection('posts').orderBy('datePublished', descending: true).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(

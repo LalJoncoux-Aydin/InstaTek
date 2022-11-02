@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:instatek/methods/firestore_methods.dart';
 import 'package:instatek/models/user.dart';
 import 'package:instatek/providers/user_provider.dart';
-import 'package:instatek/utils/colors.dart';
 import 'package:instatek/utils/utils.dart';
 import 'package:instatek/widgets/posts/comment_card.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +50,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: mobileBackgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         title: const Text(
           'Comments',
         ),
@@ -109,9 +108,9 @@ class _CommentsScreenState extends State<CommentsScreen> {
                 ),
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  child: const Text(
+                  child: Text(
                     'Post',
-                    style: TextStyle(color: Colors.blue),
+                    style: TextStyle(color: Theme.of(context).primaryColor),
                   ),
                 ),
               )

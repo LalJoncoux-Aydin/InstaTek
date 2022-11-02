@@ -20,7 +20,7 @@ class CustomImagePicker extends StatelessWidget {
               CircleAvatar(
                 radius: 64,
                 backgroundImage: MemoryImage(imagePick!),
-                backgroundColor: Colors.red,
+                backgroundColor: Theme.of(context).colorScheme.background,
               )
             else
               const CircleAvatar(
