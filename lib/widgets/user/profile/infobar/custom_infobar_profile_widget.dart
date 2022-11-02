@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:instatek/widgets/tools/custom_validation_button.dart';
+import '../../../../utils/colors.dart';
 import 'custom_name_profile_widget.dart';
 import 'custom_profile_picture_profile.dart';
 import 'custom_table_profile_follow.dart';
@@ -14,6 +15,15 @@ class CustomInfobarProfile extends StatelessWidget {
   final String username;
   final String bio;
   final GlobalKey<FormState> formKey;
+
+  final ShapeDecoration modifyButton = const ShapeDecoration(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(4),
+      ),
+    ),
+    color: greyColor,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +43,7 @@ class CustomInfobarProfile extends StatelessWidget {
       paddingGlobal = 20;
       paddingImageTable = 2;
       paddingName = 15;
-      paddingButtonTop = 5;
+      paddingButtonTop = 20;
       paddingButtonBottom = 2;
     }
 
@@ -61,7 +71,7 @@ class CustomInfobarProfile extends StatelessWidget {
             width: double.infinity,
             child: Form(
               key: formKey,
-              child: CustomValidationButton(displayText: "Modify my account", formKey: formKey, loadingState: false, onTapFunction: modifyAccount),
+              child: CustomValidationButton(displayText: "Modify my account", formKey: formKey, loadingState: false, onTapFunction: modifyAccount, shapeDecoration: modifyButton),
             ),
           )
         ],

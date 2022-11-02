@@ -85,6 +85,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
                           formKey: formKey,
                           loadingState: _isLoading,
                           onTapFunction: registerUser,
+                          shapeDecoration: null,
                         ),
                       ],
                     ),

@@ -9,32 +9,36 @@ class CustomValidationButton extends StatelessWidget {
     required this.formKey,
     required this.loadingState,
     required this.onTapFunction,
+    required this.shapeDecoration,
   }) : super(key: key);
 
   final String displayText;
   final GlobalKey<FormState> formKey;
   final bool loadingState;
   final void Function(GlobalKey<FormState>) onTapFunction;
+  final ShapeDecoration? shapeDecoration;
 
   @override
   Widget build(BuildContext context) {
+    ShapeDecoration? decorationButton = shapeDecoration;
+    decorationButton ??= const ShapeDecoration(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(4),
+          ),
+        ),
+        color: blueColor,
+      );
+
     return Column(
       children: <Widget>[
-        const SizedBox(height: 10),
         InkWell(
           onTap: () => onTapFunction(formKey),
           child: Container(
             width: double.infinity,
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(vertical: 12),
-            decoration: const ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(4),
-                ),
-              ),
-              color: blueColor,
-            ),
+            decoration: decorationButton,
             child: !loadingState
                 ? Text(displayText, style: const TextStyle(color: whiteColor))
                 : const CircularProgressIndicator(color: primaryColor),

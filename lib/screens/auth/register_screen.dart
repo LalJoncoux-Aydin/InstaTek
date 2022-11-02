@@ -61,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       CustomTextFormField(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true, isValid: passwordIsValid(password1), updateInput: updatePassword),
                       CustomTextFormField(hintText: 'Enter your password again', textEditingController: _passwordController2, isPass: true, isValid: password2IsValid(password1, password2), updateInput: updatePassword2),
                       CustomErrorText(displayStr: errorText),
-                      CustomValidationButton(displayText: 'Register', formKey: formKey, loadingState: _isLoading, onTapFunction: nextStepRegister),
+                      CustomValidationButton(displayText: 'Register', formKey: formKey, loadingState: _isLoading, onTapFunction: nextStepRegister, shapeDecoration: null,),
                       CustomNavLink(displayText1: "Already have an account ?", displayText2: "Login", onTapFunction: navigateToLogin),
                     ],
                   ),
