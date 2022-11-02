@@ -6,9 +6,9 @@ import 'package:instatek/utils/colors.dart';
 import 'package:instatek/widgets/tools/custom_loading_screen.dart';
 import 'package:instatek/widgets/user/profile/infobar/custom_infobar_profile_widget.dart';
 import 'package:provider/provider.dart';
-import '../providers/user_provider.dart';
-import '../widgets/user/profile/posts/custom_posts_container_profile_widget.dart';
-import 'auth/login_screen.dart';
+import '../../../providers/user_provider.dart';
+import '../../../widgets/user/profile/posts/custom_posts_container_profile_widget.dart';
+import '../../auth/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, required this.uid}) : super(key: key);

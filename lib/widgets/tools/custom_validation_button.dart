@@ -15,7 +15,7 @@ class CustomValidationButton extends StatelessWidget {
   final String displayText;
   final GlobalKey<FormState> formKey;
   final bool loadingState;
-  final void Function(GlobalKey<FormState>) onTapFunction;
+  final void Function(GlobalKey<FormState>, BuildContext? context) onTapFunction;
   final ShapeDecoration? shapeDecoration;
 
   @override
@@ -33,7 +33,7 @@ class CustomValidationButton extends StatelessWidget {
     return Column(
       children: <Widget>[
         InkWell(
-          onTap: () => onTapFunction(formKey),
+          onTap: () => onTapFunction(formKey, context),
           child: Container(
             width: double.infinity,
             alignment: Alignment.center,

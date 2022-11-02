@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:instatek/methods/firestore_methods.dart';
 import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/providers/user_provider.dart';
-import 'package:instatek/screens/comments_screen.dart';
+import 'package:instatek/screens/posts/feed/comments_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/utils/global_variables.dart';
 import 'package:instatek/utils/utils.dart';

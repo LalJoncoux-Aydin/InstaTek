@@ -7,7 +7,7 @@ import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/utils/utils.dart';
 import 'package:provider/provider.dart';
 
-import '../models/user.dart';
+import '../../../models/user.dart';
 
 class AddPostScreen extends StatefulWidget {
   const AddPostScreen({Key? key}) : super(key: key);

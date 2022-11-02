@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:instatek/widgets/tools/custom_validation_button.dart';
 import '../../../../utils/colors.dart';
+import '../modify/modify_account_profile_widget.dart';
 import 'custom_name_profile_widget.dart';
 import 'custom_profile_picture_profile.dart';
 import 'custom_table_profile_follow.dart';
@@ -75,11 +76,31 @@ class CustomInfobarProfile extends StatelessWidget {
             ),
           )
         ],
-      )
+      ),
     );
   }
 
-  void modifyAccount(dynamic formKey) async {
+  void modifyAccount(dynamic formKey, BuildContext? context) async {
+    await Navigator.of(context!).push(
+      transitionRoute(),
+    );
+  }
 
+  Route<ModifyAccountProfile> transitionRoute() {
+    return PageRouteBuilder<ModifyAccountProfile>(
+      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => const ModifyAccountProfile(),
+      transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+        const Offset begin = Offset(0.0, 1.0);
+        const Offset end = Offset.zero;
+        const Cubic curve = Curves.ease;
+
+        final Animatable<Offset> tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
   }
 }

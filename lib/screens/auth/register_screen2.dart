@@ -123,7 +123,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
     });
   }
 
-  void registerUser(dynamic formKey) async {
+  void registerUser(dynamic formKey, BuildContext? context) async {
     if (formKey.currentState!.validate()) {
       // set loading to true
       setState(() {
@@ -155,7 +155,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
       // if string returned is success, user has been created
       if (res == "Success") {
         if (!mounted) return;
-        await Navigator.of(context).pushReplacement(
+        await Navigator.of(context!).pushReplacement(
           MaterialPageRoute<dynamic>(
             builder: (BuildContext context) => const ResponsiveLayout(
               mobileScreenLayout: MobileScreenLayout(),

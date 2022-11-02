@@ -116,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return null;
   }
 
-  void nextStepRegister(dynamic formKey) async {
+  void nextStepRegister(dynamic formKey, BuildContext? context) async {
     if (formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
@@ -136,7 +136,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
       if (!mounted) return;
       // Go to second page of Register
-      await Navigator.of(context).pushReplacement(
+      await Navigator.of(context!).pushReplacement(
         MaterialPageRoute<dynamic>(
           builder: (BuildContext context) =>
               RegisterScreen2(
