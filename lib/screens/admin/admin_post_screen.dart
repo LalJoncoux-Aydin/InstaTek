@@ -9,12 +9,12 @@ class AdminPostScreen extends StatefulWidget {
 }
 
 class _AdminPostScreenState extends State<AdminPostScreen> {
-  final Stream<QuerySnapshot<Object>> _usersStream =
+  final Stream<QuerySnapshot<Object>> _postsStream =
       FirebaseFirestore.instance.collection('posts').snapshots();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Object>>(
-      stream: _usersStream,
+      stream: _postsStream,
       builder: (
         BuildContext context,
         AsyncSnapshot<QuerySnapshot<Object>> snapshot,
