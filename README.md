@@ -141,7 +141,38 @@ flutter run
 
 https://www.figma.com/file/uLNpfX1iaVPnRenH1FhlWR/InstaTek?node-id=325%3A79
 
-## Repository structure
+# Repository structure
+
+```
+/
+├─ INSTATEK/
+     ├─ android/                                  # Android config
+     │        ├─ gradle/                          # Gradle wrapper properties
+     │        ├─ gradle.property                  # gradle property value
+     │        └─ settings.gradle                  # flutter setting
+     |
+     ├─ ios/                                      # IOS app
+     ├─ assets/                                   # Assets (Logo, Video, Images)
+     |
+     ├─ lib/                                      # Main code
+     │    ├─ layout/                               
+     │    ├─ methods/                               
+     |    ├─ models/                          
+     │    ├─ providers/
+     │    ├─ screens/
+     │    ├─ utils/ 
+     │    ├─ widgets/
+     │    ├─ custom_icons.dart
+     │    └─ main.dart                            # Main
+     |
+     ├
+     │
+     ├─ test/                                     # test file 
+     |
+     ├
+     └─ pubspec.yaml                              # File Package (Dependencies)
+
+```
 
 # Norme Commit
 
