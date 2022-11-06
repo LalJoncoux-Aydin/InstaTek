@@ -4,7 +4,7 @@ import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/utils/global_variables.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/custom_loading_screen.dart';
+import '../widgets/tools/custom_loading_screen.dart';
 
 class ResponsiveLayout extends StatefulWidget {
   const ResponsiveLayout({Key? key, required this.webScreenLayout, required this.mobileScreenLayout, required this.adminScreenLayout}) : super(key:key);
@@ -45,10 +45,10 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading == false) {
+/*    if (_isLoading == false) {
       setupUser();
       return const CustomLoadingScreen();
-    } else {
+    } else {*/
       return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           if (constraints.maxWidth > webScreenSize && myUser.isAdmin == false) {
@@ -60,6 +60,6 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerPr
           return widget.mobileScreenLayout;
         },
       );
-    }
+  //  }
   }
 }

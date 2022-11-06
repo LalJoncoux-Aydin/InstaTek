@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
+import '../../utils/colors.dart';
 
 class CustomNavLink extends StatelessWidget {
   const CustomNavLink({Key? key, required this.displayText1, required this.displayText2, required this.onTapFunction})
@@ -17,16 +19,13 @@ class CustomNavLink extends StatelessWidget {
           children: <Widget>[
             Container(
               padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 8),
-              child: Text(displayText1, style: TextStyle(color: Theme.of(context).colorScheme.secondary)),
+              child: Text(displayText1, style: const TextStyle(color: blueColor)),
             ),
             GestureDetector(
               onTap: onTapFunction,
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 25),
-                child: Text(
-                  displayText2,
-                  style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.secondary),
-                ),
+                child: Text(displayText2, style: const TextStyle(fontWeight: FontWeight.bold, color: blueColor)),
               ),
             )
           ],
