@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../../providers/user_provider.dart';
 import '../../../widgets/user/profile/posts/custom_posts_container_profile_widget.dart';
 import '../../auth/login_screen.dart';
+import 'modify_button_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, required this.uid}) : super(key: key);
@@ -115,7 +116,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               width: double.infinity,
               child: Column(
                 children: <Widget>[
-                  CustomInfobarProfile(photoUrl: photoUrl, followers: followers, following: following, postSize: postSize, username: username, bio: bio, formKey: formKey),
+                  CustomInfobarProfile(photoUrl: photoUrl, followers: followers, following: following, postSize: postSize, username: username, bio: bio),
+                  const ModifyButtonProfile(),
                   CustomPostsContainerProfile(uid: uid),
                 ],
               ),

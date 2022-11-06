@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Form(
           key: formKey,
-          child: Column(children: <Widget>[
+          child: Column(children: <Expanded>[
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
