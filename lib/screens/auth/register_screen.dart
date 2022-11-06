@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:instatek/screens/auth/login_screen.dart';
 import 'package:instatek/screens/auth/register_screen2.dart';
+
 import '../../methods/auth_methods.dart';
-import '../../widgets/tools/custom_error_text_widget.dart';
 import '../../widgets/auth/custom_nav_link_widget.dart';
+import '../../widgets/auth/header_login_register.dart';
+import '../../widgets/tools/custom_error_text_widget.dart';
 import '../../widgets/tools/custom_text_form_field_widget.dart';
 import '../../widgets/tools/custom_validation_button.dart';
-import '../../widgets/auth/header_login_register.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);

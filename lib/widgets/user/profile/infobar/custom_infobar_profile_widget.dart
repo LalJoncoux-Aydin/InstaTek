@@ -75,7 +75,7 @@ class CustomInfobarProfile extends StatelessWidget {
             ),
           )
         ],
-      )
+      ),
     );
   }
 

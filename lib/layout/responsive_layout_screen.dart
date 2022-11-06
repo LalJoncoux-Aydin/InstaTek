@@ -4,8 +4,6 @@ import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/utils/global_variables.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/tools/custom_loading_screen.dart';
-
 class ResponsiveLayout extends StatefulWidget {
   const ResponsiveLayout({Key? key, required this.webScreenLayout, required this.mobileScreenLayout, required this.adminScreenLayout}) : super(key:key);
   final Widget webScreenLayout;
@@ -19,7 +17,6 @@ class ResponsiveLayout extends StatefulWidget {
 class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerProviderStateMixin {
   late UserProvider userProvider;
   late model.User myUser;
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -33,7 +30,6 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerPr
     if (userProvider.isUser == true) {
       setState(() {
         myUser = userProvider.getUser;
-        _isLoading = true;
       });
     }
   }
