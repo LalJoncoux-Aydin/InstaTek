@@ -14,28 +14,29 @@ Users can comment and like your post.
 You can search for a user’s name, and access their profile with all their previous posts.
 A user can only edit and delete his own post and comments below, except the admin which has this right for all users.
 
-# Register
+# User Part
+## Register
 <p align="center">
   <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-27-02.png" width="450px"/>
 </p>
 
-# Login
+## Login
 <p align="center">
   <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-26-45.png" width="450px"/>
 </p>
 
 
-# Feed
+## Feed
 <p align="center">
   <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-27-19.png" width="450px"/>
 </p>
 
-# Comments
+## Comments
 <p align="center">
   <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-27-33.png" width="450px"/>
 </p>
 
-# Upload
+## Upload
 <p align="center">
   <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-27-58.png" width="450px"/>
 </p>
@@ -48,12 +49,12 @@ A user can only edit and delete his own post and comments below, except the admi
   <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-28-31.png" width="450px"/>
 </p>
 
-# Post
+## Post
 <p align="center">
   <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-28-20.png" width="450px"/>
 </p>
 
-# Search User
+## Search User
 <p align="center">
   <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-27-44.png" width="450px"/>
 </p>
@@ -62,7 +63,7 @@ A user can only edit and delete his own post and comments below, except the admi
   <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-28-40.png" width="450px"/>
 </p>
 
-# Profile
+## Profile
 
 <p align="center">
   <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-28-50.png" width="450px"/>
@@ -70,6 +71,20 @@ A user can only edit and delete his own post and comments below, except the admi
 
 <p align="center">
   <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/Capture%20d%E2%80%99%C3%A9cran%20de%202022-10-23%2014-29-01.png" width="450px"/>
+</p>
+
+# Admin Part
+
+## Posts
+
+<p align="center">
+  <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/postAdmin.png" width="750px"/>
+</p>
+
+## Users
+
+<p align="center">
+  <img src="https://github.com/LalJoncoux-Aydin/InstaTek/blob/main/screenshots/UserAdmin.png" width="750px"/>
 </p>
 
 # Flutter
@@ -121,6 +136,10 @@ flutter build apk
 ```sh
 flutter run
 ```
+
+# Figma
+
+https://www.figma.com/file/uLNpfX1iaVPnRenH1FhlWR/InstaTek?node-id=325%3A79
 
 ## Repository structure
 
