@@ -9,9 +9,9 @@ import '../../layout/mobile_screen_layout.dart';
 import '../../layout/responsive_layout_screen.dart';
 import '../../layout/web_screen_layout.dart';
 import '../../widgets/auth/custom_nav_link_widget.dart';
+import '../../widgets/auth/header_login_register.dart';
 import '../../widgets/tools/custom_text_form_field_widget.dart';
 import '../../widgets/tools/custom_validation_button.dart';
-import '../../widgets/auth/header_login_register.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
