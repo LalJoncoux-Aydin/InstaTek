@@ -1,9 +1,9 @@
 name: Deploy Web Docker on VPS
 
 on:
-  push:
+  pull_request:
     branches:
-      - prod_V1_1
+      - production
 
 jobs:
   deploy:
