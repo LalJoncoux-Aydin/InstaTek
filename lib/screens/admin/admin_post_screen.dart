@@ -53,7 +53,7 @@ class _AdminPostScreenState extends State<AdminPostScreen> {
                                 return <PopupMenuEntry<String>>[
                                   PopupMenuItem<String>(
                                     value: 'delete',
-                                    child: Text('Delete ${data['username']}'),
+                                    child: Text('Delete ${data['username']} post'),
                                   ),
                                 ];
                               },
