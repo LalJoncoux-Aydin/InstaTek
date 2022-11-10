@@ -1,12 +1,15 @@
+import 'dart:js';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/colors.dart';
 
 class CustomProfileContainerSearch extends StatelessWidget {
-  const CustomProfileContainerSearch({Key? key, required this.username}) : super(key: key);
+  const CustomProfileContainerSearch({Key? key, required this.username, required this.navigateToProfile}) : super(key: key);
 
   final String username;
+  final void Function(String) navigateToProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +59,16 @@ class CustomProfileContainerSearch extends StatelessWidget {
                     Container(
                     padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
                     width: double.infinity,
-                      child: Column(
-                        children: <Widget>[
-                          Image.network(docs[index].data()['avatarUrl'].toString()),
-                          Text(docs[index].data()['username'].toString())
-                        ],
+                      child: GestureDetector(
+                        onTap: () {
+                          navigateToProfile(docs[index].data()['uid'].toString());
+                        },
+                        child: Column(
+                          children: <Widget>[
+                            Image.network(docs[index].data()['avatarUrl'].toString()),
+                            Text(docs[index].data()['username'].toString())
+                          ],
+                        ),
                       ),
                     ),
                 ),
@@ -70,4 +78,6 @@ class CustomProfileContainerSearch extends StatelessWidget {
       ),
     );
   }
+
+
 }

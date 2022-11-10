@@ -15,6 +15,12 @@ class AuthMethods {
     return model.User.fromSnap(documentSnapshot);
   }
 
+  Future<model.User?> getSpecificUserDetails(String uid) async {
+    final DocumentSnapshot<Object?> documentSnapshot = await _firestore.collection('users').doc(uid).get();
+    print("Okay got it");
+    return model.User.fromSnap(documentSnapshot);
+  }
+
   Future<bool> usernameDoesntExist(dynamic username) async {
     final QuerySnapshot<Object?> querySnapshot = await _firestore.collection('users').get();
 

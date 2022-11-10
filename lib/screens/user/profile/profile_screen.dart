@@ -28,7 +28,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late int postSize = 0;
   late String photoUrl;
   late String bio;
-  late String uid = "";
   late GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
@@ -39,24 +38,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void setupUser() async {
-    userProvider = Provider.of(context, listen: false);
-    await userProvider.refreshUser();
-    if (userProvider.isUser == true) {
+    if (widget.uid != "") {
+      myUser = (await AuthMethods().getSpecificUserDetails(widget.uid))!;
       setState(() {
-        myUser = userProvider.getUser;
         username = myUser.username;
         followers = myUser.followers.length;
         following = myUser.following.length;
         photoUrl = myUser.avatarUrl;
         bio = myUser.bio;
-        uid = myUser.uid;
         _isLoading = true;
       });
-    }
-    if (uid != "") {
       final QuerySnapshot<Map<String, dynamic>> postSnap = await FirebaseFirestore.instance
           .collection('posts')
-          .where('uid', isEqualTo: uid)
+          .where('uid', isEqualTo: widget.uid)
           .get();
       setState(() {
         postSize = postSnap.docs.length;
@@ -118,7 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: <Widget>[
                   CustomInfobarProfile(photoUrl: photoUrl, followers: followers, following: following, postSize: postSize, username: username, bio: bio),
                   const ModifyButtonProfile(),
-                  CustomPostsContainerProfile(uid: uid),
+                  CustomPostsContainerProfile(uid: widget.uid),
                 ],
               ),
             ),

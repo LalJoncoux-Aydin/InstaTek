@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:instatek/screens/user/profile/profile_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/widgets/tools/custom_text_form_field_widget.dart';
 
@@ -65,7 +66,7 @@ class _SearchScreenState extends State<SearchScreen> {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: paddingGlobalHorizontal, vertical: paddingGlobalVertical),
             width: double.infinity,
-            child: CustomProfileContainerSearch(username: searchStr),
+            child: CustomProfileContainerSearch(username: searchStr, navigateToProfile: navigateToProfile),
           ),
         ),
       ),
@@ -76,5 +77,9 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       searchStr = newSearch;
     });
+  }
+
+  void navigateToProfile(dynamic uid) {
+    Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) => ProfileScreen(uid: uid)));
   }
 }
