@@ -113,6 +113,42 @@ class AuthMethods {
     }
     return res;
   }
+  
+  Future<String> updateUser({
+    String? username,
+    String? bio,
+    Uint8List? profilePicture,
+  }) async {
+    String res = "Internal unknown error.";
+    try{
+      final User currentUser = _auth.currentUser!;
+
+      if (username != "") {
+        await _firestore.collection('users').doc(currentUser.uid).update(<String, String?>{'username': username});
+        res = "Success";
+      }
+      if (bio != "") {
+        await _firestore.collection('users').doc(currentUser.uid).update(<String, String?>{'bio': bio});
+        res = "Success";
+      }
+      if (profilePicture != null) {
+        final String avatarUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
+        await currentUser.updatePhotoURL(avatarUrl);
+        res = "Success";
+      }
+      if (username == "" && bio == "") {
+        res = "Please enter at least a field";
+      }
+
+      await currentUser.reload();
+    }on FirebaseAuthException catch (err) {
+      res = err.code;
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+
+  }
 
   Future<void> signOut() async {
     await _auth.signOut();

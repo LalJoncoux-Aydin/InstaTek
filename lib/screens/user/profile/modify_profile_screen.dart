@@ -1,10 +1,17 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instatek/models/user.dart' as model;
+import 'package:instatek/screens/user/profile/profile_screen.dart';
+import 'package:instatek/widgets/tools/custom_error_text_widget.dart';
 import 'package:provider/provider.dart';
+import '../../../methods/auth_methods.dart';
 import '../../../providers/user_provider.dart';
+import '../../../utils/utils.dart';
+import '../../../widgets/tools/custom_image_picker_widget.dart';
 import '../../../widgets/tools/custom_loading_screen.dart';
 import '../../../widgets/tools/custom_text_form_field_widget.dart';
-import '../../../widgets/user/profile/infobar/custom_profile_picture_profile.dart';
+import '../../../widgets/tools/custom_validation_button.dart';
 
 class ModifyProfile extends StatefulWidget {
   const ModifyProfile({Key? key}) : super(key: key);
@@ -16,10 +23,14 @@ class ModifyProfile extends StatefulWidget {
 class _ModifyProfileState extends State<ModifyProfile> {
   late UserProvider userProvider;
   late model.User myUser;
-  late String username = "";
-  late String photoUrl;
-  late String bio;
+  late String? username;
+  late String? bio;
+  late String? photoUrl;
+  Uint8List? _image;
   bool _isLoading = false;
+  bool _isLoadingButton = false;
+  late String errorText = "";
+  late String uid = "";
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -39,6 +50,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
         username = myUser.username;
         bio = myUser.bio;
         photoUrl = myUser.avatarUrl;
+        uid = myUser.uid;
         _isLoading = true;
       });
     }
@@ -47,6 +59,8 @@ class _ModifyProfileState extends State<ModifyProfile> {
   @override
   void dispose() {
     super.dispose();
+    _usernameController.dispose();
+    _bioController.dispose();
   }
 
   @override
@@ -82,18 +96,32 @@ class _ModifyProfileState extends State<ModifyProfile> {
                       width: double.infinity,
                       child: Column(
                         children: <Widget>[
-                          CustomProfilePictureProfile(photoUrl: photoUrl),
-                          const Text("Modify profil picture"),
-                          CustomTextFormField(hintText: 'Enter your username',
-                              textEditingController: _usernameController,
-                              isPass: false,
-                              isValid: usernameIsValid(username),
-                              updateInput: updateUsername),
-                          CustomTextFormField(hintText: 'Enter your bio',
-                              textEditingController: _bioController,
-                              isPass: true,
-                              isValid: bioIsValid(bio),
-                              updateInput: updateBio),
+                          CustomImagePicker(
+                            imagePick: _image,
+                            onPressedFunction: selectImage,
+                          ),
+                          CustomTextFormField(
+                            hintText: 'Enter your username',
+                            textEditingController: _usernameController,
+                            isPass: false,
+                            isValid: usernameIsValid(username),
+                            updateInput: updateUsername,
+                          ),
+                          CustomTextFormField(
+                            hintText: 'Enter your bio',
+                            textEditingController: _bioController,
+                            isPass: false,
+                            isValid: bioIsValid(bio),
+                            updateInput: updateBio,
+                          ),
+                          CustomErrorText(displayStr: errorText),
+                          CustomValidationButton(
+                            displayText: 'Update',
+                            formKey: formKey,
+                            loadingState: _isLoadingButton,
+                            onTapFunction: updateUser,
+                            shapeDecoration: null,
+                          ),
                         ],
                       ),
                     ),
@@ -106,33 +134,6 @@ class _ModifyProfileState extends State<ModifyProfile> {
       );
     }
   }
-
-/*  void updateEmail(dynamic newMail) {
-    setState(() {
-      email = newMail;
-    });
-  }
-  String? emailIsValid(dynamic value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter some text';
-    }
-    if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
-      return 'Please enter an email in the correct format';
-    }
-    return null;
-  }
-
-  void updatePassword(dynamic newPassword) {
-    setState(() {
-      password = newPassword;
-    });
-  }
-  String? passwordIsValid(dynamic value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter some text';
-    }
-    return null;
-  }*/
 
   void updateUsername(dynamic newUsername) {
     setState(() {
@@ -156,5 +157,52 @@ class _ModifyProfileState extends State<ModifyProfile> {
       return 'Please enter some text';
     }
     return null;
+  }
+
+  void selectImage() async {
+    final Uint8List im = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = im;
+    });
+  }
+
+  void updateUser(dynamic formKey, BuildContext? context) async {
+    if (formKey.currentState!.validate()) {
+
+      setState(() {
+        _isLoadingButton = true;
+      });
+      final String res = await AuthMethods().updateUser(
+        username: _usernameController.text,
+        bio: _bioController.text,
+        profilePicture: _image,
+      );
+      setState(() {
+        _isLoadingButton = false;
+      });
+
+      // if res is Success, go to next page
+      if (res == "Success") {
+        if (!mounted) return;
+        navigateToRegister();
+      }
+      else if (res == 'username-already-in-use') {
+        setState(() {
+          errorText = "Username is already in use by another account";
+        });
+      } else {
+        setState(() {
+          errorText = "A server error happened : $res";
+        });
+      }
+    } else {
+      setState(() {
+        errorText = "An internal error happened";
+      });
+    }
+  }
+
+  void navigateToRegister() {
+    Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) => ProfileScreen(uid: uid)));
   }
 }

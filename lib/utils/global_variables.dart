@@ -8,9 +8,9 @@ int webScreenSize = 600;
 const String defaultAvatarUrl = 'https://cdn-icons-png.flaticon.com/512/847/847969.png';
 
 List<Widget> homeScreenItems = <Widget>[
+  ProfileScreen(uid: FirebaseAuth.instance.currentUser!.uid),
   const FeedScreen(),
   const Text('search'),
   const AddPostScreen(),
   const Text('notif'),
-  ProfileScreen(uid: FirebaseAuth.instance.currentUser!.uid),
 ];
