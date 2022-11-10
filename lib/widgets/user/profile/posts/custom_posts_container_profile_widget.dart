@@ -10,7 +10,7 @@ class CustomPostsContainerProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 1.7);
+    final double correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 1.7);
     final Size size = MediaQuery.of(context).size;
     double paddingPosts = 0;
     if (size.width >= 1366) {
