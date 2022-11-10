@@ -30,6 +30,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
   Uint8List? _image;
   bool _isLoading = false;
   late String username = "";
+  late String bio = "";
   late String errorText = "";
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -76,7 +77,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
                           hintText: 'Enter your bio',
                           textEditingController: _bioController,
                           isPass: false,
-                          isValid: null,
+                          isValid: bioIsValid(bio),
                           updateInput: updateBio,
                         ),
                         CustomErrorText(displayStr: errorText),
@@ -104,7 +105,6 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
       username = newUsername;
     });
   }
-
   String? usernameIsValid(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
@@ -112,8 +112,16 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
     return null;
   }
 
-  void updateBio(dynamic newUsername) {
-    //
+  void updateBio(dynamic newBio) {
+    setState(() {
+      bio = newBio;
+    });
+  }
+  String? bioIsValid(dynamic value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter some text';
+    }
+    return null;
   }
 
   void selectImage() async {
