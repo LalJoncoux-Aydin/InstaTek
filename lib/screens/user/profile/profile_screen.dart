@@ -4,11 +4,13 @@ import 'package:instatek/methods/auth_methods.dart';
 import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/widgets/tools/custom_loading_screen.dart';
+import 'package:instatek/widgets/tools/custom_validation_button.dart';
 import 'package:instatek/widgets/user/profile/infobar/custom_infobar_profile_widget.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/user_provider.dart';
 import '../../../widgets/user/profile/posts/custom_posts_container_profile_widget.dart';
 import '../../auth/login_screen.dart';
+import '../search/follow_button_profile_screen.dart';
 import 'modify_button_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -22,6 +24,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   late UserProvider userProvider;
   late model.User myUser;
+  late String ownerUid;
   late String username = "";
   late int followers = 0;
   late int following = 0;
@@ -30,6 +33,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late String bio;
   late GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool _isLoading = false;
+  bool _isLoadingFollow = false;
+  late bool _isFollowed = false;
 
   @override
   void initState() {
@@ -38,6 +43,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void setupUser() async {
+    userProvider = Provider.of(context, listen: false);
+    await userProvider.refreshUser();
+    if (userProvider.isUser == true) {
+      setState(() {
+        ownerUid = userProvider.getUser.uid;
+      });
+    }
+
     if (widget.uid != "") {
       myUser = (await AuthMethods().getSpecificUserDetails(widget.uid))!;
       setState(() {
@@ -111,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 children: <Widget>[
                   CustomInfobarProfile(photoUrl: photoUrl, followers: followers, following: following, postSize: postSize, username: username, bio: bio),
-                  const ModifyButtonProfile(),
+                  if (ownerUid == widget.uid) const ModifyButtonProfile() else if (_isFollowed == false) CustomValidationButton(displayText: "Follow", formKey: formKey, loadingState: _isLoadingFollow, onTapFunction: addFollowers, shapeDecoration: null) else if (_isFollowed == true) CustomValidationButton(displayText: "Unfo", formKey: formKey, loadingState: _isLoadingFollow, onTapFunction: addFollowers, shapeDecoration: null),
                   CustomPostsContainerProfile(uid: widget.uid),
                 ],
               ),
@@ -119,6 +132,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       );
+    }
+  }
+
+  void addFollowers(dynamic formKey, BuildContext? context) async {
+    if (formKey.currentState!.validate()) {
+      setState(() {
+        _isLoadingFollow = true;
+      });
+      final String res = await AuthMethods().addFollowers(
+        uid: widget.uid,
+      );
+      _isFollowed = true;
+      setState(() {
+        _isLoadingFollow = false;
+      });
     }
   }
 }
