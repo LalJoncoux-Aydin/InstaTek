@@ -15,6 +15,11 @@ class AuthMethods {
     return model.User.fromSnap(documentSnapshot);
   }
 
+  Future<model.User?> getSpecificUserDetails(String uid) async {
+    final DocumentSnapshot<Object?> documentSnapshot = await _firestore.collection('users').doc(uid).get();
+    return model.User.fromSnap(documentSnapshot);
+  }
+
   Future<bool> usernameDoesntExist(dynamic username) async {
     final QuerySnapshot<Object?> querySnapshot = await _firestore.collection('users').get();
 
@@ -113,8 +118,90 @@ class AuthMethods {
     }
     return res;
   }
+  
+  Future<String> updateUser({
+    String? username,
+    String? bio,
+    Uint8List? profilePicture,
+  }) async {
+    String res = "Internal unknown error.";
+    try{
+      final User currentUser = _auth.currentUser!;
+
+      if (username != "") {
+        await _firestore.collection('users').doc(currentUser.uid).update(<String, String?>{'username': username});
+        res = "Success";
+      }
+      if (bio != "") {
+        await _firestore.collection('users').doc(currentUser.uid).update(<String, String?>{'bio': bio});
+        res = "Success";
+      }
+      if (profilePicture != null) {
+        final String avatarUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
+        await currentUser.updatePhotoURL(avatarUrl);
+        res = "Success";
+      }
+      if (username == "" && bio == "") {
+        res = "Please enter at least a field";
+      }
+
+      await currentUser.reload();
+    }on FirebaseAuthException catch (err) {
+      res = err.code;
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+
+  }
 
   Future<void> signOut() async {
     await _auth.signOut();
+  }
+
+  Future<String> addFollowers({
+    String? userUid,
+    String? ownerUid,
+  }) async {
+    String res = "Internal unknown error.";
+    try {
+      // Add followers in owner user
+      await _firestore.collection('users').doc(ownerUid).update( <String, dynamic>{
+        'followers': FieldValue.arrayUnion(<dynamic>[userUid as dynamic])
+      });
+      // Add following in visited user
+      await _firestore.collection('users').doc(userUid).update(<String, dynamic>{
+        'following': FieldValue.arrayUnion(<dynamic>[ownerUid as dynamic])
+      });
+      res = "success";
+    } on FirebaseAuthException catch (err) {
+      res = err.code;
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> removeFollowers({
+    String? userUid,
+    String? ownerUid,
+  }) async {
+    String res = "Internal unknown error.";
+    try {
+      // Add followers in owner user
+      await _firestore.collection('users').doc(ownerUid).update( <String, dynamic>{
+        'followers': FieldValue.arrayRemove(<dynamic>[userUid as dynamic])
+      });
+      // Add following in visited user
+      await _firestore.collection('users').doc(userUid).update(<String, dynamic>{
+        'following': FieldValue.arrayRemove(<dynamic>[ownerUid as dynamic])
+      });
+      res = "success";
+    } on FirebaseAuthException catch (err) {
+      res = err.code;
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
   }
 }

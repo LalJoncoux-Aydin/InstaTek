@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Form(
           key: formKey,
-          child: Column(children: <Widget>[
+          child: Column(children: <Expanded>[
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
@@ -104,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-  void loginUser(dynamic formKey) async {
+  void loginUser(dynamic formKey, BuildContext? context) async {
     if (formKey.currentState!.validate()) {
 
       setState(() {
@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // if res is Success, go to next page
       if (res == "Success") {
         if (!mounted) return;
-        await Navigator.of(context).push(
+        await Navigator.of(context!).push(
           MaterialPageRoute<dynamic>(
             builder: (BuildContext context) => const ResponsiveLayout(
               mobileScreenLayout: MobileScreenLayout(),
