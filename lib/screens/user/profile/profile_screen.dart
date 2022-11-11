@@ -186,7 +186,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         userUid: widget.uid,
         ownerUid: ownerUid,
       );
-      print(res);
       if (res == "success") {
         setupUser();
       }
