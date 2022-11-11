@@ -6,7 +6,6 @@ import 'package:instatek/layout/admin_screen_layout.dart';
 import 'package:instatek/providers/theme_provider.dart';
 import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/screens/auth/login_screen.dart';
-import 'package:instatek/utils/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
