@@ -71,6 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       photoUrl = myUser.avatarUrl;
       bio = myUser.bio;
       _isLoading = true;
+      _isFollowed = false;
     });
     final QuerySnapshot<Map<String, dynamic>> postSnap = await FirebaseFirestore.instance
         .collection('posts')
@@ -81,12 +82,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
 
     if (userUid != "") {
-      print("this is owner id");
-      print(ownerUid);
       for (dynamic f in following) {
-        print(f);
         if (f == ownerUid) {
-          print("yes ?");
           setState(() {
             _isFollowed = true;
           });
@@ -185,14 +182,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {
         _isLoadingFollow = true;
       });
-/*      final String res = await AuthMethods().addFollowers(
+      final String res = await AuthMethods().removeFollowers(
         userUid: widget.uid,
         ownerUid: ownerUid,
-      );*/
-/*      print(res);
+      );
+      print(res);
       if (res == "success") {
         setupUser();
-      }*/
+      }
       setState(() {
         _isLoadingFollow = false;
       });

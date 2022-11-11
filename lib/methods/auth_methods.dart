@@ -181,4 +181,27 @@ class AuthMethods {
     }
     return res;
   }
+
+  Future<String> removeFollowers({
+    String? userUid,
+    String? ownerUid,
+  }) async {
+    String res = "Internal unknown error.";
+    try {
+      // Add followers in owner user
+      await _firestore.collection('users').doc(ownerUid).update( <String, dynamic>{
+        'followers': FieldValue.arrayRemove(<dynamic>[userUid as dynamic])
+      });
+      // Add following in visited user
+      await _firestore.collection('users').doc(userUid).update(<String, dynamic>{
+        'following': FieldValue.arrayRemove(<dynamic>[ownerUid as dynamic])
+      });
+      res = "success";
+    } on FirebaseAuthException catch (err) {
+      res = err.code;
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
 }
