@@ -17,7 +17,6 @@ class AuthMethods {
 
   Future<model.User?> getSpecificUserDetails(String uid) async {
     final DocumentSnapshot<Object?> documentSnapshot = await _firestore.collection('users').doc(uid).get();
-    print("Okay got it");
     return model.User.fromSnap(documentSnapshot);
   }
 
@@ -158,5 +157,28 @@ class AuthMethods {
 
   Future<void> signOut() async {
     await _auth.signOut();
+  }
+
+  Future<String> addFollowers({
+    String? userUid,
+    String? ownerUid,
+  }) async {
+    String res = "Internal unknown error.";
+    try {
+      // Add followers in owner user
+      await _firestore.collection('users').doc(ownerUid).update( <String, dynamic>{
+        'followers': FieldValue.arrayUnion(<dynamic>[userUid as dynamic])
+      });
+      // Add following in visited user
+      await _firestore.collection('users').doc(userUid).update(<String, dynamic>{
+        'following': FieldValue.arrayUnion(<dynamic>[ownerUid as dynamic])
+      });
+      res = "success";
+    } on FirebaseAuthException catch (err) {
+      res = err.code;
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
   }
 }
