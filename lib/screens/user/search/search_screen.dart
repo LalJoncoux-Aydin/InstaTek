@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instatek/screens/user/profile/profile_screen.dart';
 import 'package:instatek/utils/colors.dart';

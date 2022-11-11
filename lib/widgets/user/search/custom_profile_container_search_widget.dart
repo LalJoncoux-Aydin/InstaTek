@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +39,7 @@ class CustomProfileContainerSearch extends StatelessWidget {
           docs = docs.reversed.toList();
 
           if (docs.isEmpty) {
-            return Text("No result");
+            return const Text("No result");
           } else {
             return GridView.builder(
               shrinkWrap: true,

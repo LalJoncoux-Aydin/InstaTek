@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instatek/screens/posts/addpost/add_post_screen.dart';
 import 'package:instatek/screens/posts/feed/feed_screen.dart';
