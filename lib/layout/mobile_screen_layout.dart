@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instatek/custom_icons.dart';
-import 'package:instatek/models/user.dart' as model;
-import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/utils/global_variables.dart';
-import 'package:provider/provider.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
@@ -14,30 +11,13 @@ class MobileScreenLayout extends StatefulWidget {
 }
 
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
-//  late AnimationController _controller;
-  String username = "";
   int _currentPage = 0;
   late PageController pageController;
-  late UserProvider userProvider;
-  late model.User myUser;
 
   @override
   void initState() {
     super.initState();
-    setupUser();
     pageController = PageController();
-    // _controller = AnimationController(vsync: this);
-  }
-
-  void setupUser() async {
-    userProvider = Provider.of(context, listen: false);
-    await userProvider.refreshUser();
-    if (userProvider.isUser == true) {
-      setState(() {
-        myUser = userProvider.getUser;
-        username = myUser.username;
-      });
-    }
   }
 
   @override
