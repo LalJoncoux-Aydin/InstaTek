@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:instatek/methods/auth_methods.dart';
 import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/utils/colors.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +18,8 @@ class FavoriteScreen extends StatefulWidget {
 class _FavoriteScreenState extends State<FavoriteScreen> {
   late UserProvider userProvider;
   late model.User myUser;
-  late List<dynamic> followers;
+  late List<dynamic> notif;
+  late List<model.User> notifDetail = [];
   bool _isLoading = false;
 
   @override
@@ -33,9 +34,15 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     if (userProvider.isUser == true) {
       setState(() {
         myUser = userProvider.getUser;
-        followers = myUser.followers;
+        notif = myUser.notification;
         _isLoading = true;
       });
+      for (dynamic n in notif) {
+        final model.User nUser = (await AuthMethods().getSpecificUserDetails(n))!;
+        setState(() {
+          notifDetail.add(nUser);
+        });
+      }
     }
   }
 
@@ -54,7 +61,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     }
 
     if (_isLoading == false) {
-      setupUser();
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
@@ -68,7 +74,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           child: Container(
               padding: EdgeInsets.symmetric(horizontal: paddingGlobalHorizontal, vertical: paddingGlobalVertical),
               width: double.infinity,
-              child: CustomFavoriteItem(followers : followers),
+              child: CustomFavoriteItem(notif : notifDetail),
           ),
         ),
       );

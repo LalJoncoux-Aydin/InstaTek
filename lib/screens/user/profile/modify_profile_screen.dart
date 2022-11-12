@@ -2,9 +2,12 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instatek/models/user.dart' as model;
-import 'package:instatek/screens/user/profile/profile_screen.dart';
 import 'package:instatek/widgets/tools/custom_error_text_widget.dart';
 import 'package:provider/provider.dart';
+import '../../../layout/admin_screen_layout.dart';
+import '../../../layout/mobile_screen_layout.dart';
+import '../../../layout/responsive_layout_screen.dart';
+import '../../../layout/web_screen_layout.dart';
 import '../../../methods/auth_methods.dart';
 import '../../../providers/user_provider.dart';
 import '../../../utils/utils.dart';
@@ -203,6 +206,11 @@ class _ModifyProfileState extends State<ModifyProfile> {
   }
 
   void navigateToRegister() {
-    Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) => ProfileScreen(uid: uid)));
+    Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) => const ResponsiveLayout(
+      mobileScreenLayout: MobileScreenLayout(),
+      webScreenLayout: WebScreenLayout(),
+      adminScreenLayout: AdminScreenLayout(),
+    ),),
+    );
   }
 }

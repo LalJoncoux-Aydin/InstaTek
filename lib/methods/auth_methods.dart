@@ -80,6 +80,7 @@ class AuthMethods {
           isAdmin: false,
           followers: <dynamic>[],
           following: <dynamic>[],
+          notification: <dynamic>[],
         );
 
         await _firestore.collection("users").doc(cred.user!.uid).set(user.toJson());
@@ -172,6 +173,10 @@ class AuthMethods {
       // Add following in visited user
       await _firestore.collection('users').doc(userUid).update(<String, dynamic>{
         'following': FieldValue.arrayUnion(<dynamic>[ownerUid as dynamic])
+      });
+      // Add event of following
+      await _firestore.collection('users').doc(ownerUid).update( <String, dynamic>{
+        'notification': FieldValue.arrayUnion(<dynamic>[userUid as dynamic])
       });
       res = "success";
     } on FirebaseAuthException catch (err) {

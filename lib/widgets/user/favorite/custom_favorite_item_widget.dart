@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
+import 'package:instatek/models/user.dart' as model;
+import 'package:instatek/widgets/user/profile/infobar/custom_profile_picture_profile.dart';
 
 class CustomFavoriteItem extends StatelessWidget {
-  const CustomFavoriteItem({Key? key, required this.followers}) : super(key: key);
+  const CustomFavoriteItem({Key? key, required this.notif}) : super(key: key);
 
-  final List<dynamic> followers;
+  final List<model.User> notif;
 
   @override
   Widget build(BuildContext context) {
-    final double correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 1.7);
     final Size size = MediaQuery.of(context).size;
     double paddingPosts = 0;
     if (size.width >= 1366) {
@@ -16,19 +17,17 @@ class CustomFavoriteItem extends StatelessWidget {
       paddingPosts = 15;
     }
 
-    print(followers);
-
     return Container(
       padding: EdgeInsets.only(top: paddingPosts),
       width: double.infinity,
       child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: followers.length,
+          itemCount: notif.length,
           itemBuilder: (BuildContext context,int index) {
             return GestureDetector(
               child: Column(
-                  children: [
-                    Text(followers[index]),
+                  children: <Widget>[
+                    Text("${notif[index].username} just followed you"),
+                    CustomProfilePictureProfile(photoUrl: notif[index].avatarUrl),
                   ],
                 ),
             );

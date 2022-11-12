@@ -1,5 +1,3 @@
-//import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
@@ -12,6 +10,7 @@ class User {
     required this.isAdmin,
     required this.followers,
     required this.following,
+    required this.notification,
   });
   final String email;
   final String uid;
@@ -21,6 +20,7 @@ class User {
   final bool isAdmin;
   final List<dynamic> followers;
   final List<dynamic> following;
+  final List<dynamic> notification;
 
   static User? fromSnap(DocumentSnapshot<Object?> snap) {
     if (snap.data() != null) {
@@ -35,6 +35,7 @@ class User {
         isAdmin: snapshot["isAdmin"],
         followers: snapshot["followers"],
         following: snapshot["following"],
+        notification: snapshot["notification"],
       );
     } else {
       return null;
@@ -50,5 +51,6 @@ class User {
         "isAdmin": isAdmin,
         "followers": followers,
         "following": following,
+        "notification": notification,
       };
 }
