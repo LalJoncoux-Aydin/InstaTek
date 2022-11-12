@@ -48,6 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: Form(
           key: formKey,

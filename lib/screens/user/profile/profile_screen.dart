@@ -116,9 +116,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
-        backgroundColor: mobileBackgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
-          backgroundColor: mobileBackgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background,
           title: Text(
             username,
           ),

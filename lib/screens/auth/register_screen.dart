@@ -46,6 +46,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: Form(
           key: formKey,

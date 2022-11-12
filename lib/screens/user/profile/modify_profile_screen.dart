@@ -85,7 +85,9 @@ class _ModifyProfileState extends State<ModifyProfile> {
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text(
             "Modify profil",
           ),

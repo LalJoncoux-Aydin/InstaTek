@@ -64,9 +64,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
-        backgroundColor: mobileBackgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
-          backgroundColor: mobileBackgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text("Favorite"),
           centerTitle: true,
         ),

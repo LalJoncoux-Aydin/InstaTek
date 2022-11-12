@@ -43,9 +43,9 @@ class _SearchScreenState extends State<SearchScreen> {
     }
 
     return Scaffold(
-      backgroundColor: mobileBackgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        backgroundColor: mobileBackgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         title: CustomTextFormField(
           hintText: "Search for a user",
           textEditingController: _searchController,

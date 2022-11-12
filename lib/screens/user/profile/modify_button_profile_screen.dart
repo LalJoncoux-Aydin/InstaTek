@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/tools/custom_validation_button.dart';
 import 'modify_profile_screen.dart';
@@ -36,13 +37,16 @@ class _ModifyButtonProfileState extends State<ModifyButtonProfile> {
     }
 
 
-    return Container(
-      padding: EdgeInsets.only(top: paddingButtonTop, bottom: paddingButtonBottom),
-      width: double.infinity,
-      child: Form(
-        key: formKey,
-        child: CustomValidationButton(displayText: "Modify my account", formKey: formKey, loadingState: false, onTapFunction: modifyAccount, shapeDecoration: modifyButton),
-      ),
+    return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: Container(
+          padding: EdgeInsets.only(top: paddingButtonTop, bottom: paddingButtonBottom),
+          width: double.infinity,
+          child: Form(
+            key: formKey,
+            child: CustomValidationButton(displayText: "Modify my account", formKey: formKey, loadingState: false, onTapFunction: modifyAccount, shapeDecoration: modifyButton),
+          ),
+        ),
     );
   }
 
