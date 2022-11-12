@@ -1,8 +1,12 @@
 import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instatek/models/user.dart' as model;
+import 'package:instatek/screens/auth/login_screen.dart';
 import 'package:instatek/screens/user/profile/profile_screen.dart';
+import 'package:instatek/widgets/tools/custom_delete_button.dart';
 import 'package:instatek/widgets/tools/custom_error_text_widget.dart';
 import 'package:provider/provider.dart';
 import '../../../methods/auth_methods.dart';
@@ -65,9 +69,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery
-        .of(context)
-        .size;
+    final Size size = MediaQuery.of(context).size;
     double paddingGlobal = 0;
     if (size.width >= 1366) {
       paddingGlobal = 500;
@@ -81,7 +83,9 @@ class _ModifyProfileState extends State<ModifyProfile> {
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: const Text("Modify profil",),
+          title: const Text(
+            "Modify profil",
+          ),
           centerTitle: true,
         ),
         body: SafeArea(
@@ -116,10 +120,16 @@ class _ModifyProfileState extends State<ModifyProfile> {
                           ),
                           CustomErrorText(displayStr: errorText),
                           CustomValidationButton(
-                            displayText: 'Update',
+                            displayText: 'Update profil',
                             formKey: formKey,
                             loadingState: _isLoadingButton,
                             onTapFunction: updateUser,
+                            shapeDecoration: null,
+                          ),
+                          CustomDeleteButton(
+                            displayText: 'Delete profil',
+                            loadingState: _isLoadingButton,
+                            onTapFunction: deleteUser,
                             shapeDecoration: null,
                           ),
                         ],
@@ -135,11 +145,28 @@ class _ModifyProfileState extends State<ModifyProfile> {
     }
   }
 
+  void deleteUser(BuildContext context) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .delete();
+    FirebaseAuth.instance.currentUser?.delete();
+
+    FirebaseAuth.instance.signOut();
+    if (!mounted) return;
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) => const LoginScreen(),
+      ),
+    );
+  }
+
   void updateUsername(dynamic newUsername) {
     setState(() {
       username = newUsername;
     });
   }
+
   String? usernameIsValid(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
@@ -152,6 +179,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
       bio = newBio;
     });
   }
+
   String? bioIsValid(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
@@ -168,7 +196,6 @@ class _ModifyProfileState extends State<ModifyProfile> {
 
   void updateUser(dynamic formKey, BuildContext? context) async {
     if (formKey.currentState!.validate()) {
-
       setState(() {
         _isLoadingButton = true;
       });
@@ -185,8 +212,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
       if (res == "Success") {
         if (!mounted) return;
         navigateToRegister();
-      }
-      else if (res == 'username-already-in-use') {
+      } else if (res == 'username-already-in-use') {
         setState(() {
           errorText = "Username is already in use by another account";
         });
@@ -203,6 +229,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
   }
 
   void navigateToRegister() {
-    Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) => ProfileScreen(uid: uid)));
+    Navigator.of(context).push(MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) => ProfileScreen(uid: uid),),);
   }
 }
