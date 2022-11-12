@@ -1,5 +1,6 @@
 # InstaTek [EPITECH PROJET] [DOCUMENTATION]
 
+[![Codemagic build status](https://api.codemagic.io/apps/63679d41030e6be47877210a/63679d41030e6be478772109/status_badge.svg)](https://codemagic.io/apps/63679d41030e6be47877210a/63679d41030e6be478772109/latest_build)
 <a href="https://img.shields.io/badge/MADE%20WITH-FLUTTER-blue" alt="Flutter">
         <img src="https://img.shields.io/badge/MADE%20WITH-FLUTTER-blue" /></a>
 <p align="center">
@@ -136,6 +137,11 @@ flutter build apk
 ```sh
 flutter run
 ```
+# Linter
+https://pub.dev/packages/blackfoot_flutter_lint
+
+# Codemagic
+https://codemagic.io/app/63679d41030e6be47877210a/build/6367aaf7bf929684a9266f8a
 
 # Figma
 
