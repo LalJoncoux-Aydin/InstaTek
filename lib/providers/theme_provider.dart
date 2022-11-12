@@ -32,6 +32,11 @@ class MyThemes {
     ),
     primaryIconTheme: const IconThemeData(color: Colors.white),
     iconTheme: const IconThemeData(color: Colors.black),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: Color.fromARGB(255, 10, 81, 161),
+      selectionColor: Color.fromARGB(255, 180, 213, 255),
+      selectionHandleColor: Color.fromARGB(255, 180, 213, 255),
+    ),
     textTheme: const TextTheme(
       headline1: TextStyle(
         color: Colors.black,
