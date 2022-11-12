@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/screens/auth/login_screen.dart';
-import 'package:instatek/screens/user/profile/profile_screen.dart';
 import 'package:instatek/widgets/tools/custom_delete_button.dart';
 import 'package:instatek/widgets/tools/custom_error_text_widget.dart';
 import 'package:provider/provider.dart';
