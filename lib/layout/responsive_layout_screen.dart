@@ -18,6 +18,7 @@ class ResponsiveLayout extends StatefulWidget {
 class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerProviderStateMixin {
   late UserProvider userProvider;
   late model.User myUser;
+  bool isAdmin = false;
   bool _isLoading = false;
 
   @override
@@ -32,30 +33,28 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerPr
     if (userProvider.isUser == true) {
       setState(() {
         myUser = userProvider.getUser;
+        isAdmin = myUser.isAdmin;
         _isLoading = true;
       });
     }
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
     if (_isLoading == false) {
       return const CustomLoadingScreen();
     } else {
       return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          if (constraints.maxWidth > webScreenSize && myUser.isAdmin == false) {
+          if (size.width > webScreenSize && isAdmin == false) {
             return widget.webScreenLayout;
-          } else
-          if (constraints.maxWidth > webScreenSize && myUser.isAdmin == true) {
+          } else if (size.width > webScreenSize && isAdmin == true) {
             return widget.adminScreenLayout;
+          } else {
+            return widget.mobileScreenLayout;
           }
-          return widget.mobileScreenLayout;
         },
       );
     }
