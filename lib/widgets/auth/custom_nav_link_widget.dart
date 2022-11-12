@@ -10,26 +10,29 @@ class CustomNavLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              //padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 8),
-              child: Text(displayText1, style: Theme.of(context).textTheme.subtitle1),
-            ),
-            GestureDetector(
-              onTap: onTapFunction,
-              child: Container(
-                //padding: const EdgeInsets.symmetric(vertical: 25),
-                child: Text(displayText2, style: Theme.of(context).textTheme.subtitle2),
-              ),
-            )
-          ],
-        ),
-        //const SizedBox(height: 24),
-      ],
+    final Size size = MediaQuery.of(context).size;
+    double paddingVertical = 0;
+    if (size.width >= 1366) {
+      paddingVertical = 20;
+    } else {
+      paddingVertical = 20;
+    }
+
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: paddingVertical),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: Text(displayText1, style: Theme.of(context).textTheme.subtitle1),
+          ),
+          GestureDetector(
+            onTap: onTapFunction,
+            child: Text(displayText2, style: Theme.of(context).textTheme.subtitle2),
+          )
+        ],
+      ),
     );
   }
 }

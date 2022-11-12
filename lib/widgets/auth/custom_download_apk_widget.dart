@@ -12,26 +12,20 @@ class CustomDownloadApk extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Text("Download Apk", style: Theme.of(context).textTheme.subtitle1),
-            ),
-            GestureDetector(
-              onTap: () => downloadFile("/build/app/outputs/flutter-apk/app-release.apk"),
-              child: Container(
-                //padding: const EdgeInsets.symmetric(vertical: 25),
-                child: Text("APK", style: Theme.of(context).textTheme.subtitle2),
-              ),
-            )
-          ],
-        ),
-      //  const SizedBox(height: 24),
-      ],
+    final Size size = MediaQuery.of(context).size;
+    double paddingVertical = 0;
+    if (size.width >= 1366) {
+      paddingVertical = 20;
+    } else {
+      paddingVertical = 20;
+    }
+
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: paddingVertical),
+      child: GestureDetector(
+        onTap: () => downloadFile("/build/app/outputs/flutter-apk/app-release.apk"),
+        child: Text("Download APK", style: Theme.of(context).textTheme.subtitle2),
+      ),
     );
   }
 }

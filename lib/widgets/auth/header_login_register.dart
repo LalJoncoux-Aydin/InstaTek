@@ -13,8 +13,8 @@ class HeaderLoginRegister extends StatelessWidget {
       paddingBottom = 500;
       imageSize = 80;
     } else {
-      paddingBottom = 60;
-      imageSize = 60;
+      paddingBottom = 40;
+      imageSize = 90;
     }
 
     return Container(

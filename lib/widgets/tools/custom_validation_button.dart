@@ -30,7 +30,9 @@ class CustomValidationButton extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: paddingVertical),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            shape: const StadiumBorder(),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4),
+            ),
             backgroundColor: buttonColor,
         ),
         onPressed: () => onTapFunction(formKey, context),
