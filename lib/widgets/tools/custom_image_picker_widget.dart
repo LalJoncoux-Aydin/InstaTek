@@ -10,40 +10,45 @@ class CustomImagePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        // image input
-        const SizedBox(height: 10),
-        Stack(
-          children: <Widget>[
-            if (imagePick != null)
-              CircleAvatar(
-                radius: 64,
-                backgroundImage: MemoryImage(imagePick!),
-                backgroundColor: Theme.of(context).colorScheme.background,
-              )
-            else
-              const CircleAvatar(
-                radius: 64,
-                backgroundImage: NetworkImage(
-                  defaultAvatarUrl,
-                ),
-                // backgroundColor: Colors.red,
-              ),
-            Positioned(
-              bottom: -10,
-              left: 80,
-              child: IconButton(
-                onPressed: onPressedFunction,
-                icon: const Icon(
-                  Icons.add_a_photo,
-                ),
-              ),
+    final Size size = MediaQuery.of(context).size;
+    const double avatarRadius = 80;
+    double paddingVertical = 0;
+    if (size.width >= 1366) {
+      paddingVertical = 20;
+    } else {
+      paddingVertical = 20;
+    }
+
+    return Container(
+      padding: EdgeInsets.only(bottom: paddingVertical),
+      child: Stack(
+        children: <Widget>[
+          if (imagePick != null)
+            CircleAvatar(
+              radius: avatarRadius,
+              backgroundImage: MemoryImage(imagePick!),
+              backgroundColor: Theme.of(context).colorScheme.background,
             )
-          ],
-        ),
-        const SizedBox(height: 20),
-      ],
+          else
+            const CircleAvatar(
+              radius: avatarRadius,
+              backgroundImage: NetworkImage(
+                defaultAvatarUrl,
+              ),
+              // backgroundColor: Colors.red,
+            ),
+          Positioned(
+            bottom: -10,
+            left: 100,
+            child: IconButton(
+              onPressed: onPressedFunction,
+              icon: const Icon(
+                Icons.add_a_photo,
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

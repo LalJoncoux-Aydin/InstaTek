@@ -57,41 +57,23 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
         child: Form(
           key: formKey,
           child: Center(
-                  child: SingleChildScrollView(
-                    child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
-                    width: double.infinity,
-                    child: Column(
-                      children: <Widget>[
-                        const HeaderLoginRegister(),
-                        CustomImagePicker(imagePick: _image, onPressedFunction: selectImage),
-                        CustomTextFormField(
-                          hintText: 'Enter your username',
-                          textEditingController: _usernameController,
-                          isPass: false,
-                          isValid: usernameIsValid(username),
-                          updateInput: updateUsername,
-                        ),
-                        CustomTextFormField(
-                          hintText: 'Enter your bio',
-                          textEditingController: _bioController,
-                          isPass: false,
-                          isValid: bioIsValid(bio),
-                          updateInput: updateBio,
-                        ),
-                        CustomErrorText(displayStr: errorText),
-                        CustomValidationButton(
-                          displayText: 'Register',
-                          formKey: formKey,
-                          loadingState: _isLoading,
-                          onTapFunction: registerUser,
-                            buttonColor: Theme.of(context).colorScheme.tertiary
-                        ),
-                      ],
-                    ),
-                  ),
-                  ),
+            child: SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
+                width: double.infinity,
+                child: Column(
+                  children: <Widget>[
+                    const HeaderLoginRegister(),
+                    CustomImagePicker(imagePick: _image, onPressedFunction: selectImage),
+                    CustomTextFormField(hintText: 'Enter your username', textEditingController: _usernameController, isPass: false, isValid: usernameIsValid(username), updateInput: updateUsername),
+                    CustomTextFormField(hintText: 'Enter your bio', textEditingController: _bioController, isPass: false, isValid: bioIsValid(bio), updateInput: updateBio,),
+                    if (errorText != "") CustomErrorText(displayStr: errorText),
+                    CustomValidationButton(displayText: 'Register', formKey: formKey, loadingState: _isLoading, onTapFunction: registerUser, buttonColor: Theme.of(context).colorScheme.tertiary),
+                  ],
                 ),
+              ),
+            ),
+          ),
         ),
       ),
     );

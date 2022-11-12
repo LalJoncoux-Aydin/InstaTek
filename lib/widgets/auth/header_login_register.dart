@@ -15,7 +15,7 @@ class HeaderLoginRegister extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.only(bottom: 40),
+      padding: const EdgeInsets.only(bottom: 30),
       child: SvgPicture.asset(
         'assets/instatek_logo.svg',
         height: imageSize,
