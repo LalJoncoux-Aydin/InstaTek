@@ -3,7 +3,6 @@ import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/utils/global_variables.dart';
 import 'package:provider/provider.dart';
-
 import '../widgets/tools/custom_loading_screen.dart';
 
 class ResponsiveLayout extends StatefulWidget {
