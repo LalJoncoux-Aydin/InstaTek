@@ -19,7 +19,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   late UserProvider userProvider;
   late model.User myUser;
   late List<dynamic> notif;
-  late List<model.User> notifDetail = [];
+  late List<model.User> notifDetail = <model.User>[];
   bool _isLoading = false;
 
   @override
