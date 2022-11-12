@@ -49,29 +49,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: SafeArea(
         child: Form(
           key: formKey,
-          child: Column(children: <Widget>[
-            Expanded(
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
-                    width: double.infinity,
-                    child: Column(
-                      children: <Widget>[
-                        const HeaderLoginRegister(),
-                        CustomTextFormField(hintText: 'Enter your email', textEditingController: _emailController, isPass: false, isValid: emailIsValid(email), updateInput: updateEmail),
-                        CustomTextFormField(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true, isValid: passwordIsValid(password1), updateInput: updatePassword),
-                        CustomTextFormField(hintText: 'Enter your password again', textEditingController: _passwordController2, isPass: true, isValid: password2IsValid(password1, password2), updateInput: updatePassword2),
-                        if (errorText != "") CustomErrorText(displayStr: errorText),
-                        CustomValidationButton(displayText: 'Register', formKey: formKey, loadingState: _isLoading, onTapFunction: nextStepRegister, buttonColor: Theme.of(context).colorScheme.tertiary),
-                        CustomNavLink(displayText1: "Already have an account ?", displayText2: "Login", onTapFunction: navigateToLogin),
-                      ],
-                    ),
-                  ),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
+                width: double.infinity,
+                child: Column(
+                  children: <Widget>[
+                    const HeaderLoginRegister(),
+                    CustomTextFormField(hintText: 'Enter your email', textEditingController: _emailController, isPass: false, isValid: emailIsValid(email), updateInput: updateEmail),
+                    CustomTextFormField(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true, isValid: passwordIsValid(password1), updateInput: updatePassword),
+                    CustomTextFormField(hintText: 'Enter your password again', textEditingController: _passwordController2, isPass: true, isValid: password2IsValid(password1, password2), updateInput: updatePassword2),
+                    if (errorText != "") CustomErrorText(displayStr: errorText),
+                    CustomValidationButton(displayText: 'Register', formKey: formKey, loadingState: _isLoading, onTapFunction: nextStepRegister, buttonColor: Theme.of(context).colorScheme.tertiary),
+                    CustomNavLink(displayText1: "Already have an account ?", displayText2: "Login", onTapFunction: navigateToLogin),
+                  ],
                 ),
               ),
-            )
-          ],),
+            ),
+          ),
         ),
       ),
     );

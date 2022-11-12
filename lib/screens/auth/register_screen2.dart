@@ -56,11 +56,9 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
       body: SafeArea(
         child: Form(
           key: formKey,
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Container(
+          child: Center(
+                  child: SingleChildScrollView(
+                    child: Container(
                     padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
                     width: double.infinity,
                     child: Column(
@@ -92,10 +90,8 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
                       ],
                     ),
                   ),
+                  ),
                 ),
-              )
-            ],
-          ),
         ),
       ),
     );
