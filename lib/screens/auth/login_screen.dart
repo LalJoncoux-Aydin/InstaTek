@@ -48,26 +48,27 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: Form(
           key: formKey,
           child: Column(children: <Expanded>[
             Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
-                  width: double.infinity,
-                  child: Column(
-                    children: <Widget>[
-                      const HeaderLoginRegister(),
-                      CustomTextFormField(hintText: 'Enter your email - V1.1', textEditingController: _emailController, isPass: false, isValid: emailIsValid(email), updateInput: updateEmail),
-                      CustomTextFormField(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true, isValid: passwordIsValid(password), updateInput: updatePassword),
-                      CustomErrorText(displayStr: errorText),
-                      CustomValidationButton(displayText: 'Login', formKey: formKey, loadingState: _isLoading, onTapFunction: loginUser, shapeDecoration: null,),
-                      const CustomDownloadApk(),
-                      CustomNavLink(displayText1: "Don't have an account ?", displayText2: "Register", onTapFunction: navigateToRegister),
-                    ],
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
+                    width: double.infinity,
+                    child: Column(
+                      children: <Widget>[
+                        const HeaderLoginRegister(),
+                        CustomTextFormField(hintText: 'Enter your email - V1.1', textEditingController: _emailController, isPass: false, isValid: emailIsValid(email), updateInput: updateEmail),
+                        CustomTextFormField(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true, isValid: passwordIsValid(password), updateInput: updatePassword),
+                        CustomErrorText(displayStr: errorText),
+                        CustomValidationButton(displayText: 'Login', formKey: formKey, loadingState: _isLoading, onTapFunction: loginUser, buttonColor: Theme.of(context).colorScheme.tertiary),
+                        const CustomDownloadApk(),
+                        CustomNavLink(displayText1: "Don't have an account ?", displayText2: "Register", onTapFunction: navigateToRegister),
+                      ],
+                    ),
                   ),
                 ),
               ),

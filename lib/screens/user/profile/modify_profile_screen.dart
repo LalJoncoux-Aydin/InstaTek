@@ -129,7 +129,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
                             formKey: formKey,
                             loadingState: _isLoadingButton,
                             onTapFunction: updateUser,
-                            shapeDecoration: null,
+                            buttonColor: Theme.of(context).colorScheme.tertiary,
                           ),
                           CustomDeleteButton(
                             displayText: 'Delete profil',

@@ -53,7 +53,6 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
     }
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: Form(
           key: formKey,
@@ -88,7 +87,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
                           formKey: formKey,
                           loadingState: _isLoading,
                           onTapFunction: registerUser,
-                          shapeDecoration: null,
+                            buttonColor: Theme.of(context).colorScheme.tertiary
                         ),
                       ],
                     ),

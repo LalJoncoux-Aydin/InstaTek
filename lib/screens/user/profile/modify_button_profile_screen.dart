@@ -44,7 +44,7 @@ class _ModifyButtonProfileState extends State<ModifyButtonProfile> {
           width: double.infinity,
           child: Form(
             key: formKey,
-            child: CustomValidationButton(displayText: "Modify my account", formKey: formKey, loadingState: false, onTapFunction: modifyAccount, shapeDecoration: modifyButton),
+            child: CustomValidationButton(displayText: "Modify my account", formKey: formKey, loadingState: false, onTapFunction: modifyAccount, buttonColor: Theme.of(context).colorScheme.tertiary),
           ),
         ),
     );

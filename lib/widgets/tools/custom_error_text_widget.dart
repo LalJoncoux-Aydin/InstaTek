@@ -9,9 +9,9 @@ class CustomErrorText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        const SizedBox(height: 10),
+       // const SizedBox(height: 10),
         Text(displayStr),
-        const SizedBox(height: 10),
+       // const SizedBox(height: 10),
       ],
     );
   }

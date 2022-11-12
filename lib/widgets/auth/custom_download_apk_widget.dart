@@ -18,19 +18,19 @@ class CustomDownloadApk extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 8),
-              child: const Text("Download Apk", style: TextStyle(color: blueColor)),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text("Download Apk", style: Theme.of(context).textTheme.subtitle1),
             ),
             GestureDetector(
               onTap: () => downloadFile("/build/app/outputs/flutter-apk/app-release.apk"),
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 25),
-                child: const Text("APK", style: TextStyle(fontWeight: FontWeight.bold, color: blueColor)),
+                //padding: const EdgeInsets.symmetric(vertical: 25),
+                child: Text("APK", style: Theme.of(context).textTheme.subtitle2),
               ),
             )
           ],
         ),
-        const SizedBox(height: 24),
+      //  const SizedBox(height: 24),
       ],
     );
   }

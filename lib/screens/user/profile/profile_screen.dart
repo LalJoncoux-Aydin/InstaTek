@@ -147,7 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: <Widget>[
                     CustomInfobarProfile(photoUrl: photoUrl, followers: followers.length, following: following.length, postSize: postSize, username: username, bio: bio),
-                    if (userUid == "") const ModifyButtonProfile() else if (_isFollowed == false) CustomValidationButton(displayText: "Follow", formKey: formKey, loadingState: _isLoadingFollow, onTapFunction: addFollowers, shapeDecoration: null) else if (_isFollowed == true) CustomValidationButton(displayText: "Unfollow", formKey: formKey, loadingState: _isLoadingFollow, onTapFunction: removeFollowers, shapeDecoration: null),
+                    if (userUid == "") const ModifyButtonProfile() else if (_isFollowed == false) CustomValidationButton(displayText: "Follow", formKey: formKey, loadingState: _isLoadingFollow, onTapFunction: addFollowers, buttonColor: Theme.of(context).colorScheme.tertiary) else if (_isFollowed == true) CustomValidationButton(displayText: "Unfollow", formKey: formKey, loadingState: _isLoadingFollow, onTapFunction: removeFollowers, buttonColor: Theme.of(context).colorScheme.tertiary),
                     CustomPostsContainerProfile(uid: widget.uid),
                   ],
                 ),
