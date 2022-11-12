@@ -34,9 +34,14 @@ class MyThemes {
     iconTheme: const IconThemeData(color: Colors.black),
     textTheme: const TextTheme(
       headline1: TextStyle(
-        color: Colors.red,
+        color: Colors.black,
         fontSize: 13,
         fontWeight: FontWeight.w700,
+      ),
+      headline2: TextStyle(
+        color: Colors.red,
+        fontSize: 13,
+        fontWeight: FontWeight.bold,
       ),
       subtitle1: TextStyle(
         color: Color.fromARGB(255, 95, 134, 196),

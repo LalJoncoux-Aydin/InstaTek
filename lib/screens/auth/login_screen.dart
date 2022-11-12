@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const HeaderLoginRegister(),
                         CustomTextFormField(hintText: 'Enter your email', textEditingController: _emailController, isPass: false, isValid: emailIsValid(email), updateInput: updateEmail),
                         CustomTextFormField(hintText: 'Enter your password', textEditingController: _passwordController, isPass: true, isValid: passwordIsValid(password), updateInput: updatePassword),
-                        CustomErrorText(displayStr: errorText),
+                        if (errorText != "") CustomErrorText(displayStr: errorText),
                         CustomValidationButton(displayText: 'Login', formKey: formKey, loadingState: _isLoading, onTapFunction: loginUser, buttonColor: Theme.of(context).colorScheme.tertiary),
                         const CustomDownloadApk(),
                         CustomNavLink(displayText1: "Don't have an account ?", displayText2: "Register", onTapFunction: navigateToRegister),

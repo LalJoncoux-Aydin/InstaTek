@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CustomErrorText extends StatelessWidget {
   const CustomErrorText({Key? key, required this.displayStr}) : super(key: key);
@@ -7,12 +7,17 @@ class CustomErrorText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-       // const SizedBox(height: 10),
-        Text(displayStr),
-       // const SizedBox(height: 10),
-      ],
+    final Size size = MediaQuery.of(context).size;
+    double paddingVertical = 0;
+    if (size.width >= 1366) {
+      paddingVertical = 20;
+    } else {
+      paddingVertical = 10;
+    }
+
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: paddingVertical),
+      child: Text(displayStr, style: Theme.of(context).textTheme.headline2),
     );
   }
 }

@@ -21,20 +21,14 @@ class CustomTextFormField extends StatelessWidget {
     final OutlineInputBorder inputBorder = OutlineInputBorder(
       borderSide: Divider.createBorderSide(context, color: Theme.of(context).colorScheme.tertiary),
     );
-    final Size size = MediaQuery.of(context).size;
-    double paddingVertical = 0;
-    if (size.width >= 1366) {
-      paddingVertical = 20;
-    } else {
-      paddingVertical = 10;
-    }
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: paddingVertical),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: TextFormField(
           validator: (String? value) {
             return isValid;
           },
+          cursorColor: Theme.of(context).colorScheme.tertiary,
           controller: textEditingController,
           onChanged: (String changedText) => updateInput(changedText),
           decoration: InputDecoration(

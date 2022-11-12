@@ -7,18 +7,15 @@ class HeaderLoginRegister extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    double paddingBottom = 0;
     double imageSize = 0;
     if (size.width >= 1366) {
-      paddingBottom = 500;
-      imageSize = 80;
+      imageSize = 120;
     } else {
-      paddingBottom = 40;
       imageSize = 90;
     }
 
     return Container(
-      padding: EdgeInsets.only(bottom: paddingBottom),
+      padding: const EdgeInsets.only(bottom: 40),
       child: SvgPicture.asset(
         'assets/instatek_logo.svg',
         height: imageSize,
