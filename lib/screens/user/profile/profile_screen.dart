@@ -7,8 +7,11 @@ import 'package:instatek/widgets/user/profile/infobar/custom_infobar_profile_wid
 import 'package:provider/provider.dart';
 import '../../../models/post.dart';
 import '../../../providers/user_provider.dart';
+import '../../../widgets/tools/custom_validation_button.dart';
 import '../../../widgets/user/profile/posts/custom_posts_container_profile_widget.dart';
 import '../../auth/login_screen.dart';
+import 'modify_button_profile_screen.dart';
+import 'modify_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, this.uid = ""}) : super(key: key);
@@ -24,13 +27,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late String userUid = "";
   late String ownerUid = "";
   late String username = "";
-  late List<dynamic> followers;
-  late List<dynamic> following;
+  late List<dynamic> followers = <dynamic>[];
+  late List<dynamic> following = <dynamic>[];
   late List<Post> postList = <Post>[];
   late int postSize = 0;
   late String photoUrl;
   late String bio;
   late GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late GlobalKey<FormState> formKeyFollow = GlobalKey<FormState>();
   bool _isLoading = false;
   bool _isLoadingFollow = false;
   late bool _isFollowed = false;
@@ -53,21 +57,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     // Get user for own profile or others profile
     if (widget.uid != "") {
+      print("here ?");
       myUser = (await AuthMethods().getSpecificUserDetails(widget.uid))!;
       setState(() {
         userUid = myUser.uid;
       });
-      for (dynamic f in following) {
-        if (f == ownerUid) {
-          setState(() {
-            _isFollowed = true;
-          });
-        }
-      }
+      print(ownerUid);
+
     } else {
       if (userProvider.isUser == true) {
         setState(() {
           myUser = userProvider.getUser;
+          _isFollowed = false;
         });
       }
     }
@@ -80,6 +81,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _isLoading = true;
       _isFollowed = false;
     });
+
+    if (userUid != "") {
+      for (dynamic f in following) {
+        if (f == ownerUid) {
+          setState(() {
+            _isFollowed = true;
+          });
+        }
+      }
+    }
 
     final List<Post>? postListTmp = await FireStoreMethods().getUserPosts(myUser.uid);
     if (postListTmp != null) {
@@ -137,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         body: SafeArea(
           child: Form(
-            key: formKey,
+            key: userUid == "" ? formKey : formKeyFollow,
             child: SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: paddingGlobalHorizontal, vertical: paddingGlobalVertical),
@@ -145,7 +156,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: <Widget>[
                     CustomInfobarProfile(photoUrl: photoUrl, followers: followers.length, following: following.length, postSize: postSize, username: username, bio: bio),
-                    //if (userUid == "") const ModifyButtonProfile() else if (_isFollowed == false) CustomValidationButton(displayText: "Follow", formKey: formKey, loadingState: _isLoadingFollow, onTapFunction: addFollowers, buttonColor: Theme.of(context).colorScheme.tertiary) else if (_isFollowed == true) CustomValidationButton(displayText: "Unfollow", formKey: formKey, loadingState: _isLoadingFollow, onTapFunction: removeFollowers, buttonColor: Theme.of(context).colorScheme.tertiary),
+                    if (userUid == "") CustomValidationButton(displayText: "Modify my account", formKey: formKey, loadingState: false, onTapFunction: modifyAccount, buttonColor: Theme.of(context).colorScheme.tertiary)
+                    else if (_isFollowed == false) CustomValidationButton(displayText: "Follow", formKey: formKeyFollow, loadingState: _isLoadingFollow, onTapFunction: addFollowers, buttonColor: Theme.of(context).colorScheme.tertiary)
+                    else if (_isFollowed == true) CustomValidationButton(displayText: "Unfollow", formKey: formKeyFollow, loadingState: _isLoadingFollow, onTapFunction: removeFollowers, buttonColor: Theme.of(context).colorScheme.tertiary),
                     CustomPostsContainerProfile(listPost: postList),
                   ],
                 ),
@@ -157,8 +170,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  void modifyAccount(dynamic formKey, BuildContext? context) async {
+    await Navigator.of(context!).push(
+        MaterialPageRoute<dynamic>(builder: (BuildContext context) => const ModifyProfile(),),
+    );
+  }
+
   void addFollowers(dynamic formKey, BuildContext? context) async {
+    print("lry bithc?");
     if (formKey.currentState!.validate()) {
+      print("fck seris");
       setState(() {
         _isLoadingFollow = true;
       });
