@@ -4,10 +4,9 @@ import '../../../../models/post.dart';
 import 'custom_posts_element_profile_widget.dart';
 
 class CustomPostsContainerProfile extends StatelessWidget {
-  const CustomPostsContainerProfile({Key? key, required this.listPost, required this.borderColor}) : super(key: key);
+  const CustomPostsContainerProfile({Key? key, required this.listPost}) : super(key: key);
 
   final List<Post> listPost;
-  final Color borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +37,7 @@ class CustomPostsContainerProfile extends StatelessWidget {
             childAspectRatio: correctRatio,
           ),
           itemCount: listPost.length,
-          itemBuilder: (BuildContext ctx, int index) =>
-              CustomPostsElementProfile(
-                  displayPost: listPost[index], borderColor: borderColor),
+          itemBuilder: (BuildContext ctx, int index) => CustomPostsElementProfile(displayPost: listPost[index]),
         ),
       );
     }
