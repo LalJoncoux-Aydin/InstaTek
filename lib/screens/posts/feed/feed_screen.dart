@@ -28,6 +28,7 @@ class _FeedScreenState extends State<FeedScreen> {
                 color: Theme.of(context).colorScheme.secondary,
                 height: 32,
               ),
+              automaticallyImplyLeading: false,
               actions: <Widget>[
                 IconButton(
                   icon: Icon(

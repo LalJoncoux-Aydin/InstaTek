@@ -127,6 +127,10 @@ class AuthMethods {
     String res = "Credentials are incorrect.";
     try {
       if (email.isNotEmpty && password.isNotEmpty) {
+        final QuerySnapshot<Map<String, dynamic>> documentSnapshot = await _firestore.collection('users').where('email', isEqualTo: email).get();
+        if (documentSnapshot.docs.isEmpty) {
+          return "user-not-found";
+        }
         await _auth.signInWithEmailAndPassword(
           email: email,
           password: password,
@@ -196,18 +200,12 @@ class AuthMethods {
     String res = "Internal unknown error.";
     try {
       // Add followers in owner user
-      await _firestore
-          .collection('users')
-          .doc(ownerUid)
-          .update(<String, dynamic>{
-        'followers': FieldValue.arrayUnion(<dynamic>[userUid as dynamic])
+      await _firestore.collection('users').doc(ownerUid).update( <String, dynamic>{
+        'following': FieldValue.arrayUnion(<dynamic>[userUid as dynamic])
       });
       // Add following in visited user
-      await _firestore
-          .collection('users')
-          .doc(userUid)
-          .update(<String, dynamic>{
-        'following': FieldValue.arrayUnion(<dynamic>[ownerUid as dynamic])
+      await _firestore.collection('users').doc(userUid).update(<String, dynamic>{
+        'followers': FieldValue.arrayUnion(<dynamic>[ownerUid as dynamic])
       });
       // Add event of following
       await _firestore
@@ -248,18 +246,12 @@ class AuthMethods {
     String res = "Internal unknown error.";
     try {
       // Add followers in owner user
-      await _firestore
-          .collection('users')
-          .doc(ownerUid)
-          .update(<String, dynamic>{
-        'followers': FieldValue.arrayRemove(<dynamic>[userUid as dynamic])
+      await _firestore.collection('users').doc(ownerUid).update( <String, dynamic>{
+        'following': FieldValue.arrayRemove(<dynamic>[userUid as dynamic])
       });
       // Add following in visited user
-      await _firestore
-          .collection('users')
-          .doc(userUid)
-          .update(<String, dynamic>{
-        'following': FieldValue.arrayRemove(<dynamic>[ownerUid as dynamic])
+      await _firestore.collection('users').doc(userUid).update(<String, dynamic>{
+        'followers': FieldValue.arrayRemove(<dynamic>[ownerUid as dynamic])
       });
       res = "success";
     } on FirebaseAuthException catch (err) {

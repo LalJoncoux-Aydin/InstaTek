@@ -3,6 +3,7 @@ import 'package:instatek/screens/user/profile/profile_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/widgets/tools/custom_text_form_field_widget.dart';
 
+import '../../../utils/global_variables.dart';
 import '../../../widgets/user/search/custom_profile_container_search_widget.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -31,21 +32,22 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    double paddingGlobalHorizontal = 0;
-    double paddingGlobalVertical = 0;
+    double paddingHorizontal = 0;
+    double paddingVertical = 0;
 
-    if (size.width >= 1366) {
-      paddingGlobalHorizontal = 50;
-      paddingGlobalVertical = 40;
+    if (size.width >= webScreenSize) {
+      paddingHorizontal = 50;
+      paddingVertical = 40;
     } else {
-      paddingGlobalHorizontal = 0;
-      paddingGlobalVertical = 20;
+      paddingHorizontal = 0;
+      paddingVertical = 20;
     }
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
+      appBar: size.width > webScreenSize ? null : AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
+        automaticallyImplyLeading: false,
         title: CustomTextFormField(
           hintText: "Search for a user",
           textEditingController: _searchController,
@@ -61,12 +63,10 @@ class _SearchScreenState extends State<SearchScreen> {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: paddingGlobalHorizontal, vertical: paddingGlobalVertical),
-            width: double.infinity,
-            child: CustomProfileContainerSearch(username: searchStr, navigateToProfile: navigateToProfile),
-          ),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: paddingHorizontal, vertical: paddingVertical),
+          width: double.infinity,
+          child: CustomProfileContainerSearch(username: searchStr, navigateToProfile: navigateToProfile),
         ),
       ),
     );

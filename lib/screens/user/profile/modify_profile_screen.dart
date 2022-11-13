@@ -43,7 +43,16 @@ class _ModifyProfileState extends State<ModifyProfile> {
   @override
   void initState() {
     super.initState();
-    setupUser();
+    if (mounted) {
+      setupUser();
+    }
+  }
+
+  @override
+  void setState(dynamic fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
   }
 
   void setupUser() async {
@@ -79,7 +88,6 @@ class _ModifyProfileState extends State<ModifyProfile> {
     }
 
     if (_isLoading == false) {
-      setupUser();
       return const CustomLoadingScreen();
     } else {
       return Scaffold(

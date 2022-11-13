@@ -3,6 +3,7 @@ import 'package:instatek/screens/auth/login_screen.dart';
 import 'package:instatek/screens/auth/register_screen2.dart';
 
 import '../../methods/auth_methods.dart';
+import '../../utils/global_variables.dart';
 import '../../widgets/auth/custom_nav_link_widget.dart';
 import '../../widgets/auth/header_login_register.dart';
 import '../../widgets/tools/custom_error_text_widget.dart';
@@ -39,7 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     double paddingGlobal = 0;
-    if (size.width >= 1366) {
+    if (size.width >= webScreenSize) {
       paddingGlobal = 500;
     } else {
       paddingGlobal = 60;

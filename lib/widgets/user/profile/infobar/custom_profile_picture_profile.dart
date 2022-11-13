@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:instatek/utils/colors.dart';
 
+import '../../../../utils/global_variables.dart';
+
 class CustomProfilePictureProfile extends StatelessWidget {
   const CustomProfilePictureProfile({Key? key, required this.photoUrl}) : super(key: key);
 
@@ -8,7 +10,13 @@ class CustomProfilePictureProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double radiusImage = 40;
+    final Size size = MediaQuery.of(context).size;
+    double radiusImage = 0;
+    if (size.width >= webScreenSize) {
+      radiusImage = 50;
+    } else {
+      radiusImage = 40;
+    }
 
     return CircleAvatar(
         backgroundColor: greyColor,

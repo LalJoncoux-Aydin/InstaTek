@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
-
-import '../../../../utils/colors.dart';
+import 'package:flutter/material.dart';
 
 class CustomNameProfile extends StatelessWidget {
   const CustomNameProfile({Key? key, required this.username, required this.bio}) : super(key: key);
@@ -28,10 +26,7 @@ class CustomNameProfile extends StatelessWidget {
           padding: EdgeInsets.only(top: paddingName),
           child: Text(
             username,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: whiteColor,
-            ),
+            style: Theme.of(context).textTheme.headline3,
           ),
         ),
         Container(
@@ -39,9 +34,7 @@ class CustomNameProfile extends StatelessWidget {
           padding: EdgeInsets.only(top: paddingBio),
           child: Text(
             bio,
-            style: const TextStyle(
-              color: whiteColor,
-            ),
+            style: Theme.of(context).textTheme.bodyText2,
           ),
         ),
       ],
