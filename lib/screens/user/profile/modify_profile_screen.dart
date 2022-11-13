@@ -1,6 +1,4 @@
 import 'dart:typed_data';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instatek/models/user.dart' as model;
@@ -158,20 +156,27 @@ class _ModifyProfileState extends State<ModifyProfile> {
     }
   }
 
-  void deleteUser(BuildContext context) {
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .delete();
-    FirebaseAuth.instance.currentUser?.delete();
-
-    FirebaseAuth.instance.signOut();
-    if (!mounted) return;
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => const LoginScreen(),
-      ),
-    );
+  void deleteUser(BuildContext context) async {
+    setState(() {
+      _isLoadingButton = true;
+    });
+    final String res = await AuthMethods().deleteUser();
+    setState(() {
+      _isLoadingButton = false;
+    });
+    if (res == "success") {
+      await AuthMethods().signOut();
+      if (!mounted) return;
+      await Navigator.of(context).pushReplacement(
+        MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => const LoginScreen(),
+        ),
+      );
+    } else {
+      setState(() {
+        errorText = "A server error happened : $res";
+      });
+    }
   }
 
   void updateUsername(dynamic newUsername) {
@@ -242,11 +247,14 @@ class _ModifyProfileState extends State<ModifyProfile> {
   }
 
   void navigateToRegister() {
-    Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) => const ResponsiveLayout(
-      mobileScreenLayout: MobileScreenLayout(),
-      webScreenLayout: WebScreenLayout(),
-      adminScreenLayout: AdminScreenLayout(),
-    ),),
+    Navigator.of(context).push(
+      MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) => const ResponsiveLayout(
+          mobileScreenLayout: MobileScreenLayout(),
+          webScreenLayout: WebScreenLayout(),
+          adminScreenLayout: AdminScreenLayout(),
+        ),
+      ),
     );
   }
 }

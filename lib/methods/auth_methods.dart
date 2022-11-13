@@ -11,24 +11,34 @@ class AuthMethods {
   Future<model.User?> getUserDetails() async {
     final User currentUser = _auth.currentUser!;
 
-    final DocumentSnapshot<Object?> documentSnapshot = await _firestore.collection('users').doc(currentUser.uid).get();
+    final DocumentSnapshot<Object?> documentSnapshot =
+        await _firestore.collection('users').doc(currentUser.uid).get();
     return model.User.fromSnap(documentSnapshot);
   }
 
   Future<model.User?> getSpecificUserDetails(String uid) async {
-    final DocumentSnapshot<Object?> documentSnapshot = await _firestore.collection('users').doc(uid).get();
+    final DocumentSnapshot<Object?> documentSnapshot =
+        await _firestore.collection('users').doc(uid).get();
     return model.User.fromSnap(documentSnapshot);
   }
 
   Future<bool> usernameDoesntExist(dynamic username) async {
-    final QuerySnapshot<Object?> querySnapshot = await _firestore.collection('users').get();
+    final QuerySnapshot<Object?> querySnapshot =
+        await _firestore.collection('users').get();
 
-    final List<Object?> allData = querySnapshot.docs.map((QueryDocumentSnapshot<Object?> doc) => doc.data()).toList();
+    final List<Object?> allData = querySnapshot.docs
+        .map((QueryDocumentSnapshot<Object?> doc) => doc.data())
+        .toList();
     for (Object? user in allData) {
       final String userStr = user.toString();
-      final String usernameOffset = userStr.substring(userStr.indexOf("username: "));
-      final String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1,
-          (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","),);
+      final String usernameOffset =
+          userStr.substring(userStr.indexOf("username: "));
+      final String usernameOld = usernameOffset.substring(
+        usernameOffset.indexOf(" ") + 1,
+        (!usernameOffset.contains(","))
+            ? usernameOffset.indexOf("}")
+            : usernameOffset.indexOf(","),
+      );
       if (username == usernameOld) {
         return true;
       }
@@ -37,14 +47,22 @@ class AuthMethods {
   }
 
   Future<bool> emailDoesntExist(dynamic email) async {
-    final QuerySnapshot<Object?> querySnapshot = await _firestore.collection('users').get();
+    final QuerySnapshot<Object?> querySnapshot =
+        await _firestore.collection('users').get();
 
-    final List<Object?> allData = querySnapshot.docs.map((QueryDocumentSnapshot<Object?> doc) => doc.data()).toList();
+    final List<Object?> allData = querySnapshot.docs
+        .map((QueryDocumentSnapshot<Object?> doc) => doc.data())
+        .toList();
     for (Object? user in allData) {
       final String userStr = user.toString();
-      final String usernameOffset = userStr.substring(userStr.indexOf("email: "));
-      final String usernameOld = usernameOffset.substring(usernameOffset.indexOf(" ") + 1,
-          (!usernameOffset.contains(",")) ? usernameOffset.indexOf("}") : usernameOffset.indexOf(","),);
+      final String usernameOffset =
+          userStr.substring(userStr.indexOf("email: "));
+      final String usernameOld = usernameOffset.substring(
+        usernameOffset.indexOf(" ") + 1,
+        (!usernameOffset.contains(","))
+            ? usernameOffset.indexOf("}")
+            : usernameOffset.indexOf(","),
+      );
       if (email == usernameOld) {
         return false;
       }
@@ -68,8 +86,10 @@ class AuthMethods {
           username.isNotEmpty &&
           bio.isNotEmpty &&
           profilePicture != null) {
-        final UserCredential cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-        final String avatarUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
+        final UserCredential cred = await _auth.createUserWithEmailAndPassword(
+            email: email, password: password,);
+        final String avatarUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', profilePicture, false);
 
         final model.User user = model.User(
           username: username.toLowerCase(),
@@ -83,7 +103,10 @@ class AuthMethods {
           notification: <dynamic>[],
         );
 
-        await _firestore.collection("users").doc(cred.user!.uid).set(user.toJson());
+        await _firestore
+            .collection("users")
+            .doc(cred.user!.uid)
+            .set(user.toJson());
 
         res = "Success";
       } else {
@@ -123,26 +146,33 @@ class AuthMethods {
     }
     return res;
   }
-  
+
   Future<String> updateUser({
     String? username,
     String? bio,
     Uint8List? profilePicture,
   }) async {
     String res = "Internal unknown error.";
-    try{
+    try {
       final User currentUser = _auth.currentUser!;
 
       if (username != "") {
-        await _firestore.collection('users').doc(currentUser.uid).update(<String, String?>{'username': username});
+        await _firestore
+            .collection('users')
+            .doc(currentUser.uid)
+            .update(<String, String?>{'username': username});
         res = "Success";
       }
       if (bio != "") {
-        await _firestore.collection('users').doc(currentUser.uid).update(<String, String?>{'bio': bio});
+        await _firestore
+            .collection('users')
+            .doc(currentUser.uid)
+            .update(<String, String?>{'bio': bio});
         res = "Success";
       }
       if (profilePicture != null) {
-        final String avatarUrl = await StorageMethods().uploadImageToStorage('profilePics', profilePicture, false);
+        final String avatarUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', profilePicture, false);
         await currentUser.updatePhotoURL(avatarUrl);
         res = "Success";
       }
@@ -151,13 +181,12 @@ class AuthMethods {
       }
 
       await currentUser.reload();
-    }on FirebaseAuthException catch (err) {
+    } on FirebaseAuthException catch (err) {
       res = err.code;
     } catch (err) {
       res = err.toString();
     }
     return res;
-
   }
 
   Future<void> signOut() async {
@@ -179,10 +208,29 @@ class AuthMethods {
         'followers': FieldValue.arrayUnion(<dynamic>[ownerUid as dynamic])
       });
       // Add event of following
-      await _firestore.collection('users').doc(ownerUid).update( <String, dynamic>{
+      await _firestore
+          .collection('users')
+          .doc(ownerUid)
+          .update(<String, dynamic>{
         'notification': FieldValue.arrayUnion(<dynamic>[userUid as dynamic])
       });
       res = "success";
+    } on FirebaseAuthException catch (err) {
+      res = err.code;
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> deleteUser({
+    String? userUid,
+  }) async {
+    String res = "Internal unknown error.";
+    try {
+      await _firestore.collection('users').doc(_auth.currentUser?.uid).delete();
+      await _auth.currentUser?.delete();
+      res = 'success';
     } on FirebaseAuthException catch (err) {
       res = err.code;
     } catch (err) {
