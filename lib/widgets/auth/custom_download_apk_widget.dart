@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../utils/colors.dart';
 
 class CustomDownloadApk extends StatelessWidget {
   const CustomDownloadApk({Key? key}) : super(key: key);
@@ -12,26 +10,20 @@ class CustomDownloadApk extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 8),
-              child: const Text("Download Apk", style: TextStyle(color: blueColor)),
-            ),
-            GestureDetector(
-              onTap: () => downloadFile("/build/app/outputs/flutter-apk/app-release.apk"),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 25),
-                child: const Text("APK", style: TextStyle(fontWeight: FontWeight.bold, color: blueColor)),
-              ),
-            )
-          ],
-        ),
-        const SizedBox(height: 24),
-      ],
+    final Size size = MediaQuery.of(context).size;
+    double paddingVertical = 0;
+    if (size.width >= 1366) {
+      paddingVertical = 20;
+    } else {
+      paddingVertical = 20;
+    }
+
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: paddingVertical),
+      child: GestureDetector(
+        onTap: () => downloadFile("/build/app/outputs/flutter-apk/app-release.apk"),
+        child: Text("Download APK", style: Theme.of(context).textTheme.subtitle2),
+      ),
     );
   }
 }

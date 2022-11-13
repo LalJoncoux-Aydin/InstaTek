@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instatek/models/user.dart' as model;
-import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/screens/admin/admin_post_screen.dart';
 import 'package:instatek/screens/admin/admin_user_screen.dart';
 import 'package:instatek/utils/colors.dart';
-import 'package:provider/provider.dart';
 
 class AdminScreenLayout extends StatefulWidget {
   const AdminScreenLayout({Key? key}) : super(key: key);
@@ -15,9 +12,6 @@ class AdminScreenLayout extends StatefulWidget {
 }
 
 class AdminScreenLayoutState extends State<AdminScreenLayout> {
-  String username = "";
-  late UserProvider userProvider;
-  late model.User myUser;
   int _selectedIndex = 0;
   NavigationRailLabelType labelType = NavigationRailLabelType.all;
   double groupAligment = 0.0;
@@ -25,18 +19,6 @@ class AdminScreenLayoutState extends State<AdminScreenLayout> {
   @override
   void initState() {
     super.initState();
-    setupUser();
-  }
-
-  void setupUser() async {
-    userProvider = Provider.of(context, listen: false);
-    await userProvider.refreshUser();
-    if (userProvider.isUser == true) {
-      setState(() {
-        myUser = userProvider.getUser;
-        username = myUser.username;
-      });
-    }
   }
 
   @override

@@ -14,7 +14,7 @@ class Post {
   final String description;
   final String uid;
   final String username;
-  final List<String> likes;
+  final List<dynamic> likes;
   final String postId;
   final DateTime datePublished;
   final String postUrl;
@@ -28,7 +28,7 @@ class Post {
       uid: snapshot["uid"],
       likes: snapshot["likes"],
       postId: snapshot["postId"],
-      datePublished: snapshot["datePublished"],
+      datePublished: snapshot["datePublished"].toDate(),
       username: snapshot["username"],
       postUrl: snapshot['postUrl'],
       avatarUrl: snapshot['avatarUrl'],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instatek/methods/auth_methods.dart';
 import 'package:instatek/models/user.dart' as model;
-import 'package:instatek/utils/colors.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/user_provider.dart';
@@ -64,9 +63,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
-        backgroundColor: mobileBackgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
-          backgroundColor: mobileBackgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text("Favorite"),
           centerTitle: true,
         ),

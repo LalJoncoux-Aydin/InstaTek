@@ -1,12 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import '../../../../models/post.dart';
 import '../../../../utils/colors.dart';
 
 class CustomPostsContainerProfile extends StatelessWidget {
-  const CustomPostsContainerProfile({Key? key, required this.uid}) : super(key: key);
+  const CustomPostsContainerProfile({Key? key, required this.listPost}) : super(key: key);
 
-  final String uid;
+  final List<Post> listPost;
 
   @override
   Widget build(BuildContext context) {
@@ -22,33 +21,19 @@ class CustomPostsContainerProfile extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: paddingPosts),
       width: double.infinity,
-      child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: FirebaseFirestore.instance.collection('posts').where('uid', isEqualTo: uid).snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          List<QueryDocumentSnapshot<Map<String, dynamic>>> docs = snapshot.data!.docs;
-          docs.sort((QueryDocumentSnapshot<Map<String, dynamic>> a, QueryDocumentSnapshot<Map<String, dynamic>> b) => a.data()['datePublished'].toDate().toString().compareTo(b.data()['datePublished'].toDate().toString()));
-          docs = docs.reversed.toList();
-
-          return GridView.builder(
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: correctRatio,
-            ),
-            itemCount: docs.length,
-            itemBuilder: (BuildContext ctx, int index) => Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: whiteColor),
-                  ),
-                  child: Image.network(docs[index].data()['postUrl'].toString()),
-            ),
-          );
-        },
+      child: GridView.builder(
+        shrinkWrap: true,
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200,
+            childAspectRatio: correctRatio,
+        ),
+        itemCount: listPost.length,
+        itemBuilder: (BuildContext ctx, int index) => Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: whiteColor),
+              ),
+              child: Image.network(listPost[index].postUrl.toString()),
+        ),
       ),
     );
   }

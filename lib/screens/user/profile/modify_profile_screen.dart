@@ -85,7 +85,9 @@ class _ModifyProfileState extends State<ModifyProfile> {
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text(
             "Modify profil",
           ),
@@ -127,7 +129,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
                             formKey: formKey,
                             loadingState: _isLoadingButton,
                             onTapFunction: updateUser,
-                            shapeDecoration: null,
+                            buttonColor: Theme.of(context).colorScheme.tertiary,
                           ),
                           CustomDeleteButton(
                             displayText: 'Delete profil',

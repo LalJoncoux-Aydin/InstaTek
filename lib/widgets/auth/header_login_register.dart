@@ -6,16 +6,20 @@ class HeaderLoginRegister extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        const SizedBox(height: 30),
-        SvgPicture.asset(
-          'assets/instatek_logo.svg',
-          color: Theme.of(context).colorScheme.secondary,
-          height: 60,
-        ),
-        const SizedBox(height: 30),
-      ],
+    final Size size = MediaQuery.of(context).size;
+    double imageSize = 0;
+    if (size.width >= 1366) {
+      imageSize = 120;
+    } else {
+      imageSize = 90;
+    }
+
+    return Container(
+      padding: const EdgeInsets.only(bottom: 30),
+      child: SvgPicture.asset(
+        'assets/instatek_logo.svg',
+        height: imageSize,
+      ),
     );
   }
 }

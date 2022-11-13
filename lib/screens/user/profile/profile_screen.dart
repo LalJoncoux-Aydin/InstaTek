@@ -1,16 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instatek/methods/auth_methods.dart';
+import 'package:instatek/methods/firestore_methods.dart';
 import 'package:instatek/models/user.dart' as model;
-import 'package:instatek/utils/colors.dart';
 import 'package:instatek/widgets/tools/custom_loading_screen.dart';
-import 'package:instatek/widgets/tools/custom_validation_button.dart';
 import 'package:instatek/widgets/user/profile/infobar/custom_infobar_profile_widget.dart';
 import 'package:provider/provider.dart';
+import '../../../models/post.dart';
 import '../../../providers/user_provider.dart';
+import '../../../widgets/tools/custom_validation_button.dart';
 import '../../../widgets/user/profile/posts/custom_posts_container_profile_widget.dart';
 import '../../auth/login_screen.dart';
-import 'modify_button_profile_screen.dart';
+import 'modify_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, this.uid = ""}) : super(key: key);
@@ -26,12 +26,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late String userUid = "";
   late String ownerUid = "";
   late String username = "";
-  late List<dynamic> followers;
-  late List<dynamic> following;
+  late List<dynamic> followers = <dynamic>[];
+  late List<dynamic> following = <dynamic>[];
+  late List<Post> postList = <Post>[];
   late int postSize = 0;
   late String photoUrl;
   late String bio;
   late GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late GlobalKey<FormState> formKeyFollow = GlobalKey<FormState>();
   bool _isLoading = false;
   bool _isLoadingFollow = false;
   late bool _isFollowed = false;
@@ -43,6 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void setupUser() async {
+    // Get actual user
     userProvider = Provider.of(context, listen: false);
     await userProvider.refreshUser();
     if (userProvider.isUser == true) {
@@ -51,19 +54,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
       });
     }
 
+    // Get user for own profile or others profile
     if (widget.uid != "") {
       myUser = (await AuthMethods().getSpecificUserDetails(widget.uid))!;
       setState(() {
         userUid = myUser.uid;
       });
+
     } else {
       if (userProvider.isUser == true) {
         setState(() {
           myUser = userProvider.getUser;
+          _isFollowed = false;
         });
       }
     }
-
     setState(() {
       username = myUser.username;
       followers = myUser.followers;
@@ -72,13 +77,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       bio = myUser.bio;
       _isLoading = true;
       _isFollowed = false;
-    });
-    final QuerySnapshot<Map<String, dynamic>> postSnap = await FirebaseFirestore.instance
-        .collection('posts')
-        .where('uid', isEqualTo: widget.uid)
-        .get();
-    setState(() {
-      postSize = postSnap.docs.length;
     });
 
     if (userUid != "") {
@@ -89,6 +87,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           });
         }
       }
+    }
+
+    final List<Post>? postListTmp = await FireStoreMethods().getUserPosts(myUser.uid);
+    if (postListTmp != null) {
+      setState(() {
+        postList = postListTmp;
+        postSize = postList.length;
+      });
     }
   }
 
@@ -112,34 +118,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     if (_isLoading == false) {
-      setupUser();
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
-        backgroundColor: mobileBackgroundColor,
         appBar: AppBar(
-          backgroundColor: mobileBackgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background,
           title: Text(
             username,
           ),
           actions: <Widget>[
             IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.logout,
-                color: whiteColor,
+                color: Theme.of(context).colorScheme.secondary,
               ),
               onPressed: () async {
                 await AuthMethods().signOut();
                 if (!mounted) return;
-                await Navigator.of(context).pushReplacement(MaterialPageRoute<dynamic>(builder: (BuildContext context) => const LoginScreen(),),);
-                },
+                await Navigator.of(context).pushReplacement(
+                  MaterialPageRoute<dynamic>(builder: (BuildContext context) => const LoginScreen(),),
+                );
+              },
             ),
           ],
           centerTitle: false,
         ),
         body: SafeArea(
           child: Form(
-            key: formKey,
+            key: userUid == "" ? formKey : formKeyFollow,
             child: SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: paddingGlobalHorizontal, vertical: paddingGlobalVertical),
@@ -147,8 +153,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: <Widget>[
                     CustomInfobarProfile(photoUrl: photoUrl, followers: followers.length, following: following.length, postSize: postSize, username: username, bio: bio),
-                    if (userUid == "") const ModifyButtonProfile() else if (_isFollowed == false) CustomValidationButton(displayText: "Follow", formKey: formKey, loadingState: _isLoadingFollow, onTapFunction: addFollowers, shapeDecoration: null) else if (_isFollowed == true) CustomValidationButton(displayText: "Unfollow", formKey: formKey, loadingState: _isLoadingFollow, onTapFunction: removeFollowers, shapeDecoration: null),
-                    CustomPostsContainerProfile(uid: widget.uid),
+                    if (userUid == "") CustomValidationButton(displayText: "Modify my account", formKey: formKey, loadingState: false, onTapFunction: modifyAccount, buttonColor: Theme.of(context).colorScheme.tertiary)
+                    else if (_isFollowed == false) CustomValidationButton(displayText: "Follow", formKey: formKeyFollow, loadingState: _isLoadingFollow, onTapFunction: addFollowers, buttonColor: Theme.of(context).colorScheme.tertiary)
+                    else if (_isFollowed == true) CustomValidationButton(displayText: "Unfollow", formKey: formKeyFollow, loadingState: _isLoadingFollow, onTapFunction: removeFollowers, buttonColor: Theme.of(context).colorScheme.tertiary),
+                    CustomPostsContainerProfile(listPost: postList),
                   ],
                 ),
               ),
@@ -157,6 +165,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       );
     }
+  }
+
+  void modifyAccount(dynamic formKey, BuildContext? context) async {
+    await Navigator.of(context!).push(
+        MaterialPageRoute<dynamic>(builder: (BuildContext context) => const ModifyProfile(),),
+    );
   }
 
   void addFollowers(dynamic formKey, BuildContext? context) async {

@@ -149,7 +149,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   child: Text(
                     "Post",
                     style: TextStyle(
-                      color: Theme.of(context).textTheme.button!.color,
+                      color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,
                       fontSize: 16.0,
                     ),

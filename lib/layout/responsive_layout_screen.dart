@@ -3,6 +3,7 @@ import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/utils/global_variables.dart';
 import 'package:provider/provider.dart';
+import '../widgets/tools/custom_loading_screen.dart';
 
 class ResponsiveLayout extends StatefulWidget {
   const ResponsiveLayout({Key? key, required this.webScreenLayout, required this.mobileScreenLayout, required this.adminScreenLayout}) : super(key:key);
@@ -17,6 +18,8 @@ class ResponsiveLayout extends StatefulWidget {
 class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerProviderStateMixin {
   late UserProvider userProvider;
   late model.User myUser;
+  bool isAdmin = false;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -30,32 +33,30 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerPr
     if (userProvider.isUser == true) {
       setState(() {
         myUser = userProvider.getUser;
+        isAdmin = myUser.isAdmin;
+        _isLoading = true;
       });
     }
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-/*    if (_isLoading == false) {
-      setupUser();
+    final Size size = MediaQuery.of(context).size;
+
+    if (_isLoading == false) {
       return const CustomLoadingScreen();
-    } else {*/
+    } else {
       return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          if (constraints.maxWidth > webScreenSize && myUser.isAdmin == false) {
+          if (size.width > webScreenSize && isAdmin == false) {
             return widget.webScreenLayout;
-          } else
-          if (constraints.maxWidth > webScreenSize && myUser.isAdmin == true) {
+          } else if (size.width > webScreenSize && isAdmin == true) {
             return widget.adminScreenLayout;
+          } else {
+            return widget.mobileScreenLayout;
           }
-          return widget.mobileScreenLayout;
         },
       );
-  //  }
+    }
   }
 }
