@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:instatek/methods/auth_methods.dart';
-import 'package:instatek/models/user.dart' as model;
-import 'package:provider/provider.dart';
-
-import '../../../providers/user_provider.dart';
 import '../../../utils/global_variables.dart';
-import '../../../widgets/tools/custom_loading_screen.dart';
-import '../../../widgets/user/favorite/custom_favorite_container_widget.dart';
 
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({Key? key}) : super(key: key);
@@ -16,42 +9,16 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
-  late UserProvider userProvider;
-  late model.User myUser;
-  late List<dynamic> notif;
-  late List<model.User> notifDetail = <model.User>[];
-  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    if (mounted) {
-      setupUser();
-    }
   }
 
   @override
   void setState(dynamic fn) {
     if(mounted) {
       super.setState(fn);
-    }
-  }
-
-  void setupUser() async {
-    userProvider = Provider.of(context, listen: false);
-    await userProvider.refreshUser();
-    if (userProvider.isUser == true) {
-      setState(() {
-        myUser = userProvider.getUser;
-        notif = myUser.notification;
-        _isLoading = true;
-      });
-      for (dynamic n in notif) {
-        final model.User nUser = (await AuthMethods().getSpecificUserDetails(n))!;
-        setState(() {
-          notifDetail.add(nUser);
-        });
-      }
     }
   }
 
@@ -69,25 +36,20 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       paddingGlobalVertical = 20;
     }
 
-    if (_isLoading == false) {
-      return const CustomLoadingScreen();
-    } else {
-      return Scaffold(
+    return Scaffold(
+      appBar: size.width > webScreenSize ? null : AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: size.width > webScreenSize ? null : AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Theme.of(context).colorScheme.background,
-          title: const Text("Favorite"),
-          centerTitle: true,
+        title: const Text("Favorite"),
+        centerTitle: true,
+      ),
+      body: SafeArea(
+        child: Container(
+            padding: EdgeInsets.symmetric(horizontal: paddingGlobalHorizontal, vertical: paddingGlobalVertical),
+            width: double.infinity,
+            child: const Text("Notification"),
         ),
-        body: SafeArea(
-          child: Container(
-              padding: EdgeInsets.symmetric(horizontal: paddingGlobalHorizontal, vertical: paddingGlobalVertical),
-              width: double.infinity,
-              child: CustomFavoriteContainer(notif : notifDetail),
-          ),
-        ),
-      );
-    }
+      ),
+    );
   }
 }

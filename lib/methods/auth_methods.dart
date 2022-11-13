@@ -215,13 +215,6 @@ class AuthMethods {
       await _firestore.collection('users').doc(userUid).update(<String, dynamic>{
         'followers': FieldValue.arrayUnion(<dynamic>[ownerUid as dynamic])
       });
-      // Add event of following
-      await _firestore
-          .collection('users')
-          .doc(ownerUid)
-          .update(<String, dynamic>{
-        'notification': FieldValue.arrayUnion(<dynamic>[userUid as dynamic])
-      });
       res = "success";
     } on FirebaseAuthException catch (err) {
       res = err.code;

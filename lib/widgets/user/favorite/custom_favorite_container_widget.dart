@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:instatek/models/user.dart' as model;
-import 'package:instatek/widgets/user/profile/infobar/custom_profile_picture_profile.dart';
+import 'package:instatek/widgets/user/favorite/custom_favorite_element_widget.dart';
 
 import '../../../utils/global_variables.dart';
 
@@ -26,12 +26,7 @@ class CustomFavoriteContainer extends StatelessWidget {
           itemCount: notif.length,
           itemBuilder: (BuildContext context,int index) {
             return GestureDetector(
-              child: Column(
-                  children: <Widget>[
-                    Text("${notif[index].username} just followed you"),
-                    CustomProfilePictureProfile(photoUrl: notif[index].avatarUrl),
-                  ],
-                ),
+              child: CustomFavoriteElement(notif: notif[index]),
             );
           },
       ),
