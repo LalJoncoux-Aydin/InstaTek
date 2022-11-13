@@ -14,15 +14,12 @@ class CustomProfileElementSearch extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     double paddingPosts = 0;
     double paddingGlobal = 0;
-    double sizePhoto = 0;
     if (size.width >= webScreenSize) {
       paddingPosts = 5;
       paddingGlobal = 5;
-      sizePhoto = 140;
     } else {
       paddingPosts = 5;
       paddingGlobal = 5;
-      sizePhoto = 110;
     }
 
     return Container(
