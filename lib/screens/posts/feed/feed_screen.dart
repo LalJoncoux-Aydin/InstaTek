@@ -43,12 +43,11 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
     final Size size = MediaQuery.of(context).size;
     double paddingGlobalHorizontal = 0;
     double paddingGlobalVertical = 0;
 
-    if (size.width >= 1366) {
+    if (size.width >= webScreenSize) {
       paddingGlobalHorizontal = 50;
       paddingGlobalVertical = 40;
     } else {
@@ -60,40 +59,35 @@ class _FeedScreenState extends State<FeedScreen> {
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: width > webScreenSize
-            ? null
-            : AppBar(
-                backgroundColor: Theme.of(context).colorScheme.background,
-                centerTitle: false,
-                title: SvgPicture.asset(
-                  'assets/instatek_logo.svg',
-                  color: Theme.of(context).colorScheme.secondary,
-                  height: 32,
-                ),
-                actions: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      Icons.messenger_outline_rounded,
-                      color: Theme.of(context).iconTheme.color,
-                    ),
-                    onPressed: () {},
+        appBar: size.width > webScreenSize ? null : AppBar(
+          centerTitle: false,
+          title: SvgPicture.asset(
+            'assets/instatek_logo.svg',
+            color: Theme.of(context).colorScheme.secondary,
+            height: 32,
+          ),
+          automaticallyImplyLeading: false,
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: paddingGlobalVertical, horizontal: paddingGlobalHorizontal),
+              width: double.infinity,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemBuilder: (BuildContext ctx, int index) => Container(
+                  margin: EdgeInsets.symmetric(
+                    horizontal: size.width > webScreenSize ? size.width * 0.3 : 0,
+                    vertical: size.width > webScreenSize ? 10 : 0,
                   ),
-                ],
-              ),
-        body: Container(
-          padding: EdgeInsets.symmetric(vertical: paddingGlobalVertical, horizontal: paddingGlobalHorizontal),
-          child: ListView.builder(
-            itemBuilder: (BuildContext ctx, int index) => Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: width > webScreenSize ? width * 0.3 : 0,
-                vertical: width > webScreenSize ? 10 : 0,
-              ),
-              child: PostCard(
-                post: postList[index],
+                  child: Text(postList[index].username),
+                  /*PostCard(
+                    post: postList[index],
+                  ),*/
+                ),
+                itemCount: postList.length,
               ),
             ),
-            itemCount: postList.length,
           ),
         ),
       );
