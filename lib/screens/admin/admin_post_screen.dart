@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instatek/methods/firestore_methods.dart';
 import 'package:instatek/models/post.dart';
-import 'package:instatek/utils/global_variables.dart';
 import 'package:instatek/widgets/tools/custom_loading_screen.dart';
 
 class AdminPostScreen extends StatefulWidget {
@@ -49,36 +47,36 @@ class _AdminPostScreenState extends State<AdminPostScreen> {
           child: SingleChildScrollView(
             child: ListView.builder(
               shrinkWrap: true,
-              itemBuilder: (BuildContext ctx, int index) => Container(
-                child: Center(
-                  child: SizedBox(
-                    width: 800,
-                    child: Card(
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage:
-                              NetworkImage('${postList[index].postUrl}'),
-                        ),
-                        title: Text('${postList[index].username}'),
-                        subtitle: Text(
-                          'Description: ${postList[index].description}\nDate: ${postList[index].datePublished}\nUID: ${postList[index].uid}\npostId: ${postList[index].postId}',
-                        ),
-                        trailing: PopupMenuButton<String>(
-                          itemBuilder: (BuildContext context) {
-                            return <PopupMenuEntry<String>>[
-                              PopupMenuItem<String>(
-                                value: 'delete',
-                                child: Text(
-                                    'Delete ${postList[index].username} post',),
+              itemBuilder: (BuildContext ctx, int index) => Center(
+                child: SizedBox(
+                  width: 800,
+                  child: Card(
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(postList[index].postUrl),
+                      ),
+                      title: Text(postList[index].username),
+                      subtitle: Text(
+                        'Description: ${postList[index].description}\nDate: ${postList[index].datePublished}\nUID: ${postList[index].uid}\npostId: ${postList[index].postId}',
+                      ),
+                      trailing: PopupMenuButton<String>(
+                        itemBuilder: (BuildContext context) {
+                          return <PopupMenuEntry<String>>[
+                            PopupMenuItem<String>(
+                              value: 'delete',
+                              child: Text(
+                                'Delete ${postList[index].username} post',
                               ),
-                            ];
-                          },
-                          onSelected: (String value) {
-                            if (value == 'delete') {
-                              FireStoreMethods().deletePost(postList[index].postId);
-                            }
-                          },
-                        ),
+                            ),
+                          ];
+                        },
+                        onSelected: (String value) {
+                          if (value == 'delete') {
+                            FireStoreMethods()
+                                .deletePost(postList[index].postId);
+                            setState(postList);
+                          }
+                        },
                       ),
                     ),
                   ),
