@@ -25,18 +25,24 @@ class CustomPostsContainerProfile extends StatelessWidget {
       correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 2.15);
     }
 
-    return Container(
-      padding: EdgeInsets.only(top: paddingVertical),
-      width: double.infinity,
-      child: GridView.builder(
-        shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+    if (listPost.isEmpty) {
+     return const Text("No Post");
+    } else {
+      return Container(
+        padding: EdgeInsets.only(top: paddingVertical),
+        width: double.infinity,
+        child: GridView.builder(
+          shrinkWrap: true,
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: crossAxis,
             childAspectRatio: correctRatio,
+          ),
+          itemCount: listPost.length,
+          itemBuilder: (BuildContext ctx, int index) =>
+              CustomPostsElementProfile(
+                  displayPost: listPost[index], borderColor: borderColor),
         ),
-        itemCount: listPost.length,
-        itemBuilder: (BuildContext ctx, int index) => CustomPostsElementProfile(displayPost: listPost[index], borderColor: borderColor),
-      ),
-    );
+      );
+    }
   }
 }

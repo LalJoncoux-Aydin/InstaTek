@@ -165,6 +165,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: double.infinity,
                 child: Column(
                   children: <Widget>[
+                    if (userUid == "")
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.logout,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          onPressed: () async {
+                            await AuthMethods().signOut();
+                            if (!mounted) return;
+                            await Navigator.of(context).pushReplacement(
+                              MaterialPageRoute<dynamic>(builder: (BuildContext context) => const LoginScreen(),),
+                            );
+                          },
+                        ),
+                      ),
                     CustomInfobarProfile(photoUrl: photoUrl, followers: followers.length, following: following.length, postSize: postSize, username: username, bio: bio),
                     CustomButtonProfile(userUid: userUid, isFollowed: _isFollowed, modifyAccount: modifyAccount, addFollowers: addFollowers, removeFollowers: removeFollowers, theme: Theme.of(context).colorScheme.tertiary, isLoadingFollow: _isLoadingFollow, formKey: formKey, formKeyFollow: formKeyFollow),
                     CustomPostsContainerProfile(listPost: postList, borderColor: Theme.of(context).colorScheme.secondary.withOpacity(0.3)),
