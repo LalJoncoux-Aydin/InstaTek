@@ -1,6 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instatek/methods/firestore_methods.dart';
+import 'package:instatek/models/post.dart';
 import 'package:instatek/utils/global_variables.dart';
 import 'package:instatek/widgets/posts/post_card.dart';
 
@@ -12,9 +13,35 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
+  late List<Post> postList = <Post>[];
+
+  @override
+  void initState() {
+    super.initState();
+    setupPosts();
+  }
+
+  void setupPosts() async {
+    final List<Post> postListTmp = await FireStoreMethods().getFeedPosts();
+    setState(() {
+      postList = postListTmp;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
+    final Size size = MediaQuery.of(context).size;
+    double paddingGlobalHorizontal = 0;
+    double paddingGlobalVertical = 0;
+
+    if (size.width >= 1366) {
+      paddingGlobalHorizontal = 50;
+      paddingGlobalVertical = 40;
+    } else {
+      paddingGlobalHorizontal = 0;
+      paddingGlobalVertical = 20;
+    }
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -38,28 +65,16 @@ class _FeedScreenState extends State<FeedScreen> {
                 ),
               ],
             ),
-      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: FirebaseFirestore.instance.collection('posts').orderBy('datePublished', descending: true).snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return ListView.builder(
-            shrinkWrap: true,
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (BuildContext ctx, int index) => Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: width > webScreenSize ? width * 0.3 : 0,
-                vertical: width > webScreenSize ? 15 : 0,
-              ),
-              child: PostCard(
-                snap: snapshot.data!.docs[index].data(),
-              ),
-            ),
-          );
-        },
+      body: ListView.builder(
+        itemBuilder: (BuildContext ctx, int index) => Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.red),
+          ),
+          child: PostCard(
+            snap: postList[index],
+          ),
+        ),
+        itemCount: postList.length,
       ),
     );
   }

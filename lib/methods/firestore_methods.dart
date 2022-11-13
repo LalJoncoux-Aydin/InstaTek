@@ -7,9 +7,20 @@ import 'package:uuid/uuid.dart';
 class FireStoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  Future<List<Post>> getFeedPosts() async {
+    final QuerySnapshot<Map<String, dynamic>> documentSnapshot = await _firestore.collection('posts').get();
+    List<Post> listPost =
+        documentSnapshot.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => Post.fromSnap(doc)).toList();
+    listPost.sort((Post a, Post b) => a.datePublished.toString().compareTo(b.datePublished.toString()));
+    listPost = listPost.reversed.toList();
+    return listPost;
+  }
+
   Future<List<Post>?> getUserPosts(String uid) async {
-    final QuerySnapshot<Map<String, dynamic>> documentSnapshot = await _firestore.collection('posts').where('uid', isEqualTo: uid).get();
-    List<Post> listPost = documentSnapshot.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => Post.fromSnap(doc)).toList();
+    final QuerySnapshot<Map<String, dynamic>> documentSnapshot =
+        await _firestore.collection('posts').where('uid', isEqualTo: uid).get();
+    List<Post> listPost =
+        documentSnapshot.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => Post.fromSnap(doc)).toList();
     listPost.sort((Post a, Post b) => a.datePublished.toString().compareTo(b.datePublished.toString()));
     listPost = listPost.reversed.toList();
     return listPost;
