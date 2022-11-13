@@ -3,7 +3,8 @@ import 'package:instatek/models/post.dart';
 import 'package:instatek/models/user.dart' as model;
 
 class PostCardHeader extends StatelessWidget {
-  const PostCardHeader({Key? key, required this.deletePost, required this.displayPost, required this.myUser}) : super(key: key);
+  const PostCardHeader({Key? key, required this.deletePost, required this.displayPost, required this.myUser})
+      : super(key: key);
 
   final void Function(String postId) deletePost;
   final Post displayPost;

@@ -68,24 +68,23 @@ class _FeedScreenState extends State<FeedScreen> {
     if (size.width >= webScreenSize) {
       paddingGlobalHorizontal = 50;
       paddingGlobalVertical = 40;
-    } else {
-      paddingGlobalHorizontal = 0;
-      paddingGlobalVertical = 20;
     }
 
     if (_isLoadingPost == false || _isLoadingUser == false) {
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
-        appBar: size.width > webScreenSize ? null : AppBar(
-          centerTitle: false,
-          title: SvgPicture.asset(
-            'assets/instatek_logo.svg',
-            color: Theme.of(context).colorScheme.secondary,
-            height: 32,
-          ),
-          automaticallyImplyLeading: false,
-        ),
+        appBar: size.width > webScreenSize
+            ? null
+            : AppBar(
+                centerTitle: false,
+                title: SvgPicture.asset(
+                  'assets/instatek_logo.svg',
+                  color: Theme.of(context).colorScheme.secondary,
+                  height: 32,
+                ),
+                automaticallyImplyLeading: false,
+              ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Container(
@@ -112,7 +111,5 @@ class _FeedScreenState extends State<FeedScreen> {
     }
   }
 
-  void updatePost(String uid) {
-
-  }
+  void updatePost(String uid) {}
 }
