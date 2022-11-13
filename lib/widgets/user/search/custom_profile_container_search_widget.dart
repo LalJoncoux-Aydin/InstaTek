@@ -17,13 +17,13 @@ class CustomProfileContainerSearch extends StatelessWidget {
     double crossAxis = 0;
     double correctRatio = 0;
     if (size.width >= webScreenSize) {
-      paddingVertical = 0;
-      crossAxis = 600;
-      correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height * 1.15);
+      paddingVertical = 20;
+      crossAxis = 300;
+      correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height * 2.2);
     } else {
       paddingVertical = 20;
       crossAxis = 200;
-      correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 2.15);
+      correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 1.4);
     }
 
     if (listResearch.isEmpty) {

@@ -18,24 +18,26 @@ class CustomProfileElementSearch extends StatelessWidget {
       paddingPosts = 10;
       paddingGlobal = 10;
     } else {
-      paddingPosts = 15;
-      paddingGlobal = 10;
+      paddingPosts = 5;
+      paddingGlobal = 5;
     }
 
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Theme.of(context).colorScheme.secondary),
       ),
-      child:
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: paddingGlobal, vertical: paddingGlobal),
         width: double.infinity,
         child: GestureDetector(
           onTap: () => navigateToProfile(displayUser.uid),
           child: Column(
             children: <Widget>[
               Image.network(displayUser.avatarUrl),
-              Text(displayUser.username)
+              Container(
+                padding: EdgeInsets.only(top: paddingPosts),
+                child: Text(displayUser.username),
+              ),
             ],
           ),
         ),
