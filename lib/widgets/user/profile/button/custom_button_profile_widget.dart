@@ -5,13 +5,13 @@ import '../../../../utils/global_variables.dart';
 import '../../../tools/custom_validation_button.dart';
 
 class CustomButtonProfile extends StatelessWidget {
-  CustomButtonProfile({Key? key, required this.userUid, required this.isFollowed, required this.modifyAccount, required this.addFollowers, required this.removeFollowers, required this.theme}) : super(key: key);
+    CustomButtonProfile({Key? key, required this.userUid, required this.isFollowed, required this.modifyAccount, required this.addFollowers, required this.removeFollowers, required this.theme, required this._isLoadingFollow}) : super(key: key);
 
   final String userUid;
   final bool isFollowed;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> formKeyFollow = GlobalKey<FormState>();
-  final bool _isLoadingFollow = false;
+  final bool _isLoadingFollow;
   final void Function(GlobalKey<FormState>, BuildContext? context) modifyAccount;
   final void Function(GlobalKey<FormState>, BuildContext? context) addFollowers;
   final void Function(GlobalKey<FormState>, BuildContext? context) removeFollowers;
@@ -20,20 +20,23 @@ class CustomButtonProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    double paddingHorizontal = 0;
+    double paddingLeft = 0;
+    double paddingRight = 0;
     double paddingVertical = 0;
 
     if (size.width >= webScreenSize) {
-      paddingHorizontal = 50;
-      paddingVertical = 40;
+      paddingLeft = 0;
+      paddingRight = 1000;
+      paddingVertical = 5;
     } else {
-      paddingHorizontal = 20;
+      paddingLeft = 20;
+      paddingRight = 20;
       paddingVertical = 10;
     }
 
 
     return Container(
-      padding: EdgeInsets.only(top: paddingVertical, left: paddingHorizontal, right: paddingHorizontal),
+      padding: EdgeInsets.only(top: paddingVertical, left: paddingLeft, right: paddingRight),
       child: whichButton(userUid, isFollowed, formKey, formKeyFollow, _isLoadingFollow, modifyAccount, addFollowers, removeFollowers, theme),
     );
   }

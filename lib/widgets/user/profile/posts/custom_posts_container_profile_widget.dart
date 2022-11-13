@@ -1,42 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:instatek/utils/global_variables.dart';
 import '../../../../models/post.dart';
-import '../../../../utils/colors.dart';
+import 'custom_posts_element_profile_widget.dart';
 
 class CustomPostsContainerProfile extends StatelessWidget {
-  const CustomPostsContainerProfile({Key? key, required this.listPost}) : super(key: key);
+  const CustomPostsContainerProfile({Key? key, required this.listPost, required this.borderColor}) : super(key: key);
 
   final List<Post> listPost;
+  final Color borderColor;
 
   @override
   Widget build(BuildContext context) {
-    final double correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 1.7);
     final Size size = MediaQuery.of(context).size;
-    double paddingHorizontal = 0;
     double paddingVertical = 0;
-    if (size.width >= 1366) {
-      paddingHorizontal = 20;
+    double crossAxis = 0;
+    double correctRatio = 0;
+    if (size.width >= webScreenSize) {
       paddingVertical = 0;
+      crossAxis = 600;
+      correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height * 1.15);
     } else {
-      paddingHorizontal = 20;
-      paddingVertical = 0;
+      paddingVertical = 20;
+      crossAxis = 200;
+      correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 2.15);
     }
 
     return Container(
-      padding: EdgeInsets.only(top: paddingVertical, left: paddingHorizontal, right: paddingHorizontal),
+      padding: EdgeInsets.only(top: paddingVertical),
       width: double.infinity,
       child: GridView.builder(
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 200,
+            maxCrossAxisExtent: crossAxis,
             childAspectRatio: correctRatio,
         ),
         itemCount: listPost.length,
-        itemBuilder: (BuildContext ctx, int index) => Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: whiteColor),
-              ),
-              child: Image.network(listPost[index].postUrl.toString()),
-        ),
+        itemBuilder: (BuildContext ctx, int index) => CustomPostsElementProfile(displayPost: listPost[index], borderColor: borderColor)
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../utils/global_variables.dart';
 import 'custom_name_profile_widget.dart';
 import 'custom_profile_picture_profile.dart';
 import 'custom_table_profile_follow.dart';
@@ -19,8 +20,8 @@ class CustomInfobarProfile extends StatelessWidget {
     double paddingGlobal = 0;
     double paddingImageTable = 0;
     double paddingName = 0;
-    if (size.width >= 1366) {
-      paddingGlobal = 30;
+    if (size.width >= webScreenSize) {
+      paddingGlobal = 800;
       paddingImageTable = 10;
       paddingName = 10;
     } else {
@@ -30,7 +31,7 @@ class CustomInfobarProfile extends StatelessWidget {
     }
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: paddingGlobal),
+      padding: size.width > webScreenSize ? EdgeInsets.only(right: paddingGlobal) : EdgeInsets.symmetric(horizontal: paddingGlobal),
       child: Column(
         children: <Container>[
           Container(

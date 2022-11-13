@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import '../../../models/post.dart';
 import '../../../providers/user_provider.dart';
 import '../../../utils/global_variables.dart';
-import '../../../widgets/tools/custom_validation_button.dart';
 import '../../../widgets/user/profile/posts/custom_posts_container_profile_widget.dart';
 import '../../auth/login_screen.dart';
 import 'modify_profile_screen.dart';
@@ -119,15 +118,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    double paddingGlobalHorizontal = 0;
-    double paddingGlobalVertical = 0;
+    double paddingHorizontal = 0;
+    double paddingVertical = 0;
 
     if (size.width >= webScreenSize) {
-      paddingGlobalHorizontal = 50;
-      paddingGlobalVertical = 40;
+      paddingHorizontal = 70;
+      paddingVertical = 40;
     } else {
-      paddingGlobalHorizontal = 0;
-      paddingGlobalVertical = 20;
+      paddingHorizontal = 0;
+      paddingVertical = 20;
     }
 
     if (_isLoading == false) {
@@ -162,13 +161,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             key: userUid == "" ? formKey : formKeyFollow,
             child: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: paddingGlobalHorizontal, vertical: paddingGlobalVertical),
+                padding: EdgeInsets.symmetric(horizontal: paddingHorizontal, vertical: paddingVertical) ,
                 width: double.infinity,
                 child: Column(
                   children: <Widget>[
                     CustomInfobarProfile(photoUrl: photoUrl, followers: followers.length, following: following.length, postSize: postSize, username: username, bio: bio),
-                    CustomButtonProfile(userUid: userUid, isFollowed: _isFollowed, modifyAccount: modifyAccount, addFollowers: addFollowers, removeFollowers: removeFollowers, theme: Theme.of(context).colorScheme.tertiary),
-                    CustomPostsContainerProfile(listPost: postList),
+                    CustomButtonProfile(userUid: userUid, isFollowed: _isFollowed, modifyAccount: modifyAccount, addFollowers: addFollowers, removeFollowers: removeFollowers, theme: Theme.of(context).colorScheme.tertiary, _isLoadingFollow: _isLoadingFollow,),
+                    CustomPostsContainerProfile(listPost: postList, borderColor: Theme.of(context).colorScheme.secondary.withOpacity(0.3)),
                   ],
                 ),
               ),

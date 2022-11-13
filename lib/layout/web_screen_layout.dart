@@ -27,6 +27,7 @@ class _WebScreenLayoutState extends State<WebScreenLayout> with SingleTickerProv
       appBar: AppBar(
         backgroundColor: blueColor,
         centerTitle: true,
+        automaticallyImplyLeading: false,
         title: SvgPicture.asset(
           'assets/instatek_logo.svg',
           color: primaryColor,
@@ -76,8 +77,9 @@ class _WebScreenLayoutState extends State<WebScreenLayout> with SingleTickerProv
           // Text('selectedIndex: $_selectedIndex'),
           if (_selectedIndex == 0)
             const Expanded(
-                child: FeedScreen(),
+              child: FeedScreen(),
             ),
+
           if (_selectedIndex == 1)
             const Expanded(
                 child: SearchScreen(),
@@ -92,7 +94,7 @@ class _WebScreenLayoutState extends State<WebScreenLayout> with SingleTickerProv
             ),
           if (_selectedIndex == 4)
             const Expanded(
-                child: ProfileScreen(),
+              child: ProfileScreen(),
             ),
         ],
       ),
