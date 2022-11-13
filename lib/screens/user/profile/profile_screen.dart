@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:instatek/methods/auth_methods.dart';
 import 'package:instatek/methods/firestore_methods.dart';
 import 'package:instatek/models/user.dart' as model;
+import 'package:instatek/widgets/change_theme_button_widget.dart';
 import 'package:instatek/widgets/tools/custom_loading_screen.dart';
 import 'package:instatek/widgets/user/profile/button/custom_button_profile_widget.dart';
 import 'package:instatek/widgets/user/profile/infobar/custom_infobar_profile_widget.dart';
@@ -187,6 +188,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                         ),
                       ),
+                    Container(
+                      alignment: Alignment.centerRight,
+                      child: const ChangeThemeButtonWidget(),
+                    ),
                     CustomInfobarProfile(
                       photoUrl: photoUrl,
                       followers: followers.length,

@@ -11,7 +11,7 @@ class ChangeThemeButtonWidget extends StatelessWidget {
     return IconButton(
       icon: Icon(
         themeProvider.isDarkMode ? Icons.wb_sunny : Icons.nightlight_round,
-        color: Colors.white,
+        color: Theme.of(context).iconTheme.color,
       ),
       onPressed: () {
         themeProvider.toggleTheme(!themeProvider.isDarkMode);
