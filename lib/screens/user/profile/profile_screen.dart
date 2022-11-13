@@ -7,6 +7,7 @@ import 'package:instatek/widgets/user/profile/infobar/custom_infobar_profile_wid
 import 'package:provider/provider.dart';
 import '../../../models/post.dart';
 import '../../../providers/user_provider.dart';
+import '../../../utils/global_variables.dart';
 import '../../../widgets/tools/custom_validation_button.dart';
 import '../../../widgets/user/profile/posts/custom_posts_container_profile_widget.dart';
 import '../../auth/login_screen.dart';
@@ -109,7 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     double paddingGlobalHorizontal = 0;
     double paddingGlobalVertical = 0;
 
-    if (size.width >= 1366) {
+    if (size.width >= webScreenSize) {
       paddingGlobalHorizontal = 50;
       paddingGlobalVertical = 40;
     } else {
