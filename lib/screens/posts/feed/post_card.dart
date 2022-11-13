@@ -73,6 +73,8 @@ class _PostCardState extends State<PostCard> {
           PostCardImage(
             myUser: widget.myUser,
             displayPost: widget.displayPost,
+            isLiked: isLiked,
+            onLiked: onLiked,
           ),
           PostCardButtons(
             myUser: widget.myUser,
