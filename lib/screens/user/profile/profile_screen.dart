@@ -3,6 +3,7 @@ import 'package:instatek/methods/auth_methods.dart';
 import 'package:instatek/methods/firestore_methods.dart';
 import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/widgets/tools/custom_loading_screen.dart';
+import 'package:instatek/widgets/user/profile/button/custom_button_profile_widget.dart';
 import 'package:instatek/widgets/user/profile/infobar/custom_infobar_profile_widget.dart';
 import 'package:provider/provider.dart';
 import '../../../models/post.dart';
@@ -166,9 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: <Widget>[
                     CustomInfobarProfile(photoUrl: photoUrl, followers: followers.length, following: following.length, postSize: postSize, username: username, bio: bio),
-                    if (userUid == "") CustomValidationButton(displayText: "Modify my account", formKey: formKey, loadingState: false, onTapFunction: modifyAccount, buttonColor: Theme.of(context).colorScheme.tertiary)
-                    else if (_isFollowed == false) CustomValidationButton(displayText: "Follow", formKey: formKeyFollow, loadingState: _isLoadingFollow, onTapFunction: addFollowers, buttonColor: Theme.of(context).colorScheme.tertiary)
-                    else if (_isFollowed == true) CustomValidationButton(displayText: "Unfollow", formKey: formKeyFollow, loadingState: _isLoadingFollow, onTapFunction: removeFollowers, buttonColor: Theme.of(context).colorScheme.tertiary),
+                    CustomButtonProfile(userUid: userUid, isFollowed: _isFollowed, modifyAccount: modifyAccount, addFollowers: addFollowers, removeFollowers: removeFollowers, theme: Theme.of(context).colorScheme.tertiary),
                     CustomPostsContainerProfile(listPost: postList),
                   ],
                 ),

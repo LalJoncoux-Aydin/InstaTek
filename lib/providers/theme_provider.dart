@@ -48,6 +48,11 @@ class MyThemes {
         fontSize: 13,
         fontWeight: FontWeight.bold,
       ),
+      headline3: TextStyle(
+        color: Colors.black,
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
+      ),
       subtitle1: TextStyle(
         color: Color.fromARGB(255, 95, 134, 196),
         fontSize: 15,

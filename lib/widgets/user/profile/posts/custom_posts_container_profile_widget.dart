@@ -11,15 +11,18 @@ class CustomPostsContainerProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     final double correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 1.7);
     final Size size = MediaQuery.of(context).size;
-    double paddingPosts = 0;
+    double paddingHorizontal = 0;
+    double paddingVertical = 0;
     if (size.width >= 1366) {
-      paddingPosts = 10;
+      paddingHorizontal = 20;
+      paddingVertical = 0;
     } else {
-      paddingPosts = 15;
+      paddingHorizontal = 20;
+      paddingVertical = 0;
     }
 
     return Container(
-      padding: EdgeInsets.only(top: paddingPosts),
+      padding: EdgeInsets.only(top: paddingVertical, left: paddingHorizontal, right: paddingHorizontal),
       width: double.infinity,
       child: GridView.builder(
         shrinkWrap: true,
