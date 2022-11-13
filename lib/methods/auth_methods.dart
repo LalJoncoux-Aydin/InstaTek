@@ -104,6 +104,10 @@ class AuthMethods {
     String res = "Credentials are incorrect.";
     try {
       if (email.isNotEmpty && password.isNotEmpty) {
+        final QuerySnapshot<Map<String, dynamic>> documentSnapshot = await _firestore.collection('users').where('email', isEqualTo: email).get();
+        if (documentSnapshot.docs.isEmpty) {
+          return "user-not-found";
+        }
         await _auth.signInWithEmailAndPassword(
           email: email,
           password: password,
