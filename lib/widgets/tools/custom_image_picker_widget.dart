@@ -12,15 +12,18 @@ class CustomImagePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     const double avatarRadius = 80;
-    double paddingVertical = 0;
-    if (size.width >= 1366) {
-      paddingVertical = 20;
+    double paddingBottom = 0;
+    double paddingTop = 0;
+    if (size.width >= webScreenSize) {
+      paddingBottom = 20;
+      paddingTop = 50;
     } else {
-      paddingVertical = 20;
+      paddingBottom = 20;
+      paddingTop = 20;
     }
 
     return Container(
-      padding: EdgeInsets.only(bottom: paddingVertical),
+      padding: EdgeInsets.only(bottom: paddingBottom, top: paddingTop),
       child: Stack(
         children: <Widget>[
           if (imagePick != null)

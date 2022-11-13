@@ -165,7 +165,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: double.infinity,
                 child: Column(
                   children: <Widget>[
-                    if (userUid == "")
+                    if (userUid == "" && size.width > webScreenSize)
                       Container(
                         alignment: Alignment.centerLeft,
                         child: IconButton(
