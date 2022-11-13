@@ -23,7 +23,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   late UserProvider userProvider;
-  late model.User myUser;
+  late model.User? myUser;
   late String userUid = "";
   late String ownerUid = "";
   late String username = "";
@@ -42,7 +42,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    setupUser();
+    if (mounted) {
+      setupUser();
+    }
+  }
+
+  @override
+  void setState(dynamic fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
   }
 
   void setupUser() async {
@@ -59,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (widget.uid != "") {
       myUser = (await AuthMethods().getSpecificUserDetails(widget.uid))!;
       setState(() {
-        userUid = myUser.uid;
+        userUid = myUser!.uid;
       });
 
     } else {
@@ -71,11 +80,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       }
     }
     setState(() {
-      username = myUser.username;
-      followers = myUser.followers;
-      following = myUser.following;
-      photoUrl = myUser.avatarUrl;
-      bio = myUser.bio;
+      username = myUser!.username;
+      followers = myUser!.followers;
+      following = myUser!.following;
+      photoUrl = myUser!.avatarUrl;
+      bio = myUser!.bio;
       _isLoading = true;
       _isFollowed = false;
     });
@@ -90,12 +99,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       }
     }
 
-    final List<Post>? postListTmp = await FireStoreMethods().getUserPosts(myUser.uid);
-    if (postListTmp != null) {
-      setState(() {
-        postList = postListTmp;
-        postSize = postList.length;
-      });
+    if (myUser != null) {
+      final List<Post>? postListTmp = await FireStoreMethods().getUserPosts(myUser!.uid,);
+      if (postListTmp != null) {
+        setState(() {
+          postList = postListTmp;
+          postSize = postList.length;
+        });
+      }
     }
   }
 

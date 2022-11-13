@@ -25,7 +25,16 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   void initState() {
     super.initState();
-    setupUser();
+    if (mounted) {
+      setupUser();
+    }
+  }
+
+  @override
+  void setState(dynamic fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
   }
 
   void setupUser() async {
