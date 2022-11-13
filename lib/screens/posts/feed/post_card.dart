@@ -35,7 +35,7 @@ class _PostCardState extends State<PostCard> {
 
   @override
   void setState(dynamic fn) {
-    if(mounted) {
+    if (mounted) {
       super.setState(fn);
     }
   }
@@ -52,10 +52,12 @@ class _PostCardState extends State<PostCard> {
     final double width = MediaQuery.of(context).size.width;
 
     return Container(
-      margin: width > webScreenSize ? const EdgeInsets.symmetric(vertical: 10) : const EdgeInsets.symmetric(vertical: 1),
+      margin:
+          width > webScreenSize ? const EdgeInsets.symmetric(vertical: 10) : const EdgeInsets.symmetric(vertical: 1),
       decoration: BoxDecoration(
         border: Border.all(
-          color: width > webScreenSize ? Theme.of(context).colorScheme.secondary : Theme.of(context).colorScheme.primary,
+          color:
+              width > webScreenSize ? Theme.of(context).colorScheme.secondary : Theme.of(context).colorScheme.primary,
         ),
         borderRadius: BorderRadius.circular(10),
         color: Theme.of(context).colorScheme.primary,
@@ -75,6 +77,9 @@ class _PostCardState extends State<PostCard> {
             displayPost: widget.displayPost,
             isLiked: isLiked,
             onLiked: onLiked,
+            isAnimating: isLikeAnimating,
+            onStartAnimation: onStartAnimation,
+            onEndAnimation: onEndAnimation,
           ),
           PostCardButtons(
             myUser: widget.myUser,
@@ -91,6 +96,18 @@ class _PostCardState extends State<PostCard> {
         ],
       ),
     );
+  }
+
+  void onStartAnimation() {
+    setState(() {
+      isLikeAnimating = true;
+    });
+  }
+
+  void onEndAnimation() {
+    setState(() {
+      isLikeAnimating = false;
+    });
   }
 
   void onLiked() async {

@@ -10,17 +10,28 @@ class PostCardImage extends StatelessWidget {
     required this.myUser,
     required this.isLiked,
     required this.onLiked,
+    required this.onStartAnimation,
+    required this.onEndAnimation,
+    required this.isAnimating,
   }) : super(key: key);
 
   final Post displayPost;
   final model.User myUser;
   final bool isLiked;
+  final bool isAnimating;
   final Function() onLiked;
+  final Function() onEndAnimation;
+  final Function() onStartAnimation;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onDoubleTap: () => onLiked(),
+      onDoubleTap: () {
+        if (!isAnimating) {
+          onStartAnimation();
+          onLiked();
+        }
+      },
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -32,32 +43,30 @@ class PostCardImage extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
+          AnimatedOpacity(
+            duration: const Duration(milliseconds: 200),
+            opacity: isAnimating ? 1 : 0,
+            child: LikeAnimation(
+              isAnimating: isAnimating,
+              duration: const Duration(
+                milliseconds: 400,
+              ),
+              onEnd: onEndAnimation,
+              child: isLiked
+                  ? const Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 100,
+                    )
+                  : Icon(
+                      Icons.favorite,
+                      color: Theme.of(context).primaryColor,
+                      size: 100,
+                    ),
+            ),
+          ),
         ],
       ),
-      /*AnimatedOpacity(
-        duration: const Duration(milliseconds: 200),
-        opacity: isLikeAnimating ? 1 : 0,
-        child: LikeAnimation(
-          isAnimating: isLikeAnimating,
-          duration: const Duration(
-            milliseconds: 400,
-          ),
-          onEnd: () {
-            setIsLikeAnimating(false);
-          },
-          child: isLiked
-              ? const Icon(
-                  Icons.favorite,
-                  color: Colors.red,
-                  size: 100,
-                )
-              : Icon(
-                  Icons.favorite,
-                  color: Theme.of(context).primaryColor,
-                  size: 100,
-                ),
-        ),
-      ),*/
     );
   }
 }
