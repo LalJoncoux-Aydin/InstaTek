@@ -73,6 +73,11 @@ class MyThemes {
         fontSize: 13,
         fontWeight: FontWeight.bold,
       ),
+      caption: TextStyle(
+        color: Colors.grey,
+        fontSize: 13,
+        fontWeight: FontWeight.w400,
+      ),
     ),
   );
 
@@ -107,6 +112,11 @@ class MyThemes {
         fontWeight: FontWeight.w400,
       ),
       button: TextStyle(
+        color: Colors.white,
+        fontSize: 13,
+        fontWeight: FontWeight.w400,
+      ),
+      caption: TextStyle(
         color: Colors.grey,
         fontSize: 13,
         fontWeight: FontWeight.w400,
