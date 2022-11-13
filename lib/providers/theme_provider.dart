@@ -22,7 +22,7 @@ class MyThemes {
     visualDensity: VisualDensity.adaptivePlatformDensity,
     colorScheme: const ColorScheme.light().copyWith(
       primary: Colors.white,
-      secondary: Colors.black,
+      secondary: const Color.fromARGB(255, 56, 56, 56),
       tertiary: const Color.fromARGB(255, 10, 81, 161),
       background: Colors.white,
       onBackground: Colors.black,
@@ -59,7 +59,12 @@ class MyThemes {
         fontWeight: FontWeight.bold,
       ),
       bodyText1: TextStyle(
-        color: Colors.yellow,
+        color: Colors.white,
+        fontSize: 13,
+        fontWeight: FontWeight.w400,
+      ),
+      bodyText2: TextStyle(
+        color: Colors.black,
         fontSize: 13,
         fontWeight: FontWeight.w400,
       ),

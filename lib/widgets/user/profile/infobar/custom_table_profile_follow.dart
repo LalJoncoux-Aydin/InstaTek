@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:instatek/utils/colors.dart';
 
+import 'custom_table_column_profile_follow_widget.dart';
+
 class CustomTableProfileFollow extends StatelessWidget {
   const CustomTableProfileFollow({Key? key, required this.followers, required this.following, required this.postSize}) : super(key: key);
 
@@ -31,45 +33,14 @@ class CustomTableProfileFollow extends StatelessWidget {
         children: <Row>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Column>[
-              buildStatColumn(postSize, "posts", numPadding, sizeLabel, labelPadding),
-              buildStatColumn(followers, "followers", numPadding, sizeLabel, labelPadding),
-              buildStatColumn(following, "following", numPadding, sizeLabel, labelPadding),
+            children: <Widget>[
+              TableColumnProfileFollowWidget(num: postSize, label: "posts", numPadding: numPadding, sizeLabel: sizeLabel, labelPadding: labelPadding),
+              TableColumnProfileFollowWidget(num: followers, label: "followers", numPadding: numPadding, sizeLabel: sizeLabel, labelPadding: labelPadding),
+              TableColumnProfileFollowWidget(num: following, label: "following", numPadding: numPadding, sizeLabel: sizeLabel, labelPadding: labelPadding),
             ],
           ),
         ],
       ),
-    );
-  }
-
-  Column buildStatColumn(int num, String label, double numPadding, double sizeLabel, double labelPadding) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Container>[
-        Container(
-          margin: EdgeInsets.only(bottom: numPadding),
-          child: Text(
-            num.toString(),
-            style: TextStyle(
-              fontSize: sizeLabel,
-              fontWeight: FontWeight.bold,
-              color: whiteColor,
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(top: labelPadding),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: sizeLabel - 2,
-              fontWeight: FontWeight.w400,
-              color: greyColor,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

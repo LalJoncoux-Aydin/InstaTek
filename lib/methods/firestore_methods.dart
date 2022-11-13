@@ -1,12 +1,20 @@
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:instatek/methods/storage_methods.dart';
 import 'package:instatek/models/post.dart';
 import 'package:uuid/uuid.dart';
 
 class FireStoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<List<Post>?> getUserPosts(String uid) async {
+    final QuerySnapshot<Map<String, dynamic>> documentSnapshot = await _firestore.collection('posts').where('uid', isEqualTo: uid).get();
+    List<Post> listPost = documentSnapshot.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => Post.fromSnap(doc)).toList();
+    listPost.sort((Post a, Post b) => a.datePublished.toString().compareTo(b.datePublished.toString()));
+    listPost = listPost.reversed.toList();
+    return listPost;
+  }
 
   Future<String> uploadPost(
     String description,
