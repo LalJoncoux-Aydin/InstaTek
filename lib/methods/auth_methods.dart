@@ -87,7 +87,7 @@ class AuthMethods {
           bio.isNotEmpty &&
           profilePicture != null) {
         final UserCredential cred = await _auth.createUserWithEmailAndPassword(
-            email: email, password: password);
+            email: email, password: password,);
         final String avatarUrl = await StorageMethods()
             .uploadImageToStorage('profilePics', profilePicture, false);
 
