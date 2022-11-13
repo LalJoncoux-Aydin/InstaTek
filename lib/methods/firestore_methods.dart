@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:instatek/methods/storage_methods.dart';
 import 'package:instatek/models/post.dart';
 import 'package:uuid/uuid.dart';

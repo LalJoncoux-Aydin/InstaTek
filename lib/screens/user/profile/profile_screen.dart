@@ -10,7 +10,6 @@ import '../../../providers/user_provider.dart';
 import '../../../widgets/tools/custom_validation_button.dart';
 import '../../../widgets/user/profile/posts/custom_posts_container_profile_widget.dart';
 import '../../auth/login_screen.dart';
-import 'modify_button_profile_screen.dart';
 import 'modify_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -57,12 +56,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     // Get user for own profile or others profile
     if (widget.uid != "") {
-      print("here ?");
       myUser = (await AuthMethods().getSpecificUserDetails(widget.uid))!;
       setState(() {
         userUid = myUser.uid;
       });
-      print(ownerUid);
 
     } else {
       if (userProvider.isUser == true) {
@@ -177,9 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void addFollowers(dynamic formKey, BuildContext? context) async {
-    print("lry bithc?");
     if (formKey.currentState!.validate()) {
-      print("fck seris");
       setState(() {
         _isLoadingFollow = true;
       });

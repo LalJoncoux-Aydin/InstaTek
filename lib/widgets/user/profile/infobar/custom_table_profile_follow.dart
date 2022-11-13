@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:instatek/utils/colors.dart';
-
 import 'custom_table_column_profile_follow_widget.dart';
 
 class CustomTableProfileFollow extends StatelessWidget {

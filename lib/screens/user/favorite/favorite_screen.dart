@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instatek/methods/auth_methods.dart';
 import 'package:instatek/models/user.dart' as model;
-import 'package:instatek/utils/colors.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/user_provider.dart';
