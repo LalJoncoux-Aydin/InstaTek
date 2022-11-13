@@ -61,7 +61,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     double paddingGlobalHorizontal = 0;
     double paddingGlobalVertical = 0;
 
-    if (size.width >= 1366) {
+    if (size.width >= webScreenSize) {
       paddingGlobalHorizontal = 50;
       paddingGlobalVertical = 40;
     } else {

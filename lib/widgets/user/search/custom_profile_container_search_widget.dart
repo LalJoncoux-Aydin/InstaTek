@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/colors.dart';
+import '../../../utils/global_variables.dart';
 
 class CustomProfileContainerSearch extends StatelessWidget {
   const CustomProfileContainerSearch({Key? key, required this.username, required this.navigateToProfile}) : super(key: key);
@@ -15,7 +16,7 @@ class CustomProfileContainerSearch extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     double paddingPosts = 0;
     double paddingGlobal = 0;
-    if (size.width >= 1366) {
+    if (size.width >= webScreenSize) {
       paddingPosts = 10;
       paddingGlobal = 10;
     } else {

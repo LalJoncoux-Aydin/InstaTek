@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/global_variables.dart';
+
 class CustomValidationButton extends StatelessWidget {
   const CustomValidationButton({
     Key? key,
@@ -20,7 +22,7 @@ class CustomValidationButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     double paddingVertical = 0;
-    if (size.width >= 1366) {
+    if (size.width >= webScreenSize) {
       paddingVertical = 20;
     } else {
       paddingVertical = 10;
