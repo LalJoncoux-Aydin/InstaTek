@@ -122,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
-        appBar: AppBar(
+        appBar: size.width > webScreenSize ? null : AppBar(
           backgroundColor: Theme.of(context).colorScheme.background,
           title: Text(
             username,

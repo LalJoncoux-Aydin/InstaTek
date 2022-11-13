@@ -4,6 +4,7 @@ import 'package:instatek/models/user.dart' as model;
 import 'package:provider/provider.dart';
 
 import '../../../providers/user_provider.dart';
+import '../../../utils/global_variables.dart';
 import '../../../widgets/tools/custom_loading_screen.dart';
 import '../../../widgets/user/favorite/custom_favorite_item_widget.dart';
 
@@ -64,7 +65,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     } else {
       return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: AppBar(
+        appBar: size.width > webScreenSize ? null : AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text("Favorite"),

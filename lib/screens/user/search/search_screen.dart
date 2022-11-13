@@ -3,6 +3,7 @@ import 'package:instatek/screens/user/profile/profile_screen.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/widgets/tools/custom_text_form_field_widget.dart';
 
+import '../../../utils/global_variables.dart';
 import '../../../widgets/user/search/custom_profile_container_search_widget.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -44,7 +45,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
+      appBar: size.width > webScreenSize ? null : AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
         automaticallyImplyLeading: false,
         title: CustomTextFormField(
