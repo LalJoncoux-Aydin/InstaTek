@@ -199,11 +199,11 @@ class AuthMethods {
     try {
       // Add followers in owner user
       await _firestore.collection('users').doc(ownerUid).update( <String, dynamic>{
-        'followers': FieldValue.arrayRemove(<dynamic>[userUid as dynamic])
+        'following': FieldValue.arrayRemove(<dynamic>[userUid as dynamic])
       });
       // Add following in visited user
       await _firestore.collection('users').doc(userUid).update(<String, dynamic>{
-        'following': FieldValue.arrayRemove(<dynamic>[ownerUid as dynamic])
+        'followers': FieldValue.arrayRemove(<dynamic>[ownerUid as dynamic])
       });
       res = "success";
     } on FirebaseAuthException catch (err) {

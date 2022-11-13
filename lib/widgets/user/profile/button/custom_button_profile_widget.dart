@@ -5,13 +5,13 @@ import '../../../../utils/global_variables.dart';
 import '../../../tools/custom_validation_button.dart';
 
 class CustomButtonProfile extends StatelessWidget {
-    CustomButtonProfile({Key? key, required this.userUid, required this.isFollowed, required this.modifyAccount, required this.addFollowers, required this.removeFollowers, required this.theme, required this._isLoadingFollow}) : super(key: key);
+  const CustomButtonProfile({Key? key, required this.userUid, required this.isFollowed, required this.modifyAccount, required this.addFollowers, required this.removeFollowers, required this.theme, required this.isLoadingFollow, required this.formKey, required this.formKeyFollow}) : super(key: key);
 
   final String userUid;
   final bool isFollowed;
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> formKeyFollow = GlobalKey<FormState>();
-  final bool _isLoadingFollow;
+  final GlobalKey<FormState> formKey;
+  final GlobalKey<FormState> formKeyFollow;
+  final bool isLoadingFollow;
   final void Function(GlobalKey<FormState>, BuildContext? context) modifyAccount;
   final void Function(GlobalKey<FormState>, BuildContext? context) addFollowers;
   final void Function(GlobalKey<FormState>, BuildContext? context) removeFollowers;
@@ -37,7 +37,7 @@ class CustomButtonProfile extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.only(top: paddingVertical, left: paddingLeft, right: paddingRight),
-      child: whichButton(userUid, isFollowed, formKey, formKeyFollow, _isLoadingFollow, modifyAccount, addFollowers, removeFollowers, theme),
+      child: whichButton(userUid, isFollowed, formKey, formKeyFollow, isLoadingFollow, modifyAccount, addFollowers, removeFollowers, theme),
     );
   }
 

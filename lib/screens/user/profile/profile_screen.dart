@@ -90,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
 
     if (userUid != "") {
-      for (dynamic f in following) {
+      for (dynamic f in followers) {
         if (f == ownerUid) {
           setState(() {
             _isFollowed = true;
@@ -138,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: Text(
             username,
           ),
-          automaticallyImplyLeading: false,
+          automaticallyImplyLeading: userUid != "",
           actions: <Widget>[
             IconButton(
               icon: Icon(
@@ -166,7 +166,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: <Widget>[
                     CustomInfobarProfile(photoUrl: photoUrl, followers: followers.length, following: following.length, postSize: postSize, username: username, bio: bio),
-                    CustomButtonProfile(userUid: userUid, isFollowed: _isFollowed, modifyAccount: modifyAccount, addFollowers: addFollowers, removeFollowers: removeFollowers, theme: Theme.of(context).colorScheme.tertiary, _isLoadingFollow: _isLoadingFollow,),
+                    CustomButtonProfile(userUid: userUid, isFollowed: _isFollowed, modifyAccount: modifyAccount, addFollowers: addFollowers, removeFollowers: removeFollowers, theme: Theme.of(context).colorScheme.tertiary, isLoadingFollow: _isLoadingFollow, formKey: formKey, formKeyFollow: formKeyFollow),
                     CustomPostsContainerProfile(listPost: postList, borderColor: Theme.of(context).colorScheme.secondary.withOpacity(0.3)),
                   ],
                 ),
