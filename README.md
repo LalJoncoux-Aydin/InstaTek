@@ -137,6 +137,19 @@ flutter build apk
 ```sh
 flutter run
 ```
+
+# UML
+**Layout**
+![umlLayout](https://user-images.githubusercontent.com/52639848/201545502-dd191a0e-73d5-44da-9d95-69b63bc0a06a.png)
+**Admin**
+![umlAdmin](https://user-images.githubusercontent.com/52639848/201545731-d04fdc8a-a25c-407f-adbf-57e5ce2a4c75.png)
+**Auth**
+![umlAuth](https://user-images.githubusercontent.com/52639848/201546636-3bd17334-1a6d-4e78-903c-2ae830488383.png)
+**Global**
+![umlGlobal](https://user-images.githubusercontent.com/52639848/201546644-a7fcd847-f5ea-4b9c-b6cf-3dcf561de9f1.png)
+**Lien**
+https://lucid.app/lucidchart/06502452-9d5a-431b-b0e0-e80d6c5eaa1f/edit?invitationId=inv_4a352749-280a-4856-8cde-7292540fdd63
+
 # Linter
 https://pub.dev/packages/blackfoot_flutter_lint
 

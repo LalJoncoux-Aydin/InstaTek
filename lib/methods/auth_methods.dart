@@ -22,6 +22,14 @@ class AuthMethods {
     return model.User.fromSnap(documentSnapshot);
   }
 
+  Future<List<model.User>?> getUserListByUsername(String username) async {
+    final QuerySnapshot<Map<String, dynamic>> documentSnapshot = await _firestore.collection('users').where('username', isEqualTo: username).get();
+    List<model.User> listUser = documentSnapshot.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => model.User.fromSnap(doc)).toList();
+    listUser.sort((model.User a, model.User b) => a.username.compareTo(b.username));
+    listUser = listUser.reversed.toList();
+    return listUser;
+  }
+
   Future<bool> usernameDoesntExist(dynamic username) async {
     final QuerySnapshot<Object?> querySnapshot =
         await _firestore.collection('users').get();

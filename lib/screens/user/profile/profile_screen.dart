@@ -138,9 +138,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ? null
             : AppBar(
                 backgroundColor: Theme.of(context).colorScheme.background,
-                title: Text(
-                  username,
-                ),
                 automaticallyImplyLeading: userUid != "",
                 actions: <Widget>[
                   IconButton(
@@ -170,6 +167,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: double.infinity,
                 child: Column(
                   children: <Widget>[
+                    if (userUid == "" && size.width > webScreenSize)
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: IconButton(
+                          color: Colors.white,
+                          icon: Icon(
+                            Icons.logout,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          onPressed: () async {
+                            await AuthMethods().signOut();
+                            if (!mounted) return;
+                            await Navigator.of(context).pushReplacement(
+                              MaterialPageRoute<dynamic>(
+                                builder: (BuildContext context) => const LoginScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     CustomInfobarProfile(
                       photoUrl: photoUrl,
                       followers: followers.length,
@@ -184,15 +201,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       modifyAccount: modifyAccount,
                       addFollowers: addFollowers,
                       removeFollowers: removeFollowers,
-                      theme: Theme.of(context).colorScheme.tertiary,
                       isLoadingFollow: _isLoadingFollow,
                       formKey: formKey,
                       formKeyFollow: formKeyFollow,
                     ),
-                    CustomPostsContainerProfile(
-                      listPost: postList,
-                      borderColor: Theme.of(context).colorScheme.secondary.withOpacity(0.3),
-                    ),
+                    CustomPostsContainerProfile(listPost: postList),
                   ],
                 ),
               ),

@@ -51,38 +51,41 @@ class AdminScreenLayoutState extends State<AdminScreenLayout> {
             labelType: labelType,
             destinations: <NavigationRailDestination>[
               NavigationRailDestination(
-                icon: Icon(Icons.photo_library, color: Theme.of(context).iconTheme.color),
-                selectedIcon:
-                    Icon(Icons.photo_library_outlined, color: Theme.of(context).iconTheme.color!.withOpacity(1.0)),
-                label: const Text('Posts'),
+                icon: Icon(
+                  Icons.photo_library,
+                  color: Theme.of(context).iconTheme.color,
+                ),
+                selectedIcon: Icon(
+                  Icons.photo_library_outlined,
+                  color: Theme.of(context).iconTheme.color!.withOpacity(1.0),
+                ),
+                label:
+                    Text('Posts', style: Theme.of(context).textTheme.headline1),
               ),
               NavigationRailDestination(
-                icon: Icon(Icons.person, color: Theme.of(context).iconTheme.color),
-                selectedIcon: Icon(Icons.person_outline, color: Theme.of(context).iconTheme.color!.withOpacity(1.0)),
-                label: const Text('Users'),
+                icon: Icon(
+                  Icons.person,
+                  color: Theme.of(context).iconTheme.color,
+                ),
+                selectedIcon: Icon(
+                  Icons.person_outline,
+                  color: Theme.of(context).iconTheme.color!.withOpacity(1.0),
+                ),
+                label:
+                    Text('Users', style: Theme.of(context).textTheme.headline1),
               ),
             ],
           ),
           const VerticalDivider(thickness: 1, width: 1),
           // This is the main content.
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  // Text('selectedIndex: $_selectedIndex'),
-                  if (_selectedIndex == 0)
-                    const AdminPostScreen()
-                  else
-                    const SizedBox(),
-                  if (_selectedIndex == 1)
-                    const AdminUserScreen()
-                  else
-                    const SizedBox(),
-                ],
-              ),
+          if (_selectedIndex == 0)
+            const Expanded(
+              child: AdminPostScreen(),
             ),
-          ),
+          if (_selectedIndex == 1)
+            const Expanded(
+              child: AdminUserScreen(),
+            ),
         ],
       ),
     );

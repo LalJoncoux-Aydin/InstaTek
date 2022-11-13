@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/widgets/user/profile/infobar/custom_profile_picture_profile.dart';
 
-class CustomFavoriteItem extends StatelessWidget {
-  const CustomFavoriteItem({Key? key, required this.notif}) : super(key: key);
+import '../../../utils/global_variables.dart';
+
+class CustomFavoriteContainer extends StatelessWidget {
+  const CustomFavoriteContainer({Key? key, required this.notif}) : super(key: key);
 
   final List<model.User> notif;
 
@@ -11,7 +13,7 @@ class CustomFavoriteItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     double paddingPosts = 0;
-    if (size.width >= 1366) {
+    if (size.width >= webScreenSize) {
       paddingPosts = 10;
     } else {
       paddingPosts = 15;

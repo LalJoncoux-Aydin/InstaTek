@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/global_variables.dart';
 import '../../../tools/custom_validation_button.dart';
 
 class CustomButtonProfile extends StatelessWidget {
-  const CustomButtonProfile({Key? key, required this.userUid, required this.isFollowed, required this.modifyAccount, required this.addFollowers, required this.removeFollowers, required this.theme, required this.isLoadingFollow, required this.formKey, required this.formKeyFollow}) : super(key: key);
+  const CustomButtonProfile({Key? key, required this.userUid, required this.isFollowed, required this.modifyAccount, required this.addFollowers, required this.removeFollowers, required this.isLoadingFollow, required this.formKey, required this.formKeyFollow}) : super(key: key);
 
   final String userUid;
   final bool isFollowed;
@@ -15,7 +14,6 @@ class CustomButtonProfile extends StatelessWidget {
   final void Function(GlobalKey<FormState>, BuildContext? context) modifyAccount;
   final void Function(GlobalKey<FormState>, BuildContext? context) addFollowers;
   final void Function(GlobalKey<FormState>, BuildContext? context) removeFollowers;
-  final Color theme;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +35,7 @@ class CustomButtonProfile extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.only(top: paddingVertical, left: paddingLeft, right: paddingRight),
-      child: whichButton(userUid, isFollowed, formKey, formKeyFollow, isLoadingFollow, modifyAccount, addFollowers, removeFollowers, theme),
+      child: whichButton(userUid, isFollowed, formKey, formKeyFollow, isLoadingFollow, modifyAccount, addFollowers, removeFollowers, Theme.of(context).colorScheme.tertiary),
     );
   }
 

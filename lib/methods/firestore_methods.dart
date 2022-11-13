@@ -2,32 +2,60 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:instatek/methods/storage_methods.dart';
 import 'package:instatek/models/post.dart';
+import 'package:instatek/models/user.dart';
 import 'package:uuid/uuid.dart';
 
 class FireStoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<List<Post>> getFeedPosts() async {
-    final QuerySnapshot<Map<String, dynamic>> documentSnapshot = await _firestore.collection('posts').get();
-    List<Post> listPost =
-        documentSnapshot.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => Post.fromSnap(doc)).toList();
-    listPost.sort((Post a, Post b) => a.datePublished.toString().compareTo(b.datePublished.toString()));
+    final QuerySnapshot<Map<String, dynamic>> documentSnapshot =
+        await _firestore.collection('posts').get();
+    List<Post> listPost = documentSnapshot.docs
+        .map(
+          (QueryDocumentSnapshot<Map<String, dynamic>> doc) =>
+              Post.fromSnap(doc),
+        )
+        .toList();
+    listPost.sort(
+      (Post a, Post b) =>
+          a.datePublished.toString().compareTo(b.datePublished.toString()),
+    );
     listPost = listPost.reversed.toList();
     return listPost;
+  }
+
+  Future<List<User?>> getUsers() async {
+    final QuerySnapshot<Map<String, dynamic>> documentSnapshot =
+        await _firestore.collection('users').get();
+    final List<User?> userList = documentSnapshot.docs
+        .map(
+          (QueryDocumentSnapshot<Map<String, dynamic>> doc) =>
+              User.fromSnap(doc),
+        )
+        .toList();
+    return userList;
   }
 
   Future<List<Post>?> getUserPosts(String uid) async {
     final QuerySnapshot<Map<String, dynamic>> documentSnapshot =
         await _firestore.collection('posts').where('uid', isEqualTo: uid).get();
-    List<Post> listPost =
-        documentSnapshot.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => Post.fromSnap(doc)).toList();
-    listPost.sort((Post a, Post b) => a.datePublished.toString().compareTo(b.datePublished.toString()));
+    List<Post> listPost = documentSnapshot.docs
+        .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) =>
+            Post.fromSnap(doc),)
+        .toList();
+    listPost.sort((Post a, Post b) =>
+        a.datePublished.toString().compareTo(b.datePublished.toString()),);
     listPost = listPost.reversed.toList();
     return listPost;
   }
 
   Future<int> getPostCommentNb(String postId) async {
-    final QuerySnapshot<Object?> comments = await FirebaseFirestore.instance.collection('posts').doc(postId).collection('comments').get();
+    final QuerySnapshot<Object?> comments = await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .get();
     return comments.docs.length;
   }
 
@@ -40,7 +68,8 @@ class FireStoreMethods {
   ) async {
     String res = "Some error occurred";
     try {
-      final String postUrl = await StorageMethods().uploadImageToStorage('posts', file, true);
+      final String postUrl =
+          await StorageMethods().uploadImageToStorage('posts', file, true);
       final String postId = const Uuid().v4();
       final Post post = Post(
         description: description,
@@ -60,16 +89,23 @@ class FireStoreMethods {
     return res;
   }
 
-  Future<String> addOrRemoveLikeOnPost(String postId, String uid, List<dynamic> likes, bool isLiked) async {
+  Future<String> addOrRemoveLikeOnPost(
+      String postId, String uid, List<dynamic> likes, bool isLiked,) async {
     String res = "Some error occurred";
     try {
       if (isLiked) {
-        await _firestore.collection('posts').doc(postId).update(<String, Object?>{
+        await _firestore
+            .collection('posts')
+            .doc(postId)
+            .update(<String, Object?>{
           'likes': FieldValue.arrayRemove(<String>[uid])
         });
         res = 'remove';
       } else {
-        await _firestore.collection('posts').doc(postId).update(<String, Object?>{
+        await _firestore
+            .collection('posts')
+            .doc(postId)
+            .update(<String, Object?>{
           'likes': FieldValue.arrayUnion(<String>[uid])
         });
         res = 'add';
@@ -91,7 +127,12 @@ class FireStoreMethods {
     try {
       if (text.isNotEmpty) {
         final String commentId = const Uuid().v4();
-        await _firestore.collection('posts').doc(postId).collection('comments').doc(commentId).set(<String, dynamic>{
+        await _firestore
+            .collection('posts')
+            .doc(postId)
+            .collection('comments')
+            .doc(commentId)
+            .set(<String, dynamic>{
           'avatarUrl': avatarUrl,
           'name': name,
           'uid': uid,
@@ -113,6 +154,17 @@ class FireStoreMethods {
     String res = "Some error occurred";
     try {
       await _firestore.collection('posts').doc(postId).delete();
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> deleteUser(String uid) async {
+    String res = "Some error occurred";
+    try {
+      await _firestore.collection('users').doc(uid).delete();
       res = 'success';
     } catch (err) {
       res = err.toString();
