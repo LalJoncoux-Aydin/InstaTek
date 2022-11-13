@@ -32,15 +32,15 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    double paddingGlobalHorizontal = 0;
-    double paddingGlobalVertical = 0;
+    double paddingHorizontal = 0;
+    double paddingVertical = 0;
 
-    if (size.width >= 1366) {
-      paddingGlobalHorizontal = 50;
-      paddingGlobalVertical = 40;
+    if (size.width >= webScreenSize) {
+      paddingHorizontal = 50;
+      paddingVertical = 40;
     } else {
-      paddingGlobalHorizontal = 0;
-      paddingGlobalVertical = 20;
+      paddingHorizontal = 0;
+      paddingVertical = 20;
     }
 
     return Scaffold(
@@ -63,12 +63,10 @@ class _SearchScreenState extends State<SearchScreen> {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: paddingGlobalHorizontal, vertical: paddingGlobalVertical),
-            width: double.infinity,
-            child: CustomProfileContainerSearch(username: searchStr, navigateToProfile: navigateToProfile),
-          ),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: paddingHorizontal, vertical: paddingVertical),
+          width: double.infinity,
+          child: CustomProfileContainerSearch(username: searchStr, navigateToProfile: navigateToProfile),
         ),
       ),
     );
