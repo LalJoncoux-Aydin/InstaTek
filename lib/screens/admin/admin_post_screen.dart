@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:instatek/methods/firestore_methods.dart';
 import 'package:instatek/models/post.dart';
 import 'package:instatek/widgets/tools/custom_loading_screen.dart';
@@ -90,12 +89,10 @@ class _AdminPostScreenState extends State<AdminPostScreen> {
   }
 
   void deletePost(Post postToDelete) async {
-    print("?? que pasa");
     setState(() {
       _isLoading = false;
     });
     final String res = await FireStoreMethods().deletePost(postToDelete.postId);
-    print(res);
     if (res == "success") {
       setupPosts();
     }

@@ -43,45 +43,59 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
-          body: SafeArea(
-        child: SingleChildScrollView(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemBuilder: (BuildContext ctx, int index) => Center(
-              child: SizedBox(
-                width: 800,
-                child: Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(userList[index]!.avatarUrl),
-                    ),
-                    title: Text(userList[index]!.username),
-                    subtitle: Text(
-                      'Email: ${userList[index]!.email}\nBio: ${userList[index]!.bio}\nAdmin: ${userList[index]!.isAdmin}\nUID: ${userList[index]!.uid}',
-                    ),
-                    trailing: PopupMenuButton<String>(
-                      itemBuilder: (BuildContext context) {
-                        return <PopupMenuEntry<String>>[
-                          PopupMenuItem<String>(
-                            value: 'delete',
-                            child: Text('Delete ${userList[index]!.username}'),
-                          ),
-                        ];
-                      },
-                      onSelected: (String value) {
-                        FireStoreMethods().deleteUser(userList[index]!.uid);
-                        setState(userList);
-                      },
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemBuilder: (BuildContext ctx, int index) => Center(
+                child: SizedBox(
+                  width: 800,
+                  child: Card(
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage:
+                            NetworkImage(userList[index]!.avatarUrl),
+                      ),
+                      title: Text(userList[index]!.username),
+                      subtitle: Text(
+                        'Email: ${userList[index]!.email}\nBio: ${userList[index]!.bio}\nAdmin: ${userList[index]!.isAdmin}\nUID: ${userList[index]!.uid}',
+                      ),
+                      trailing: PopupMenuButton<String>(
+                        itemBuilder: (BuildContext context) {
+                          return <PopupMenuEntry<String>>[
+                            PopupMenuItem<String>(
+                              value: 'delete',
+                              child:
+                                  Text('Delete ${userList[index]!.username}'),
+                            ),
+                          ];
+                        },
+                        onSelected: (String value) {
+                          deleteUser(userList[index]!);
+                        },
+                      ),
                     ),
                   ),
                 ),
               ),
+              itemCount: userList.length,
             ),
-            itemCount: userList.length,
           ),
         ),
-      ),);
+      );
     }
+  }
+
+  void deleteUser(User userToDelete) async {
+    setState(() {
+      _isLoading = false;
+    });
+    final String res = await FireStoreMethods().deleteUser(userToDelete.uid);
+    if (res == "success") {
+      setupUsers();
+    }
+    setState(() {
+      _isLoading = true;
+    });
   }
 }
