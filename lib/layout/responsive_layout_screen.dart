@@ -24,7 +24,16 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> with SingleTickerPr
   @override
   void initState() {
     super.initState();
-    setupUser();
+    if (mounted) {
+      setupUser();
+    }
+  }
+
+  @override
+  void setState(dynamic fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
   }
 
   void setupUser() async {

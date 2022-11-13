@@ -16,7 +16,7 @@ class CustomTableProfileFollow extends StatelessWidget {
     late double numPadding = 0;
 
     if (size.width >= 1366) {
-      sizeLabel = 30;
+      sizeLabel = 20;
       numPadding = 5;
       labelPadding = 5;
     } else {

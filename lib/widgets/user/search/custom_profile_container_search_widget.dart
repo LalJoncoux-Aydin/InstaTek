@@ -25,7 +25,6 @@ class CustomProfileContainerSearch extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.only(top: paddingPosts),
-      width: double.infinity,
       child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: FirebaseFirestore.instance.collection('users').where('username', isEqualTo: username).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {

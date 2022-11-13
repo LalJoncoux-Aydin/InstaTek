@@ -46,7 +46,7 @@ class _RegisterScreenState2 extends State<RegisterScreen2> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     double paddingGlobal = 0;
-    if (size.width >= 1366) {
+    if (size.width >= webScreenSize) {
       paddingGlobal = 500;
     } else {
       paddingGlobal = 60;

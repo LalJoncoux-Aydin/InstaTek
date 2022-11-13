@@ -8,6 +8,7 @@ import '../../layout/admin_screen_layout.dart';
 import '../../layout/mobile_screen_layout.dart';
 import '../../layout/responsive_layout_screen.dart';
 import '../../layout/web_screen_layout.dart';
+import '../../utils/global_variables.dart';
 import '../../widgets/auth/custom_nav_link_widget.dart';
 import '../../widgets/auth/header_login_register.dart';
 import '../../widgets/tools/custom_text_form_field_widget.dart';
@@ -40,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     double paddingGlobal = 0;
-    if (size.width >= 1366) {
+    if (size.width >= webScreenSize) {
       paddingGlobal = 500;
     } else {
       paddingGlobal = 60;

@@ -3,11 +3,12 @@ import 'package:instatek/methods/auth_methods.dart';
 import 'package:instatek/methods/firestore_methods.dart';
 import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/widgets/tools/custom_loading_screen.dart';
+import 'package:instatek/widgets/user/profile/button/custom_button_profile_widget.dart';
 import 'package:instatek/widgets/user/profile/infobar/custom_infobar_profile_widget.dart';
 import 'package:provider/provider.dart';
 import '../../../models/post.dart';
 import '../../../providers/user_provider.dart';
-import '../../../widgets/tools/custom_validation_button.dart';
+import '../../../utils/global_variables.dart';
 import '../../../widgets/user/profile/posts/custom_posts_container_profile_widget.dart';
 import '../../auth/login_screen.dart';
 import 'modify_profile_screen.dart';
@@ -22,7 +23,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   late UserProvider userProvider;
-  late model.User myUser;
+  late model.User? myUser;
   late String userUid = "";
   late String ownerUid = "";
   late String username = "";
@@ -41,7 +42,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    setupUser();
+    if (mounted) {
+      setupUser();
+    }
+  }
+
+  @override
+  void setState(dynamic fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
   }
 
   void setupUser() async {
@@ -58,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (widget.uid != "") {
       myUser = (await AuthMethods().getSpecificUserDetails(widget.uid))!;
       setState(() {
-        userUid = myUser.uid;
+        userUid = myUser!.uid;
       });
 
     } else {
@@ -70,17 +80,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       }
     }
     setState(() {
-      username = myUser.username;
-      followers = myUser.followers;
-      following = myUser.following;
-      photoUrl = myUser.avatarUrl;
-      bio = myUser.bio;
+      username = myUser!.username;
+      followers = myUser!.followers;
+      following = myUser!.following;
+      photoUrl = myUser!.avatarUrl;
+      bio = myUser!.bio;
       _isLoading = true;
       _isFollowed = false;
     });
 
     if (userUid != "") {
-      for (dynamic f in following) {
+      for (dynamic f in followers) {
         if (f == ownerUid) {
           setState(() {
             _isFollowed = true;
@@ -89,12 +99,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       }
     }
 
-    final List<Post>? postListTmp = await FireStoreMethods().getUserPosts(myUser.uid);
-    if (postListTmp != null) {
-      setState(() {
-        postList = postListTmp;
-        postSize = postList.length;
-      });
+    if (myUser != null) {
+      final List<Post>? postListTmp = await FireStoreMethods().getUserPosts(myUser!.uid,);
+      if (postListTmp != null) {
+        setState(() {
+          postList = postListTmp;
+          postSize = postList.length;
+        });
+      }
     }
   }
 
@@ -106,26 +118,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    double paddingGlobalHorizontal = 0;
-    double paddingGlobalVertical = 0;
+    double paddingHorizontal = 0;
+    double paddingVertical = 0;
 
-    if (size.width >= 1366) {
-      paddingGlobalHorizontal = 50;
-      paddingGlobalVertical = 40;
+    if (size.width >= webScreenSize) {
+      paddingHorizontal = 70;
+      paddingVertical = 40;
     } else {
-      paddingGlobalHorizontal = 0;
-      paddingGlobalVertical = 20;
+      paddingHorizontal = 0;
+      paddingVertical = 20;
     }
 
     if (_isLoading == false) {
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
-        appBar: AppBar(
+        appBar: size.width > webScreenSize ? null : AppBar(
           backgroundColor: Theme.of(context).colorScheme.background,
           title: Text(
             username,
           ),
+          automaticallyImplyLeading: userUid != "",
           actions: <Widget>[
             IconButton(
               icon: Icon(
@@ -148,15 +161,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             key: userUid == "" ? formKey : formKeyFollow,
             child: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: paddingGlobalHorizontal, vertical: paddingGlobalVertical),
+                padding: EdgeInsets.symmetric(horizontal: paddingHorizontal, vertical: paddingVertical) ,
                 width: double.infinity,
                 child: Column(
                   children: <Widget>[
                     CustomInfobarProfile(photoUrl: photoUrl, followers: followers.length, following: following.length, postSize: postSize, username: username, bio: bio),
-                    if (userUid == "") CustomValidationButton(displayText: "Modify my account", formKey: formKey, loadingState: false, onTapFunction: modifyAccount, buttonColor: Theme.of(context).colorScheme.tertiary)
-                    else if (_isFollowed == false) CustomValidationButton(displayText: "Follow", formKey: formKeyFollow, loadingState: _isLoadingFollow, onTapFunction: addFollowers, buttonColor: Theme.of(context).colorScheme.tertiary)
-                    else if (_isFollowed == true) CustomValidationButton(displayText: "Unfollow", formKey: formKeyFollow, loadingState: _isLoadingFollow, onTapFunction: removeFollowers, buttonColor: Theme.of(context).colorScheme.tertiary),
-                    CustomPostsContainerProfile(listPost: postList),
+                    CustomButtonProfile(userUid: userUid, isFollowed: _isFollowed, modifyAccount: modifyAccount, addFollowers: addFollowers, removeFollowers: removeFollowers, theme: Theme.of(context).colorScheme.tertiary, isLoadingFollow: _isLoadingFollow, formKey: formKey, formKeyFollow: formKeyFollow),
+                    CustomPostsContainerProfile(listPost: postList, borderColor: Theme.of(context).colorScheme.secondary.withOpacity(0.3)),
                   ],
                 ),
               ),
