@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../utils/colors.dart';
 
 class CustomNameProfile extends StatelessWidget {
   const CustomNameProfile({Key? key, required this.username, required this.bio}) : super(key: key);

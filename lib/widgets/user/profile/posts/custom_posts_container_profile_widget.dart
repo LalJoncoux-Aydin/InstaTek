@@ -35,7 +35,7 @@ class CustomPostsContainerProfile extends StatelessWidget {
             childAspectRatio: correctRatio,
         ),
         itemCount: listPost.length,
-        itemBuilder: (BuildContext ctx, int index) => CustomPostsElementProfile(displayPost: listPost[index], borderColor: borderColor)
+        itemBuilder: (BuildContext ctx, int index) => CustomPostsElementProfile(displayPost: listPost[index], borderColor: borderColor),
       ),
     );
   }
