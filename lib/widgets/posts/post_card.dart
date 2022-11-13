@@ -11,12 +11,15 @@ import 'package:instatek/widgets/posts/like_animation.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/post.dart';
+
 class PostCard extends StatefulWidget {
   const PostCard({
     Key? key,
-    required this.snap,
+    required this.post,
   }) : super(key: key);
-  final dynamic snap;
+
+  final Post post;
 
   @override
   State<PostCard> createState() => _PostCardState();
@@ -35,7 +38,7 @@ class _PostCardState extends State<PostCard> {
   void fetchNumberOfComments() async {
     try {
       final QuerySnapshot<Object?> snap =
-          await FirebaseFirestore.instance.collection('posts').doc(widget.snap['postId']).collection('comments').get();
+          await FirebaseFirestore.instance.collection('posts').doc(widget.post.postId).collection('comments').get();
       numberOfComments = snap.docs.length;
     } catch (err) {
       if (mounted) {
@@ -85,7 +88,7 @@ class _PostCardState extends State<PostCard> {
                 CircleAvatar(
                   radius: 16,
                   backgroundImage: NetworkImage(
-                    widget.snap['avatarUrl'].toString(),
+                    widget.post.avatarUrl,
                   ),
                 ),
                 Expanded(
@@ -98,14 +101,14 @@ class _PostCardState extends State<PostCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          widget.snap['username'].toString(),
+                          widget.post.username.toString(),
                           style: Theme.of(context).textTheme.headline1,
                         ),
                       ],
                     ),
                   ),
                 ),
-                if (widget.snap['uid'].toString() == user.uid)
+                if (widget.post.uid.toString() == user.uid)
                   IconButton(
                     onPressed: () {
                       showDialog(
@@ -130,7 +133,7 @@ class _PostCardState extends State<PostCard> {
                                       ),
                                       onTap: () {
                                         deletePost(
-                                          widget.snap['postId'].toString(),
+                                          widget.post.postId.toString(),
                                         );
                                         // remove the dialog box
                                         Navigator.of(context).pop();
@@ -154,7 +157,7 @@ class _PostCardState extends State<PostCard> {
             ),
           ),
           // IMAGE SECTION OF THE POST
-          GestureDetector(
+          /*GestureDetector(
             onDoubleTap: () {
               FireStoreMethods().addOrRemoveLikeOnPost(
                 widget.snap['postId'].toString(),
@@ -204,9 +207,9 @@ class _PostCardState extends State<PostCard> {
                 ),
               ],
             ),
-          ),
+          ),*/
           // LIKE, COMMENT SECTION OF THE POST
-          Row(
+          /*Row(
             children: <Widget>[
               LikeAnimation(
                 isAnimating: widget.snap['likes'].contains(user.uid),
@@ -261,9 +264,9 @@ class _PostCardState extends State<PostCard> {
                 ),
               )
             ],
-          ),
+          ),*/
           //DESCRIPTION AND NUMBER OF COMMENTS
-          Container(
+          /*Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -320,7 +323,7 @@ class _PostCardState extends State<PostCard> {
                 ),
               ],
             ),
-          )
+          )*/
         ],
       ),
     );

@@ -80,17 +80,20 @@ class _FeedScreenState extends State<FeedScreen> {
                   ),
                 ],
               ),
-        body: ListView.builder(
-          itemBuilder: (BuildContext ctx, int index) => Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.red),
+        body: Container(
+          padding: EdgeInsets.symmetric(vertical: paddingGlobalVertical, horizontal: paddingGlobalHorizontal),
+          child: ListView.builder(
+            itemBuilder: (BuildContext ctx, int index) => Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.red),
+              ),
+              child: PostCard(
+                post: postList[index],
+              ),
             ),
-            child: PostCard(
-              snap: postList[index],
-            ),
+            itemCount: postList.length,
           ),
-          itemCount: postList.length,
-        ),
+        )
       );
     }
   }
