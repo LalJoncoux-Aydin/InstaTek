@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../providers/user_provider.dart';
 import '../../../utils/global_variables.dart';
 import '../../../widgets/tools/custom_loading_screen.dart';
-import '../../../widgets/user/favorite/custom_favorite_item_widget.dart';
+import '../../../widgets/user/favorite/custom_favorite_container_widget.dart';
 
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({Key? key}) : super(key: key);
@@ -84,7 +84,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           child: Container(
               padding: EdgeInsets.symmetric(horizontal: paddingGlobalHorizontal, vertical: paddingGlobalVertical),
               width: double.infinity,
-              child: CustomFavoriteItem(notif : notifDetail),
+              child: CustomFavoriteContainer(notif : notifDetail),
           ),
         ),
       );

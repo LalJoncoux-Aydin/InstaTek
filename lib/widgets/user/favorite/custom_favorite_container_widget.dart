@@ -4,8 +4,8 @@ import 'package:instatek/widgets/user/profile/infobar/custom_profile_picture_pro
 
 import '../../../utils/global_variables.dart';
 
-class CustomFavoriteItem extends StatelessWidget {
-  const CustomFavoriteItem({Key? key, required this.notif}) : super(key: key);
+class CustomFavoriteContainer extends StatelessWidget {
+  const CustomFavoriteContainer({Key? key, required this.notif}) : super(key: key);
 
   final List<model.User> notif;
 
