@@ -12,6 +12,7 @@ import '../../../layout/responsive_layout_screen.dart';
 import '../../../layout/web_screen_layout.dart';
 import '../../../methods/auth_methods.dart';
 import '../../../providers/user_provider.dart';
+import '../../../utils/global_variables.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/tools/custom_image_picker_widget.dart';
 import '../../../widgets/tools/custom_loading_screen.dart';
@@ -81,7 +82,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     double paddingGlobal = 0;
-    if (size.width >= 1366) {
+    if (size.width >= webScreenSize) {
       paddingGlobal = 500;
     } else {
       paddingGlobal = 60;
@@ -91,7 +92,6 @@ class _ModifyProfileState extends State<ModifyProfile> {
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text(
@@ -129,7 +129,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
                             isValid: bioIsValid(bio),
                             updateInput: updateBio,
                           ),
-                          CustomErrorText(displayStr: errorText),
+                          if (errorText != "") CustomErrorText(displayStr: errorText),
                           CustomValidationButton(
                             displayText: 'Update profil',
                             formKey: formKey,

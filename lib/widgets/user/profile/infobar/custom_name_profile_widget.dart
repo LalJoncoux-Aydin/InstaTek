@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../utils/global_variables.dart';
+
 class CustomNameProfile extends StatelessWidget {
   const CustomNameProfile({Key? key, required this.username, required this.bio}) : super(key: key);
 
@@ -11,7 +13,7 @@ class CustomNameProfile extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     double paddingName = 0;
     double paddingBio = 0;
-    if (size.width >= 1366) {
+    if (size.width >= webScreenSize) {
       paddingName = 10;
       paddingBio = 10;
     } else {

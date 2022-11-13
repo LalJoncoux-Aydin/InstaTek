@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../utils/global_variables.dart';
 import 'custom_table_column_profile_follow_widget.dart';
 
 class CustomTableProfileFollow extends StatelessWidget {
@@ -15,7 +16,7 @@ class CustomTableProfileFollow extends StatelessWidget {
     late double labelPadding = 0;
     late double numPadding = 0;
 
-    if (size.width >= 1366) {
+    if (size.width >= webScreenSize) {
       sizeLabel = 20;
       numPadding = 5;
       labelPadding = 5;
