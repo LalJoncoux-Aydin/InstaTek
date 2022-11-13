@@ -4,6 +4,7 @@ import 'package:instatek/methods/firestore_methods.dart';
 import 'package:instatek/models/post.dart';
 import 'package:instatek/utils/global_variables.dart';
 import 'package:instatek/widgets/posts/post_card.dart';
+import 'package:instatek/widgets/tools/custom_loading_screen.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({Key? key}) : super(key: key);
@@ -14,17 +15,28 @@ class FeedScreen extends StatefulWidget {
 
 class _FeedScreenState extends State<FeedScreen> {
   late List<Post> postList = <Post>[];
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    setupPosts();
+    if (mounted) {
+      setupPosts();
+    }
+  }
+
+  @override
+  void setState(dynamic fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
   }
 
   void setupPosts() async {
     final List<Post> postListTmp = await FireStoreMethods().getFeedPosts();
     setState(() {
       postList = postListTmp;
+      _isLoading = true;
     });
   }
 
@@ -43,39 +55,43 @@ class _FeedScreenState extends State<FeedScreen> {
       paddingGlobalVertical = 20;
     }
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: width > webScreenSize
-          ? null
-          : AppBar(
-              backgroundColor: Theme.of(context).colorScheme.background,
-              centerTitle: false,
-              title: SvgPicture.asset(
-                'assets/instatek_logo.svg',
-                color: Theme.of(context).colorScheme.secondary,
-                height: 32,
-              ),
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.messenger_outline_rounded,
-                    color: Theme.of(context).iconTheme.color,
-                  ),
-                  onPressed: () {},
+    if (_isLoading == false) {
+      return const CustomLoadingScreen();
+    } else {
+      return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        appBar: width > webScreenSize
+            ? null
+            : AppBar(
+                backgroundColor: Theme.of(context).colorScheme.background,
+                centerTitle: false,
+                title: SvgPicture.asset(
+                  'assets/instatek_logo.svg',
+                  color: Theme.of(context).colorScheme.secondary,
+                  height: 32,
                 ),
-              ],
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.messenger_outline_rounded,
+                      color: Theme.of(context).iconTheme.color,
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+        body: ListView.builder(
+          itemBuilder: (BuildContext ctx, int index) => Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.red),
             ),
-      body: ListView.builder(
-        itemBuilder: (BuildContext ctx, int index) => Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.red),
+            child: PostCard(
+              snap: postList[index],
+            ),
           ),
-          child: PostCard(
-            snap: postList[index],
-          ),
+          itemCount: postList.length,
         ),
-        itemCount: postList.length,
-      ),
-    );
+      );
+    }
   }
 }
