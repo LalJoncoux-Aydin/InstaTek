@@ -65,6 +65,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text("Favorite"),
           centerTitle: true,

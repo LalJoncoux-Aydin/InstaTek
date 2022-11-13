@@ -46,6 +46,7 @@ class _SearchScreenState extends State<SearchScreen> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
+        automaticallyImplyLeading: false,
         title: CustomTextFormField(
           hintText: "Search for a user",
           textEditingController: _searchController,

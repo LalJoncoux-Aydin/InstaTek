@@ -126,6 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: Text(
             username,
           ),
+          automaticallyImplyLeading: false,
           actions: <Widget>[
             IconButton(
               icon: Icon(
