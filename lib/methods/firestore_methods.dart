@@ -12,11 +12,15 @@ class FireStoreMethods {
     final QuerySnapshot<Map<String, dynamic>> documentSnapshot =
         await _firestore.collection('posts').get();
     List<Post> listPost = documentSnapshot.docs
-        .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) =>
-            Post.fromSnap(doc),)
+        .map(
+          (QueryDocumentSnapshot<Map<String, dynamic>> doc) =>
+              Post.fromSnap(doc),
+        )
         .toList();
-    listPost.sort((Post a, Post b) =>
-        a.datePublished.toString().compareTo(b.datePublished.toString()),);
+    listPost.sort(
+      (Post a, Post b) =>
+          a.datePublished.toString().compareTo(b.datePublished.toString()),
+    );
     listPost = listPost.reversed.toList();
     return listPost;
   }
@@ -25,8 +29,10 @@ class FireStoreMethods {
     final QuerySnapshot<Map<String, dynamic>> documentSnapshot =
         await _firestore.collection('users').get();
     final List<User?> userList = documentSnapshot.docs
-        .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) =>
-            User.fromSnap(doc),)
+        .map(
+          (QueryDocumentSnapshot<Map<String, dynamic>> doc) =>
+              User.fromSnap(doc),
+        )
         .toList();
     return userList;
   }
@@ -42,6 +48,15 @@ class FireStoreMethods {
         a.datePublished.toString().compareTo(b.datePublished.toString()),);
     listPost = listPost.reversed.toList();
     return listPost;
+  }
+
+  Future<int> getPostCommentNb(String postId) async {
+    final QuerySnapshot<Object?> comments = await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .get();
+    return comments.docs.length;
   }
 
   Future<String> uploadPost(
@@ -75,16 +90,17 @@ class FireStoreMethods {
   }
 
   Future<String> addOrRemoveLikeOnPost(
-      String postId, String uid, List<dynamic> likes,) async {
+      String postId, String uid, List<dynamic> likes, bool isLiked,) async {
     String res = "Some error occurred";
     try {
-      if (likes.contains(uid)) {
+      if (isLiked) {
         await _firestore
             .collection('posts')
             .doc(postId)
             .update(<String, Object?>{
           'likes': FieldValue.arrayRemove(<String>[uid])
         });
+        res = 'remove';
       } else {
         await _firestore
             .collection('posts')
@@ -92,8 +108,8 @@ class FireStoreMethods {
             .update(<String, Object?>{
           'likes': FieldValue.arrayUnion(<String>[uid])
         });
+        res = 'add';
       }
-      res = 'success';
     } catch (err) {
       res = err.toString();
     }
