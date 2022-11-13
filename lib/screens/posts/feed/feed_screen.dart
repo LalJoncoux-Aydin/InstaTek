@@ -92,6 +92,7 @@ class _FeedScreenState extends State<FeedScreen> {
               width: double.infinity,
               child: ListView.builder(
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext ctx, int index) => Container(
                   margin: EdgeInsets.symmetric(
                     horizontal: size.width > webScreenSize ? size.width * 0.3 : 0,

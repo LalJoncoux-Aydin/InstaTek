@@ -49,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void setState(dynamic fn) {
-    if(mounted) {
+    if (mounted) {
       super.setState(fn);
     }
   }
@@ -70,7 +70,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {
         userUid = myUser!.uid;
       });
-
     } else {
       if (userProvider.isUser == true) {
         setState(() {
@@ -100,7 +99,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     if (myUser != null) {
-      final List<Post>? postListTmp = await FireStoreMethods().getUserPosts(myUser!.uid,);
+      final List<Post>? postListTmp = await FireStoreMethods().getUserPosts(
+        myUser!.uid,
+      );
       if (postListTmp != null) {
         setState(() {
           postList = postListTmp;
@@ -133,41 +134,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
-        appBar: size.width > webScreenSize ? null : AppBar(
-          backgroundColor: Theme.of(context).colorScheme.background,
-          title: Text(
-            username,
-          ),
-          automaticallyImplyLeading: userUid != "",
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.logout,
-                color: Theme.of(context).colorScheme.secondary,
+        appBar: size.width > webScreenSize
+            ? null
+            : AppBar(
+                backgroundColor: Theme.of(context).colorScheme.background,
+                title: Text(
+                  username,
+                ),
+                automaticallyImplyLeading: userUid != "",
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.logout,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    onPressed: () async {
+                      await AuthMethods().signOut();
+                      if (!mounted) return;
+                      await Navigator.of(context).pushReplacement(
+                        MaterialPageRoute<dynamic>(
+                          builder: (BuildContext context) => const LoginScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+                centerTitle: false,
               ),
-              onPressed: () async {
-                await AuthMethods().signOut();
-                if (!mounted) return;
-                await Navigator.of(context).pushReplacement(
-                  MaterialPageRoute<dynamic>(builder: (BuildContext context) => const LoginScreen(),),
-                );
-              },
-            ),
-          ],
-          centerTitle: false,
-        ),
         body: SafeArea(
           child: Form(
             key: userUid == "" ? formKey : formKeyFollow,
             child: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: paddingHorizontal, vertical: paddingVertical) ,
+                padding: EdgeInsets.symmetric(horizontal: paddingHorizontal, vertical: paddingVertical),
                 width: double.infinity,
                 child: Column(
                   children: <Widget>[
-                    CustomInfobarProfile(photoUrl: photoUrl, followers: followers.length, following: following.length, postSize: postSize, username: username, bio: bio),
-                    CustomButtonProfile(userUid: userUid, isFollowed: _isFollowed, modifyAccount: modifyAccount, addFollowers: addFollowers, removeFollowers: removeFollowers, theme: Theme.of(context).colorScheme.tertiary, isLoadingFollow: _isLoadingFollow, formKey: formKey, formKeyFollow: formKeyFollow),
-                    CustomPostsContainerProfile(listPost: postList, borderColor: Theme.of(context).colorScheme.secondary.withOpacity(0.3)),
+                    CustomInfobarProfile(
+                      photoUrl: photoUrl,
+                      followers: followers.length,
+                      following: following.length,
+                      postSize: postSize,
+                      username: username,
+                      bio: bio,
+                    ),
+                    CustomButtonProfile(
+                      userUid: userUid,
+                      isFollowed: _isFollowed,
+                      modifyAccount: modifyAccount,
+                      addFollowers: addFollowers,
+                      removeFollowers: removeFollowers,
+                      theme: Theme.of(context).colorScheme.tertiary,
+                      isLoadingFollow: _isLoadingFollow,
+                      formKey: formKey,
+                      formKeyFollow: formKeyFollow,
+                    ),
+                    CustomPostsContainerProfile(
+                      listPost: postList,
+                      borderColor: Theme.of(context).colorScheme.secondary.withOpacity(0.3),
+                    ),
                   ],
                 ),
               ),
@@ -180,7 +205,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void modifyAccount(dynamic formKey, BuildContext? context) async {
     await Navigator.of(context!).push(
-        MaterialPageRoute<dynamic>(builder: (BuildContext context) => const ModifyProfile(),),
+      MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) => const ModifyProfile(),
+      ),
     );
   }
 

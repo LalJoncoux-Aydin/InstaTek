@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeMode themeMode = ThemeMode.light;
+  ThemeMode themeMode = ThemeMode.dark;
 
   bool get isDarkMode => themeMode == ThemeMode.dark;
 
@@ -64,7 +64,7 @@ class MyThemes {
         fontWeight: FontWeight.bold,
       ),
       bodyText1: TextStyle(
-        color: Colors.white,
+        color: Colors.black,
         fontSize: 13,
         fontWeight: FontWeight.w400,
       ),
@@ -112,6 +112,11 @@ class MyThemes {
         color: Colors.white,
         fontSize: 13,
         fontWeight: FontWeight.w700,
+      ),
+      headline3: TextStyle(
+        color: Colors.white,
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
       ),
       bodyText1: TextStyle(
         color: Colors.white,

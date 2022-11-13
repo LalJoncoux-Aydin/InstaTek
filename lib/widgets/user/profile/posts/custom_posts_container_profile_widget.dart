@@ -30,12 +30,14 @@ class CustomPostsContainerProfile extends StatelessWidget {
       width: double.infinity,
       child: GridView.builder(
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: crossAxis,
-            childAspectRatio: correctRatio,
+          maxCrossAxisExtent: crossAxis,
+          childAspectRatio: correctRatio,
         ),
         itemCount: listPost.length,
-        itemBuilder: (BuildContext ctx, int index) => CustomPostsElementProfile(displayPost: listPost[index], borderColor: borderColor),
+        itemBuilder: (BuildContext ctx, int index) =>
+            CustomPostsElementProfile(displayPost: listPost[index], borderColor: borderColor),
       ),
     );
   }

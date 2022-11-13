@@ -41,7 +41,7 @@ class PostCardFooter extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline1,
                   ),
                   TextSpan(
-                    text: displayPost.description,
+                    text: ' ${displayPost.description}',
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ],
@@ -68,7 +68,9 @@ class PostCardFooter extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Text(
               DateFormat.yMMMd().format(displayPost.datePublished),
-              style: Theme.of(context).textTheme.caption!.copyWith(fontSize: Theme.of(context).textTheme.caption!.fontSize! - 2,),
+              style: Theme.of(context).textTheme.caption!.copyWith(
+                    fontSize: Theme.of(context).textTheme.caption!.fontSize! - 2,
+                  ),
             ),
           ),
         ],
