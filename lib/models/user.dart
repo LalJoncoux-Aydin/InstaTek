@@ -22,24 +22,20 @@ class User {
   final List<dynamic> following;
   final List<dynamic> notification;
 
-  static User? fromSnap(DocumentSnapshot<Object?> snap) {
-    if (snap.data() != null) {
-      final Map<String, dynamic> snapshot = snap.data() as Map<String, dynamic>;
+  static User fromSnap(DocumentSnapshot<Object?> snap) {
+    final Map<String, dynamic> snapshot = snap.data() as Map<String, dynamic>;
 
-      return User(
-        username: snapshot["username"],
-        uid: snapshot["uid"],
-        email: snapshot["email"],
-        avatarUrl: snapshot["avatarUrl"],
-        bio: snapshot["bio"],
-        isAdmin: snapshot["isAdmin"],
-        followers: snapshot["followers"],
-        following: snapshot["following"],
-        notification: snapshot["notification"],
-      );
-    } else {
-      return null;
-    }
+    return User(
+      username: snapshot["username"],
+      uid: snapshot["uid"],
+      email: snapshot["email"],
+      avatarUrl: snapshot["avatarUrl"],
+      bio: snapshot["bio"],
+      isAdmin: snapshot["isAdmin"],
+      followers: snapshot["followers"],
+      following: snapshot["following"],
+      notification: snapshot["notification"],
+    );
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
