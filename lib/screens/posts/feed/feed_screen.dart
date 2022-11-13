@@ -84,8 +84,9 @@ class _FeedScreenState extends State<FeedScreen> {
           padding: EdgeInsets.symmetric(vertical: paddingGlobalVertical, horizontal: paddingGlobalHorizontal),
           child: ListView.builder(
             itemBuilder: (BuildContext ctx, int index) => Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.red),
+              margin: EdgeInsets.symmetric(
+                horizontal: width > webScreenSize ? width * 0.3 : 0,
+                vertical: width > webScreenSize ? 10 : 0,
               ),
               child: PostCard(
                 post: postList[index],
@@ -93,7 +94,7 @@ class _FeedScreenState extends State<FeedScreen> {
             ),
             itemCount: postList.length,
           ),
-        )
+        ),
       );
     }
   }

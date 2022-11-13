@@ -37,9 +37,9 @@ class _PostCardState extends State<PostCard> {
 
   void fetchNumberOfComments() async {
     try {
-      final QuerySnapshot<Object?> snap =
+      final QuerySnapshot<Object?> post =
           await FirebaseFirestore.instance.collection('posts').doc(widget.post.postId).collection('comments').get();
-      numberOfComments = snap.docs.length;
+      numberOfComments = post.docs.length;
     } catch (err) {
       if (mounted) {
         showSnackBar(context, err.toString());
@@ -65,11 +65,13 @@ class _PostCardState extends State<PostCard> {
     final double width = MediaQuery.of(context).size.width;
 
     return Container(
-      // boundary needed for web
+      margin:
+          width > webScreenSize ? const EdgeInsets.symmetric(vertical: 10) : const EdgeInsets.symmetric(vertical: 1),
       decoration: BoxDecoration(
         border: Border.all(
           color: width > webScreenSize ? secondaryColor : Theme.of(context).primaryColor,
         ),
+        borderRadius: BorderRadius.circular(10),
         color: Theme.of(context).primaryColor,
       ),
       padding: const EdgeInsets.symmetric(
@@ -157,12 +159,12 @@ class _PostCardState extends State<PostCard> {
             ),
           ),
           // IMAGE SECTION OF THE POST
-          /*GestureDetector(
+          GestureDetector(
             onDoubleTap: () {
               FireStoreMethods().addOrRemoveLikeOnPost(
-                widget.snap['postId'].toString(),
+                widget.post.postId.toString(),
                 user.uid,
-                widget.snap['likes'],
+                widget.post.likes,
               );
               setState(() {
                 isLikeAnimating = true;
@@ -175,7 +177,7 @@ class _PostCardState extends State<PostCard> {
                   height: MediaQuery.of(context).size.height * 0.35,
                   width: double.infinity,
                   child: Image.network(
-                    widget.snap['postUrl'].toString(),
+                    widget.post.postUrl.toString(),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -192,7 +194,7 @@ class _PostCardState extends State<PostCard> {
                         isLikeAnimating = false;
                       });
                     },
-                    child: widget.snap['likes'].contains(user.uid)
+                    child: widget.post.likes.contains(user.uid)
                         ? const Icon(
                             Icons.favorite,
                             color: Colors.red,
@@ -207,15 +209,15 @@ class _PostCardState extends State<PostCard> {
                 ),
               ],
             ),
-          ),*/
+          ),
           // LIKE, COMMENT SECTION OF THE POST
-          /*Row(
+          Row(
             children: <Widget>[
               LikeAnimation(
-                isAnimating: widget.snap['likes'].contains(user.uid),
+                isAnimating: widget.post.likes.contains(user.uid),
                 smallLike: true,
                 child: IconButton(
-                  icon: widget.snap['likes'].contains(user.uid)
+                  icon: widget.post.likes.contains(user.uid)
                       ? const Icon(
                           Icons.favorite,
                           color: Colors.red,
@@ -225,9 +227,9 @@ class _PostCardState extends State<PostCard> {
                           color: Theme.of(context).iconTheme.color,
                         ),
                   onPressed: () => FireStoreMethods().addOrRemoveLikeOnPost(
-                    widget.snap['postId'].toString(),
+                    widget.post.postId.toString(),
                     user.uid,
-                    widget.snap['likes'],
+                    widget.post.likes,
                   ),
                 ),
               ),
@@ -239,7 +241,7 @@ class _PostCardState extends State<PostCard> {
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute<dynamic>(
                     builder: (BuildContext context) => CommentsScreen(
-                      postId: widget.snap['postId'].toString(),
+                      postId: widget.post.postId.toString(),
                     ),
                   ),
                 ),
@@ -264,16 +266,16 @@ class _PostCardState extends State<PostCard> {
                 ),
               )
             ],
-          ),*/
+          ),
           //DESCRIPTION AND NUMBER OF COMMENTS
-          /*Container(
+          Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  '${widget.snap['likes'].length} likes',
+                  '${widget.post.likes.length} likes',
                   style: Theme.of(context).textTheme.headline1,
                 ),
                 Container(
@@ -285,11 +287,11 @@ class _PostCardState extends State<PostCard> {
                     text: TextSpan(
                       children: <InlineSpan>[
                         TextSpan(
-                          text: widget.snap['username'].toString(),
+                          text: widget.post.username.toString(),
                           style: Theme.of(context).textTheme.headline1,
                         ),
                         TextSpan(
-                          text: ' ${widget.snap['description']}',
+                          text: ' ${widget.post.description}',
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ],
@@ -307,7 +309,7 @@ class _PostCardState extends State<PostCard> {
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute<dynamic>(
                       builder: (BuildContext context) => CommentsScreen(
-                        postId: widget.snap['postId'].toString(),
+                        postId: widget.post.postId.toString(),
                       ),
                     ),
                   ),
@@ -315,7 +317,7 @@ class _PostCardState extends State<PostCard> {
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Text(
-                    DateFormat.yMMMd().format(widget.snap['datePublished'].toDate()),
+                    DateFormat.yMMMd().format(widget.post.datePublished),
                     style: Theme.of(context).textTheme.button!.copyWith(
                           fontSize: Theme.of(context).textTheme.caption!.fontSize! - 2,
                         ),
@@ -323,7 +325,7 @@ class _PostCardState extends State<PostCard> {
                 ),
               ],
             ),
-          )*/
+          )
         ],
       ),
     );
