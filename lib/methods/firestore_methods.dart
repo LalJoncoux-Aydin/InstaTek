@@ -26,6 +26,11 @@ class FireStoreMethods {
     return listPost;
   }
 
+  Future<int> getPostCommentNb(String postId) async {
+    final QuerySnapshot<Object?> comments = await FirebaseFirestore.instance.collection('posts').doc(postId).collection('comments').get();
+    return comments.docs.length;
+  }
+
   Future<String> uploadPost(
     String description,
     Uint8List file,
@@ -55,19 +60,20 @@ class FireStoreMethods {
     return res;
   }
 
-  Future<String> addOrRemoveLikeOnPost(String postId, String uid, List<dynamic> likes) async {
+  Future<String> addOrRemoveLikeOnPost(String postId, String uid, List<dynamic> likes, bool isLiked) async {
     String res = "Some error occurred";
     try {
-      if (likes.contains(uid)) {
+      if (isLiked) {
         await _firestore.collection('posts').doc(postId).update(<String, Object?>{
           'likes': FieldValue.arrayRemove(<String>[uid])
         });
+        res = 'remove';
       } else {
         await _firestore.collection('posts').doc(postId).update(<String, Object?>{
           'likes': FieldValue.arrayUnion(<String>[uid])
         });
+        res = 'add';
       }
-      res = 'success';
     } catch (err) {
       res = err.toString();
     }

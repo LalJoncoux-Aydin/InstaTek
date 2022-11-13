@@ -7,14 +7,16 @@ import 'package:intl/intl.dart';
 class PostCardFooter extends StatelessWidget {
   const PostCardFooter({
     Key? key,
-    required this.post,
-    required this.user,
+    required this.displayPost,
+    required this.myUser,
     required this.numberOfComments,
+    required this.numberOfLikes,
   }) : super(key: key);
 
-  final Post post;
-  final User user;
+  final Post displayPost;
+  final User myUser;
   final int numberOfComments;
+  final int numberOfLikes;
 
   @override
   Widget build(BuildContext context) {
@@ -25,23 +27,21 @@ class PostCardFooter extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            '${post.likes.length} likes',
+            '$numberOfLikes likes',
             style: Theme.of(context).textTheme.headline1,
           ),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(
-              top: 8,
-            ),
+            padding: const EdgeInsets.only(top: 8),
             child: RichText(
               text: TextSpan(
                 children: <InlineSpan>[
                   TextSpan(
-                    text: post.username.toString(),
+                    text: displayPost.username,
                     style: Theme.of(context).textTheme.headline1,
                   ),
                   TextSpan(
-                    text: ' ${post.description}',
+                    text: displayPost.description,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ],
@@ -59,7 +59,7 @@ class PostCardFooter extends StatelessWidget {
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute<dynamic>(
                 builder: (BuildContext context) => CommentsScreen(
-                  postId: post.postId.toString(),
+                  postId: displayPost.postId,
                 ),
               ),
             ),
@@ -67,10 +67,8 @@ class PostCardFooter extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Text(
-              DateFormat.yMMMd().format(post.datePublished),
-              style: Theme.of(context).textTheme.caption!.copyWith(
-                    fontSize: Theme.of(context).textTheme.caption!.fontSize! - 2,
-                  ),
+              DateFormat.yMMMd().format(displayPost.datePublished),
+              style: Theme.of(context).textTheme.caption!.copyWith(fontSize: Theme.of(context).textTheme.caption!.fontSize! - 2,),
             ),
           ),
         ],

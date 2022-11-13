@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:instatek/methods/firestore_methods.dart';
 import 'package:instatek/models/post.dart';
-import 'package:instatek/models/user.dart';
+import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/screens/posts/feed/comments_screen.dart';
 import 'package:instatek/widgets/posts/like_animation.dart';
 
 class PostCardButtons extends StatelessWidget {
   const PostCardButtons({
     Key? key,
-    required this.post,
-    required this.user,
+    required this.displayPost,
+    required this.myUser,
+    required this.isLiked,
+    required this.onLiked,
   }) : super(key: key);
 
-  final Post post;
-  final User user;
+  final Post displayPost;
+  final model.User myUser;
+  final bool isLiked;
+  final Function() onLiked;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         LikeAnimation(
-          isAnimating: post.likes.contains(user.uid),
+          isAnimating: isLiked,
           smallLike: true,
           child: IconButton(
-            icon: post.likes.contains(user.uid)
+            icon: isLiked
                 ? const Icon(
                     Icons.favorite,
                     color: Colors.red,
@@ -32,11 +35,7 @@ class PostCardButtons extends StatelessWidget {
                     Icons.favorite_border,
                     color: Theme.of(context).iconTheme.color,
                   ),
-            onPressed: () => FireStoreMethods().addOrRemoveLikeOnPost(
-              post.postId.toString(),
-              user.uid,
-              post.likes,
-            ),
+            onPressed: () => onLiked(),
           ),
         ),
         IconButton(
@@ -47,7 +46,7 @@ class PostCardButtons extends StatelessWidget {
           onPressed: () => Navigator.of(context).push(
             MaterialPageRoute<dynamic>(
               builder: (BuildContext context) => CommentsScreen(
-                postId: post.postId.toString(),
+                postId: displayPost.postId,
               ),
             ),
           ),

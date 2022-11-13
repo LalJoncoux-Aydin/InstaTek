@@ -1,33 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:instatek/methods/firestore_methods.dart';
 import 'package:instatek/models/post.dart';
-import 'package:instatek/models/user.dart';
+import 'package:instatek/models/user.dart' as model;
 import 'package:instatek/widgets/posts/like_animation.dart';
 
 class PostCardImage extends StatelessWidget {
   const PostCardImage({
     Key? key,
-    required this.post,
-    required this.user,
-    required this.isLikeAnimating,
-    required this.setIsLikeAnimating,
+    required this.displayPost,
+    required this.myUser,
   }) : super(key: key);
 
-  final Post post;
-  final User user;
-  final bool isLikeAnimating;
-  final Function setIsLikeAnimating;
+  final Post displayPost;
+  final model.User myUser;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onDoubleTap: () {
-        FireStoreMethods().addOrRemoveLikeOnPost(
-          post.postId.toString(),
-          user.uid,
-          post.likes,
-        );
-        setIsLikeAnimating(true);
+/*        FireStoreMethods().addOrRemoveLikeOnPost(
+          displayPost.postId,
+          myUser.uid,
+          displayPost.likes,
+        );*/
       },
       child: Stack(
         alignment: Alignment.center,
@@ -36,11 +31,13 @@ class PostCardImage extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.35,
             width: double.infinity,
             child: Image.network(
-              post.postUrl.toString(),
+              displayPost.postUrl,
               fit: BoxFit.cover,
             ),
           ),
-          AnimatedOpacity(
+        ],
+      ),
+/*          AnimatedOpacity(
             duration: const Duration(milliseconds: 200),
             opacity: isLikeAnimating ? 1 : 0,
             child: LikeAnimation(
@@ -65,7 +62,7 @@ class PostCardImage extends StatelessWidget {
             ),
           ),
         ],
-      ),
+      ),*/
     );
   }
 }

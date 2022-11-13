@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instatek/methods/firestore_methods.dart';
 import 'package:instatek/models/post.dart';
+import 'package:instatek/models/user.dart' as model;
+import 'package:instatek/screens/posts/feed/post_card.dart';
 import 'package:instatek/utils/global_variables.dart';
 import 'package:instatek/widgets/tools/custom_loading_screen.dart';
+import 'package:provider/provider.dart';
 
-import '../../../widgets/posts/post_card/post_card.dart';
+import '../../../providers/user_provider.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({Key? key}) : super(key: key);
@@ -16,13 +19,17 @@ class FeedScreen extends StatefulWidget {
 
 class _FeedScreenState extends State<FeedScreen> {
   late List<Post> postList = <Post>[];
-  bool _isLoading = false;
+  bool _isLoadingPost = false;
+  bool _isLoadingUser = false;
+  late UserProvider userProvider;
+  late model.User myUser;
 
   @override
   void initState() {
     super.initState();
     if (mounted) {
       setupPosts();
+      setupUser();
     }
   }
 
@@ -37,8 +44,19 @@ class _FeedScreenState extends State<FeedScreen> {
     final List<Post> postListTmp = await FireStoreMethods().getFeedPosts();
     setState(() {
       postList = postListTmp;
-      _isLoading = true;
+      _isLoadingPost = true;
     });
+  }
+
+  void setupUser() async {
+    userProvider = Provider.of(context, listen: false);
+    await userProvider.refreshUser();
+    if (userProvider.isUser == true) {
+      setState(() {
+        myUser = userProvider.getUser;
+        _isLoadingUser = true;
+      });
+    }
   }
 
   @override
@@ -55,7 +73,7 @@ class _FeedScreenState extends State<FeedScreen> {
       paddingGlobalVertical = 20;
     }
 
-    if (_isLoading == false) {
+    if (_isLoadingPost == false || _isLoadingUser == false) {
       return const CustomLoadingScreen();
     } else {
       return Scaffold(
@@ -80,10 +98,10 @@ class _FeedScreenState extends State<FeedScreen> {
                     horizontal: size.width > webScreenSize ? size.width * 0.3 : 0,
                     vertical: size.width > webScreenSize ? 10 : 0,
                   ),
-                  child: Text(postList[index].username),
-                  /*PostCard(
-                    post: postList[index],
-                  ),*/
+                  child: PostCard(
+                    displayPost: postList[index],
+                    myUser: myUser,
+                  ),
                 ),
                 itemCount: postList.length,
               ),
@@ -92,5 +110,9 @@ class _FeedScreenState extends State<FeedScreen> {
         ),
       );
     }
+  }
+
+  void updatePost(String uid) {
+
   }
 }

@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:instatek/models/post.dart';
-import 'package:instatek/models/user.dart';
+import 'package:instatek/models/user.dart' as model;
 
 class PostCardHeader extends StatelessWidget {
-  const PostCardHeader({
-    Key? key,
-    required this.deletePost,
-    required this.post,
-    required this.user,
-  }) : super(key: key);
+  const PostCardHeader({Key? key, required this.deletePost, required this.displayPost, required this.myUser}) : super(key: key);
 
   final void Function(String postId) deletePost;
-  final Post post;
-  final User user;
+  final Post displayPost;
+  final model.User myUser;
 
   @override
   Widget build(BuildContext context) {
@@ -26,27 +21,17 @@ class PostCardHeader extends StatelessWidget {
           CircleAvatar(
             radius: 16,
             backgroundImage: NetworkImage(
-              post.avatarUrl,
+              displayPost.avatarUrl,
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 8,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    post.username.toString(),
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                ],
-              ),
+          Container(
+            padding: const EdgeInsets.only(left: 8),
+            child: Text(
+              displayPost.username.toString(),
+              style: Theme.of(context).textTheme.headline1,
             ),
           ),
-          if (post.uid.toString() == user.uid)
+          if (displayPost.uid == myUser.uid)
             IconButton(
               onPressed: () {
                 showDialog(
@@ -70,10 +55,7 @@ class PostCardHeader extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () {
-                                  deletePost(
-                                    post.postId.toString(),
-                                  );
-                                  // remove the dialog box
+                                  deletePost(displayPost.postId);
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -86,11 +68,9 @@ class PostCardHeader extends StatelessWidget {
               },
               icon: Icon(
                 Icons.more_vert,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             )
-          else
-            Container(),
         ],
       ),
     );
