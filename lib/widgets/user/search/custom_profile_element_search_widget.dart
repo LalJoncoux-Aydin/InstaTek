@@ -14,12 +14,15 @@ class CustomProfileElementSearch extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     double paddingPosts = 0;
     double paddingGlobal = 0;
+    double sizePhoto = 0;
     if (size.width >= webScreenSize) {
-      paddingPosts = 10;
-      paddingGlobal = 10;
+      paddingPosts = 5;
+      paddingGlobal = 5;
+      sizePhoto = 140;
     } else {
       paddingPosts = 5;
       paddingGlobal = 5;
+      sizePhoto = 110;
     }
 
     return Container(
@@ -33,7 +36,7 @@ class CustomProfileElementSearch extends StatelessWidget {
           onTap: () => navigateToProfile(displayUser.uid),
           child: Column(
             children: <Widget>[
-              Image.network(displayUser.avatarUrl),
+              Image.network(displayUser.avatarUrl, height: 110, width: 110),
               Container(
                 padding: EdgeInsets.only(top: paddingPosts),
                 child: Text(displayUser.username),

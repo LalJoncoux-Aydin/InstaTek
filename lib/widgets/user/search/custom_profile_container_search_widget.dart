@@ -19,7 +19,7 @@ class CustomProfileContainerSearch extends StatelessWidget {
     if (size.width >= webScreenSize) {
       paddingVertical = 20;
       crossAxis = 300;
-      correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height * 2.2);
+      correctRatio = MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height * 2.4);
     } else {
       paddingVertical = 20;
       crossAxis = 200;
@@ -36,6 +36,7 @@ class CustomProfileContainerSearch extends StatelessWidget {
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: crossAxis,
+            mainAxisExtent: size.width >= webScreenSize ? 150 : 250,
             childAspectRatio: correctRatio,
           ),
           itemCount: listResearch.length,
