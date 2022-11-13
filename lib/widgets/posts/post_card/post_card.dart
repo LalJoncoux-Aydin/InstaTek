@@ -6,13 +6,14 @@ import 'package:instatek/providers/user_provider.dart';
 import 'package:instatek/utils/colors.dart';
 import 'package:instatek/utils/global_variables.dart';
 import 'package:instatek/utils/utils.dart';
-import 'package:instatek/widgets/posts/post_card_buttons.dart';
-import 'package:instatek/widgets/posts/post_card_footer.dart';
-import 'package:instatek/widgets/posts/post_card_header.dart';
-import 'package:instatek/widgets/posts/post_card_image.dart';
+import 'package:instatek/widgets/posts/post_card/post_card_buttons.dart';
+import 'package:instatek/widgets/posts/post_card/post_card_footer.dart';
+import 'package:instatek/widgets/posts/post_card/post_card_header.dart';
+import 'package:instatek/widgets/posts/post_card/post_card_image.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/post.dart';
+import '../../../models/post.dart';
+
 
 class PostCard extends StatefulWidget {
   const PostCard({

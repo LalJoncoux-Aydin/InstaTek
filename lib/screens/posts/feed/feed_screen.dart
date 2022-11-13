@@ -3,8 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instatek/methods/firestore_methods.dart';
 import 'package:instatek/models/post.dart';
 import 'package:instatek/utils/global_variables.dart';
-import 'package:instatek/widgets/posts/post_card.dart';
 import 'package:instatek/widgets/tools/custom_loading_screen.dart';
+
+import '../../../widgets/posts/post_card/post_card.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({Key? key}) : super(key: key);

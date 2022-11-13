@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:instatek/widgets/posts/post_card.dart';
 import '../../../../models/post.dart';
 import '../../../../utils/colors.dart';
+import '../post_card/post_card.dart';
 
 class CustomPostsContainerFeed extends StatelessWidget {
   const CustomPostsContainerFeed({Key? key, required this.listPost}) : super(key: key);
