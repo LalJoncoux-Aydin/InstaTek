@@ -65,24 +65,14 @@ class AdminScreenLayoutState extends State<AdminScreenLayout> {
           ),
           const VerticalDivider(thickness: 1, width: 1),
           // This is the main content.
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  // Text('selectedIndex: $_selectedIndex'),
-                  if (_selectedIndex == 0)
-                    const AdminPostScreen()
-                  else
-                    const SizedBox(),
-                  if (_selectedIndex == 1)
-                    const AdminUserScreen()
-                  else
-                    const SizedBox(),
-                ],
-              ),
+          if (_selectedIndex == 0)
+            const Expanded(
+              child: AdminPostScreen(),
             ),
-          ),
+          if (_selectedIndex == 1)
+            const Expanded(
+              child: AdminUserScreen(),
+            ),
         ],
       ),
     );

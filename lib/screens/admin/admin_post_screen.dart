@@ -33,6 +33,7 @@ class _AdminPostScreenState extends State<AdminPostScreen> {
 
   void setupPosts() async {
     final List<Post> postListTmp = await FireStoreMethods().getFeedPosts();
+    print(postListTmp);
     setState(() {
       postList = postListTmp;
       _isLoading = true;
@@ -41,7 +42,6 @@ class _AdminPostScreenState extends State<AdminPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-  
 
     if (_isLoading == false) {
       return const CustomLoadingScreen();
