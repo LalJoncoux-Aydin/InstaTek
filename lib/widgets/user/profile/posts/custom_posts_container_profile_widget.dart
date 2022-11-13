@@ -25,12 +25,13 @@ class CustomPostsContainerProfile extends StatelessWidget {
     }
 
     if (listPost.isEmpty) {
-     return const Text("No Post");
+      return const Text("No Post");
     } else {
       return Container(
         padding: EdgeInsets.only(top: paddingVertical),
         width: double.infinity,
         child: GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: crossAxis,

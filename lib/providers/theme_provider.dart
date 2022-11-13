@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeMode themeMode = ThemeMode.light;
+  ThemeMode themeMode = ThemeMode.dark;
 
   bool get isDarkMode => themeMode == ThemeMode.dark;
 
@@ -28,7 +28,7 @@ class MyThemes {
       onBackground: Colors.black,
       onPrimary: Colors.black,
       onSecondary: Colors.white,
-      onTertiary: const Color.fromARGB(255, 10, 71, 161),
+      onTertiary: Colors.white,
     ),
     primaryIconTheme: const IconThemeData(color: Colors.white),
     iconTheme: const IconThemeData(color: Colors.black),
@@ -64,7 +64,7 @@ class MyThemes {
         fontWeight: FontWeight.bold,
       ),
       bodyText1: TextStyle(
-        color: Colors.white,
+        color: Colors.black,
         fontSize: 13,
         fontWeight: FontWeight.w400,
       ),
@@ -94,10 +94,12 @@ class MyThemes {
     colorScheme: const ColorScheme.dark().copyWith(
       primary: Colors.black,
       secondary: Colors.white,
+      tertiary: const Color.fromARGB(255, 10, 81, 161),
       background: Colors.black,
       onBackground: Colors.white,
       onPrimary: Colors.white,
       onSecondary: Colors.black,
+      onTertiary: Colors.white,
     ),
     primaryIconTheme: const IconThemeData(color: Colors.white),
     iconTheme: const IconThemeData(color: Colors.white),
@@ -110,6 +112,11 @@ class MyThemes {
         color: Colors.white,
         fontSize: 13,
         fontWeight: FontWeight.w700,
+      ),
+      headline3: TextStyle(
+        color: Colors.white,
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
       ),
       bodyText1: TextStyle(
         color: Colors.white,
